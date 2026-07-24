@@ -1,0 +1,447 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@equinixmetal.com
+    name: Equinix Metal API Team
+  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  license:
+    name: Equinix Metal
+    url: https://metal.equinix.com/legal/
+  termsOfService: https://metal.equinix.com/legal/
+  title: Metal Authentication Facilities API
+  version: 1.0.0
+servers:
+- url: https://api.equinix.com/metal/v1
+security:
+- x_auth_token: []
+tags:
+- description: 'Facility Management. Check out the product docs to learn more about [Facilities](https://metal.equinix.com/developers/docs/locations/).
+
+    '
+  name: Facilities
+paths:
+  /facilities:
+    get:
+      deprecated: true
+      description: Provides a listing of available datacenters where you can provision Packet devices.
+      operationId: findFacilities
+      parameters:
+      - description: Nested attributes to include. Included objects will return their full attributes. Attribute names can be dotted (up to 3 levels) to included deeply nested objects.
+        in: query
+        name: include
+        schema:
+          items:
+            $ref: '#/components/schemas/findFacilities_include_parameter_inner'
+          type: array
+        style: form
+      - description: Nested attributes to exclude. Excluded objects will return only the href attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply nested objects.
+        in: query
+        name: exclude
+        schema:
+          default:
+          - address
+          items:
+            $ref: '#/components/schemas/findFacilities_include_parameter_inner'
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FacilityList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+      summary: Retrieve all facilities
+      tags:
+      - Facilities
+  /organizations/{id}/facilities:
+    get:
+      deprecated: true
+      description: Returns a listing of available datacenters for the given organization
+      operationId: findFacilitiesByOrganization
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FacilityList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all facilities visible by the organization
+      tags:
+      - Facilities
+  /projects/{id}/facilities:
+    get:
+      deprecated: true
+      description: Returns a listing of available datacenters for the given project
+      operationId: findFacilitiesByProject
+      parameters:
+      - description: Project UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FacilityList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all facilities visible by the project
+      tags:
+      - Facilities
+components:
+  schemas:
+    Device_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the facility is in
+        type: object
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    FacilityList:
+      example:
+        facilities:
+        - features:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          code: code
+          ip_ranges:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          metro: null
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - features:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          code: code
+          ip_ranges:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          metro: null
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        facilities:
+          items:
+            $ref: '#/components/schemas/Facility'
+          type: array
+      type: object
+    Facility_features_inner:
+      enum:
+      - baremetal
+      - backend_transfer
+      - layer_2
+      - global_ipv4
+      - ibx
+      type: string
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
+    findFacilities_include_parameter_inner:
+      enum:
+      - address
+      - labels
+      type: string
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    Facility:
+      example:
+        features:
+        - baremetal
+        - backend_transfer
+        - global_ipv4
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        code: code
+        ip_ranges:
+        - 2604:1380::/36
+        - 147.75.192.0/21
+        metro: null
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        code:
+          type: string
+        features:
+          example:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          items:
+            $ref: '#/components/schemas/Facility_features_inner'
+          type: array
+        id:
+          format: uuid
+          type: string
+        ip_ranges:
+          description: IP ranges registered in facility. Can be used for GeoIP location
+          example:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          items:
+            type: string
+          type: array
+        metro:
+          $ref: '#/components/schemas/Device_metro'
+        name:
+          type: string
+      type: object
+  securitySchemes:
+    x_auth_token:
+      description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.
+
+        '
+      in: header
+      name: X-Auth-Token
+      type: apiKey
+      x-displayName: X-Auth-Token
+x-tagGroups:
+- name: Accounts and Organization
+  tags:
+  - Authentication
+  - Emails
+  - Invitations
+  - Memberships
+  - Organizations
+  - OTPs
+  - PasswordResetTokens
+  - PaymentMethods
+  - Projects
+  - SSHKeys
+  - SupportRequest
+  - TransferRequests
+  - TwoFactorAuth
+  - Users
+  - UserVerificationTokens
+- name: Services and Billing
+  tags:
+  - Events
+  - Facilities
+  - Incidents
+  - Invoices
+  - Licenses
+  - Metros
+  - Plans
+  - Usages
+- name: Servers
+  tags:
+  - Devices
+  - Batches
+  - Capacity
+  - HardwareReservations
+  - OperatingSystems
+  - Ports
+  - SelfServiceReservations
+  - SpotMarket
+  - Userdata
+  - Volumes
+- name: Networking
+  tags:
+  - BGP
+  - Interconnections
+  - IPAddresses
+  - MetalGateways
+  - VLANs
+  - VRFs

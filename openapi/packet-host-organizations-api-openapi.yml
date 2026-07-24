@@ -1,0 +1,2524 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@equinixmetal.com
+    name: Equinix Metal API Team
+  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  license:
+    name: Equinix Metal
+    url: https://metal.equinix.com/legal/
+  termsOfService: https://metal.equinix.com/legal/
+  title: Metal Authentication Organizations API
+  version: 1.0.0
+servers:
+- url: https://api.equinix.com/metal/v1
+security:
+- x_auth_token: []
+tags:
+- description: Organizations Management. Check out the product docs to learn more about [Organizations](https://metal.equinix.com/developers/docs/accounts/).
+  name: Organizations
+paths:
+  /organizations:
+    get:
+      description: Returns a list of organizations that are accessible to the current user.
+      operationId: findOrganizations
+      parameters:
+      - description: Include, exclude or show only personal organizations.
+        in: query
+        name: personal
+        schema:
+          $ref: '#/components/schemas/findOrganizations_personal_parameter'
+      - description: Include, exclude or show only organizations that have no projects.
+        in: query
+        name: without_projects
+        schema:
+          $ref: '#/components/schemas/findOrganizations_personal_parameter'
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+      summary: Retrieve all organizations
+      tags:
+      - Organizations
+      x-equinix-metal-paginated-property: Organizations
+    post:
+      description: Creates an organization.
+      operationId: createOrganization
+      parameters:
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationInput'
+        description: Organization to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create an organization
+      tags:
+      - Organizations
+  /organizations/{id}:
+    delete:
+      description: Deletes the organization.
+      operationId: deleteOrganization
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          description: no content
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Delete the organization
+      tags:
+      - Organizations
+    get:
+      description: Returns a single organization's details, if the user is authorized to view it.
+      operationId: findOrganizationById
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve an organization's details
+      tags:
+      - Organizations
+    put:
+      description: Updates the organization.
+      operationId: updateOrganization
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationInput'
+        description: Organization to update
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Update the organization
+      tags:
+      - Organizations
+  /organizations/{id}/customdata:
+    get:
+      description: Provides the custom metadata stored for this organization in json format
+      operationId: findOrganizationCustomdata
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve the custom metadata of an organization
+      tags:
+      - Organizations
+  /organizations/{id}/invitations:
+    get:
+      description: Returns all invitations in an organization.
+      operationId: findOrganizationInvitations
+      parameters:
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve organization invitations
+      tags:
+      - Organizations
+    post:
+      description: 'In order to add a user to an organization, they must first be invited.
+
+        To invite to several projects the parameter `projects_ids:[a,b,c]` can be used'
+      operationId: createOrganizationInvitation
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        $ref: '#/components/requestBodies/InvitationInput'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create an invitation for an organization
+      tags:
+      - Organizations
+  /organizations/{id}/operating-systems:
+    get:
+      description: Returns a listing of available operating systems for the given organization
+      operationId: findOperatingSystemsByOrganization
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperatingSystemList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all operating systems visible by the organization
+      tags:
+      - Organizations
+  /organizations/{id}/payment-methods:
+    get:
+      description: Returns all payment methods of an organization.
+      operationId: findOrganizationPaymentMethods
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all payment methods of an organization
+      tags:
+      - Organizations
+    post:
+      description: Creates a payment method.
+      operationId: createPaymentMethod
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethodCreateInput'
+        description: Payment Method to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create a payment method for the given organization
+      tags:
+      - Organizations
+  /organizations/{id}/plans:
+    get:
+      description: Returns a listing of available plans for the given organization
+      operationId: findPlansByOrganization
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all plans visible by the organization
+      tags:
+      - Organizations
+  /organizations/{id}/projects:
+    get:
+      description: Returns a collection of projects that belong to the organization.
+      operationId: findOrganizationProjects
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Filter results by name.
+        in: query
+        name: name
+        schema:
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+      summary: Retrieve all projects of an organization
+      tags:
+      - Organizations
+      x-equinix-metal-paginated-property: Projects
+    post:
+      description: Creates a new project for the organization
+      operationId: createOrganizationProject
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreateInput'
+        description: Project to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create a project for the organization
+      tags:
+      - Organizations
+  /organizations/{id}/transfers:
+    get:
+      description: Provides a collection of project transfer requests from or to the organization.
+      operationId: findOrganizationTransfers
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferRequestList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+      summary: Retrieve all project transfer requests from or to an organization
+      tags:
+      - Organizations
+components:
+  schemas:
+    ProjectCreateFromRootInput_type:
+      description: The type of the project. If no type is specified the project type will automatically be `default` Projects of type 'vmce' are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    findOrganizations_personal_parameter:
+      enum:
+      - include
+      - exclude
+      - only
+      type: string
+    Project:
+      example:
+        devices:
+        - href: href
+        - href: href
+        volumes:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        memberships:
+        - href: href
+        - href: href
+        bgp_config:
+          href: href
+        tags:
+        - tags
+        - tags
+        max_devices: '{}'
+        ssh_keys:
+        - href: href
+        - href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        invitations:
+        - href: href
+        - href: href
+        members:
+        - href: href
+        - href: href
+        organization:
+          website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        network_status: '{}'
+        customdata: '{}'
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        payment_method:
+          href: href
+      properties:
+        bgp_config:
+          $ref: '#/components/schemas/Href'
+        created_at:
+          format: date-time
+          type: string
+        customdata:
+          type: object
+        devices:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitations:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        max_devices:
+          type: object
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
+          type: string
+        network_status:
+          type: object
+        organization:
+          $ref: '#/components/schemas/Organization'
+        payment_method:
+          $ref: '#/components/schemas/Href'
+        ssh_keys:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        volumes:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        type:
+          $ref: '#/components/schemas/Project_type'
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Plan_specs_cpus_inner:
+      example:
+        count: 6
+        type: type
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+      type: object
+    Invitation_roles_inner:
+      enum:
+      - admin
+      - billing
+      - collaborator
+      - limited_collaborator
+      type: string
+    PaymentMethodList:
+      example:
+        payment_methods:
+        - projects:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          billing_address:
+            street_address: street_address
+            country_code_alpha2: country_code_alpha2
+            postal_code: postal_code
+          card_type: card_type
+          cardholder_name: cardholder_name
+          type: type
+          created_by_user:
+            href: href
+          expiration_year: expiration_year
+          default: true
+          updated_at: 2000-01-23 04:56:07+00:00
+          organization:
+            href: href
+          expiration_month: expiration_month
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+        - projects:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          billing_address:
+            street_address: street_address
+            country_code_alpha2: country_code_alpha2
+            postal_code: postal_code
+          card_type: card_type
+          cardholder_name: cardholder_name
+          type: type
+          created_by_user:
+            href: href
+          expiration_year: expiration_year
+          default: true
+          updated_at: 2000-01-23 04:56:07+00:00
+          organization:
+            href: href
+          expiration_month: expiration_month
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+      properties:
+        payment_methods:
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+          type: array
+      type: object
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
+      type: object
+    Invitation:
+      example:
+        projects:
+        - href: href
+        - href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        invitation:
+          href: href
+        organization:
+          href: href
+        roles:
+        - null
+        - null
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        invited_by:
+          href: href
+        nonce: nonce
+        invitee: invitee
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitation:
+          $ref: '#/components/schemas/Href'
+        invited_by:
+          $ref: '#/components/schemas/Href'
+        invitee:
+          format: email
+          type: string
+        nonce:
+          type: string
+        organization:
+          $ref: '#/components/schemas/Href'
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/Invitation_roles_inner'
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    Meta:
+      example:
+        next:
+          href: href
+        total: 0
+        last:
+          href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
+      properties:
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    Plan_available_in_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Facility
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    PaymentMethodBillingAddress:
+      example:
+        street_address: street_address
+        country_code_alpha2: country_code_alpha2
+        postal_code: postal_code
+      properties:
+        country_code_alpha2:
+          type: string
+        postal_code:
+          type: string
+        street_address:
+          type: string
+      type: object
+    OrganizationInput:
+      example:
+        twitter: twitter
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        name: name
+        description: description
+        logo: logo
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        customdata: '{}'
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        logo:
+          description: The logo for the organization; must be base64-encoded image data
+          format: byte
+          type: string
+        name:
+          type: string
+        twitter:
+          type: string
+        website:
+          type: string
+      type: object
+    Plan_type:
+      description: The plan type
+      enum:
+      - standard
+      - workload_optimized
+      - custom
+      type: string
+    Plan:
+      example:
+        legacy: true
+        line: line
+        available_in_metros:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        description: description
+        available_in:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        type: null
+        specs:
+          features:
+            txt: true
+            uefi: true
+            raid: true
+          memory:
+            total: total
+          cpus:
+          - count: 6
+            type: type
+          - count: 6
+            type: type
+          drives:
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          nics:
+          - count: 2
+            type: type
+          - count: 2
+            type: type
+        deployment_types:
+        - null
+        - null
+        name: name
+        categories:
+        - categories
+        - categories
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        class: m3.large.x86
+        pricing: '{}'
+        slug: m3.large.x86
+      properties:
+        available_in:
+          description: Shows which facilities the plan is available in, and the facility-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_inner'
+          type: array
+        available_in_metros:
+          description: Shows which metros the plan is available in, and the metro-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_metros_inner'
+          type: array
+        categories:
+          description: Categories of the plan, like compute or storage. A Plan can belong to multiple categories.
+          items:
+            type: string
+          type: array
+        class:
+          example: m3.large.x86
+          type: string
+        description:
+          type: string
+        deployment_types:
+          items:
+            $ref: '#/components/schemas/Plan_deployment_types_inner'
+          minItems: 0
+          type: array
+          uniqueItems: true
+        id:
+          format: uuid
+          type: string
+        legacy:
+          description: Deprecated. Always return false
+          type: boolean
+          x-deprecated: true
+        line:
+          type: string
+        name:
+          type: string
+        pricing:
+          type: object
+        slug:
+          example: m3.large.x86
+          type: string
+        specs:
+          $ref: '#/components/schemas/Plan_specs'
+        type:
+          $ref: '#/components/schemas/Plan_type'
+      type: object
+    Plan_specs:
+      example:
+        features:
+          txt: true
+          uefi: true
+          raid: true
+        memory:
+          total: total
+        cpus:
+        - count: 6
+          type: type
+        - count: 6
+          type: type
+        drives:
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        nics:
+        - count: 2
+          type: type
+        - count: 2
+          type: type
+      properties:
+        cpus:
+          items:
+            $ref: '#/components/schemas/Plan_specs_cpus_inner'
+          type: array
+        memory:
+          $ref: '#/components/schemas/Plan_specs_memory'
+        drives:
+          items:
+            $ref: '#/components/schemas/Plan_specs_drives_inner'
+          type: array
+        nics:
+          items:
+            $ref: '#/components/schemas/Plan_specs_nics_inner'
+          type: array
+        features:
+          $ref: '#/components/schemas/Plan_specs_features'
+      type: object
+    TransferRequestList:
+      example:
+        transfers:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          target_organization:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - updated_at: 2000-01-23 04:56:07+00:00
+          target_organization:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        transfers:
+          items:
+            $ref: '#/components/schemas/TransferRequest'
+          type: array
+      type: object
+    Membership:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        roles:
+        - roles
+        - roles
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user:
+          href: href
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/Href'
+        roles:
+          items:
+            type: string
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/Href'
+      type: object
+    TransferRequest:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        target_organization:
+          href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/Href'
+        target_organization:
+          $ref: '#/components/schemas/Href'
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    OperatingSystem:
+      example:
+        default_operating_system: true
+        distro: distro
+        preinstallable: true
+        licensed: true
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        provisionable_on:
+        - provisionable_on
+        - provisionable_on
+        version: version
+        pricing: '{}'
+        slug: slug
+        distro_label: distro_label
+      properties:
+        distro:
+          type: string
+        distro_label:
+          type: string
+        id:
+          format: uuid
+          type: string
+        licensed:
+          description: Licenced OS is priced according to pricing property
+          type: boolean
+        name:
+          type: string
+        preinstallable:
+          description: Servers can be already preinstalled with OS in order to shorten provision time.
+          type: boolean
+        pricing:
+          description: This object contains price per time unit and optional multiplier value if licence price depends on hardware plan or components (e.g. number of cores)
+          type: object
+        provisionable_on:
+          items:
+            type: string
+          type: array
+        slug:
+          type: string
+        version:
+          type: string
+        default_operating_system:
+          description: Default operating system for the distro.
+          readOnly: true
+          type: boolean
+      type: object
+    InvitationInput:
+      example:
+        projects_ids:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        roles:
+        - null
+        - null
+        message: message
+        invitee: invitee
+      properties:
+        invitee:
+          format: email
+          type: string
+        message:
+          type: string
+        organization_id:
+          format: uuid
+          type: string
+        projects_ids:
+          items:
+            format: uuid
+            type: string
+          type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/Invitation_roles_inner'
+          type: array
+      required:
+      - invitee
+      type: object
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    Plan_specs_features:
+      example:
+        txt: true
+        uefi: true
+        raid: true
+      properties:
+        raid:
+          type: boolean
+        txt:
+          type: boolean
+        uefi:
+          type: boolean
+      type: object
+    Plan_specs_memory:
+      example:
+        total: total
+      properties:
+        total:
+          type: string
+      type: object
+    PlanList:
+      example:
+        plans:
+        - legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+        - legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+      properties:
+        plans:
+          items:
+            $ref: '#/components/schemas/Plan'
+          type: array
+      type: object
+    Plan_deployment_types_inner:
+      enum:
+      - on_demand
+      - spot_market
+      type: string
+    OperatingSystemList:
+      example:
+        operating_systems:
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+      properties:
+        operating_systems:
+          items:
+            $ref: '#/components/schemas/OperatingSystem'
+          type: array
+      type: object
+    Plan_available_in_metros_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Metro
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    PaymentMethod:
+      example:
+        projects:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        billing_address:
+          street_address: street_address
+          country_code_alpha2: country_code_alpha2
+          postal_code: postal_code
+        card_type: card_type
+        cardholder_name: cardholder_name
+        type: type
+        created_by_user:
+          href: href
+        expiration_year: expiration_year
+        default: true
+        updated_at: 2000-01-23 04:56:07+00:00
+        organization:
+          href: href
+        expiration_month: expiration_month
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+      properties:
+        billing_address:
+          $ref: '#/components/schemas/PaymentMethodBillingAddress'
+        card_type:
+          type: string
+        cardholder_name:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        created_by_user:
+          $ref: '#/components/schemas/Href'
+        default:
+          type: boolean
+        email:
+          type: string
+        expiration_month:
+          type: string
+        expiration_year:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        organization:
+          $ref: '#/components/schemas/Href'
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    InvitationList:
+      example:
+        invitations:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+      properties:
+        invitations:
+          items:
+            $ref: '#/components/schemas/Membership'
+          type: array
+      type: object
+    Organization:
+      example:
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        projects:
+        - href: href
+        - href: href
+        credit_amount: 1.4658129
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        memberships:
+        - href: href
+        - href: href
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        twitter: twitter
+        updated_at: 2000-01-23 04:56:07+00:00
+        terms: 5
+        members:
+        - href: href
+        - href: href
+        name: name
+        logo: logo
+        customdata: '{}'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        logo:
+          type: string
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        terms:
+          type: integer
+        twitter:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        website:
+          type: string
+      type: object
+    PaymentMethodCreateInput:
+      example:
+        default: true
+        name: name
+        nonce: nonce
+      properties:
+        default:
+          type: boolean
+        name:
+          type: string
+        nonce:
+          type: string
+      required:
+      - name
+      - nonce
+      type: object
+    Plan_specs_nics_inner:
+      example:
+        count: 2
+        type: type
+      properties:
+        count:
+          example: 2
+          type: integer
+        type:
+          type: string
+      type: object
+    ProjectCreateInput:
+      example:
+        payment_method_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        customdata: '{}'
+        type: null
+        tags:
+        - tags
+        - tags
+      properties:
+        customdata:
+          type: object
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
+          type: string
+        payment_method_id:
+          format: uuid
+          type: string
+        type:
+          $ref: '#/components/schemas/ProjectCreateFromRootInput_type'
+        tags:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
+    Plan_specs_drives_inner:
+      example:
+        size: 3.84TB
+        count: 1
+        type: type
+        category: null
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+        size:
+          example: 3.84TB
+          type: string
+        category:
+          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
+      type: object
+    ProjectList:
+      example:
+        projects:
+        - devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        - devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        projects:
+          items:
+            $ref: '#/components/schemas/Project'
+          type: array
+      type: object
+    OrganizationList:
+      example:
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+        organizations:
+        - website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        organizations:
+          items:
+            $ref: '#/components/schemas/Organization'
+          type: array
+      type: object
+    Plan_available_in_inner_price:
+      example:
+        hour: 1.23
+      properties:
+        hour:
+          example: 1.23
+          format: double
+          type: number
+      type: object
+    Plan_specs_drives_inner_category:
+      enum:
+      - boot
+      - cache
+      - storage
+      type: string
+  requestBodies:
+    InvitationInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvitationInput'
+      description: Invitation to create
+      required: true
+  securitySchemes:
+    x_auth_token:
+      description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.
+
+        '
+      in: header
+      name: X-Auth-Token
+      type: apiKey
+      x-displayName: X-Auth-Token
+x-tagGroups:
+- name: Accounts and Organization
+  tags:
+  - Authentication
+  - Emails
+  - Invitations
+  - Memberships
+  - Organizations
+  - OTPs
+  - PasswordResetTokens
+  - PaymentMethods
+  - Projects
+  - SSHKeys
+  - SupportRequest
+  - TransferRequests
+  - TwoFactorAuth
+  - Users
+  - UserVerificationTokens
+- name: Services and Billing
+  tags:
+  - Events
+  - Facilities
+  - Incidents
+  - Invoices
+  - Licenses
+  - Metros
+  - Plans
+  - Usages
+- name: Servers
+  tags:
+  - Devices
+  - Batches
+  - Capacity
+  - HardwareReservations
+  - OperatingSystems
+  - Ports
+  - SelfServiceReservations
+  - SpotMarket
+  - Userdata
+  - Volumes
+- name: Networking
+  tags:
+  - BGP
+  - Interconnections
+  - IPAddresses
+  - MetalGateways
+  - VLANs
+  - VRFs

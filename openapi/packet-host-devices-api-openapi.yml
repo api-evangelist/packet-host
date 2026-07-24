@@ -1,0 +1,5986 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@equinixmetal.com
+    name: Equinix Metal API Team
+  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  license:
+    name: Equinix Metal
+    url: https://metal.equinix.com/legal/
+  termsOfService: https://metal.equinix.com/legal/
+  title: Metal Authentication Devices API
+  version: 1.0.0
+servers:
+- url: https://api.equinix.com/metal/v1
+security:
+- x_auth_token: []
+tags:
+- description: 'Device Management. Check out the product docs to learn more about [Server Devices](https://metal.equinix.com/developers/docs/servers/).
+
+    '
+  externalDocs:
+    url: https://metal.equinix.com/developers/docs/deploy/on-demand/
+  name: Devices
+paths:
+  /devices/{id}:
+    delete:
+      description: Deletes a device and deprovisions it in our datacenter.
+      operationId: deleteDevice
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Force the deletion of the device, by detaching any storage volume still active.
+        in: query
+        name: force_delete
+        schema:
+          type: boolean
+      responses:
+        '204':
+          description: no content
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Delete the device
+      tags:
+      - Devices
+    get:
+      description: "Type-specific options (such as facility for baremetal devices) will be included as part of the main data structure.\n                         State value can be one of: active inactive queued or provisioning"
+      operationId: findDeviceById
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve a device
+      tags:
+      - Devices
+    put:
+      description: Updates the device.
+      operationId: updateDevice
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdateInput'
+        description: Device to update
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Update the device
+      tags:
+      - Devices
+  /devices/{id}/actions:
+    post:
+      description: 'Performs an action for the given device.  Possible actions include: power_on, power_off, reboot, reinstall, and rescue (reboot the device into rescue OS.)'
+      operationId: performAction
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceActionInput'
+        description: Action to perform
+        required: true
+      responses:
+        '202':
+          description: accepted
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Perform an action
+      tags:
+      - Devices
+  /devices/{id}/bandwidth:
+    get:
+      description: Retrieve an instance bandwidth for a given period of time.
+      operationId: findInstanceBandwidth
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Timestamp from range
+        in: query
+        name: from
+        required: true
+        schema:
+          type: string
+      - description: Timestamp to range
+        in: query
+        name: until
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ok
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve an instance bandwidth
+      tags:
+      - Devices
+  /devices/{id}/bgp/neighbors:
+    get:
+      description: Provides a summary of the BGP neighbor data associated to the BGP sessions for this device.
+      operationId: getBgpNeighborData
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BgpSessionNeighbors'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve BGP neighbor data for this device
+      tags:
+      - Devices
+  /devices/{id}/bgp/sessions:
+    get:
+      description: Provides a listing of available BGP sessions for the device.
+      operationId: findBgpSessions
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BgpSessionList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+      summary: Retrieve all BGP sessions
+      tags:
+      - Devices
+    post:
+      description: Creates a BGP session.
+      operationId: createBgpSession
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BGPSessionInput'
+        description: BGP session to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BgpSession'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create a BGP session
+      tags:
+      - Devices
+  /devices/{id}/customdata:
+    get:
+      description: Provides the custom metadata stored for this instance in json format
+      operationId: findDeviceCustomdata
+      parameters:
+      - description: Instance UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve the custom metadata of an instance
+      tags:
+      - Devices
+  /devices/{id}/diagnostics/health/rollup:
+    get:
+      description: Returns the health rollup status of the device.
+      operationId: getDeviceHealthRollup
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceHealthRollup'
+          description: Successful operation
+        '401':
+          description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+        '404':
+          description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Get Device's Health Status
+      tags:
+      - Devices
+  /devices/{id}/firmware-sets:
+    get:
+      description: Returns the firmware set associated with the device. If a custom firmware set is associated with the device, then it is returned. Otherwise, if a default firmware set is available it is returned.
+      operationId: getDeviceFirmwareSets
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirmwareSetResponse'
+          description: Successful operation
+        '401':
+          description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+        '404':
+          description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+      summary: Get Device's associated Firmware Set
+      tags:
+      - Devices
+  /devices/{id}/ips:
+    get:
+      description: Returns all ip assignments for a device.
+      operationId: findIPAssignments
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPAssignmentList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all ip assignments
+      tags:
+      - Devices
+    post:
+      description: Creates an ip assignment for a device.
+      operationId: createIPAssignment
+      parameters:
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IPAssignmentInput'
+        description: IPAssignment to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPAssignment'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create an ip assignment
+      tags:
+      - Devices
+  /devices/{id}/metadata:
+    get:
+      description: Retrieve device metadata
+      operationId: findDeviceMetadataByID
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Retrieve metadata
+      tags:
+      - Devices
+  /devices/{id}/traffic:
+    get:
+      description: Returns traffic for a specific device.
+      operationId: findTraffic
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Traffic direction
+        in: query
+        name: direction
+        required: true
+        schema:
+          $ref: '#/components/schemas/findTraffic_direction_parameter'
+      - description: Traffic interval
+        in: query
+        name: interval
+        schema:
+          $ref: '#/components/schemas/findTraffic_interval_parameter'
+      - description: Traffic bucket
+        in: query
+        name: bucket
+        schema:
+          $ref: '#/components/schemas/findTraffic_bucket_parameter'
+      - explode: true
+        in: query
+        name: timeframe
+        schema:
+          $ref: '#/components/schemas/findTraffic_timeframe_parameter'
+        style: deepObject
+      responses:
+        '200':
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve device traffic
+      tags:
+      - Devices
+  /devices/{id}/userdata:
+    get:
+      description: Retrieve device userdata
+      operationId: findDeviceUserdataByID
+      parameters:
+      - description: Device UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Userdata'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Retrieve userdata
+      tags:
+      - Devices
+  /devices/{instance_id}/ips/{id}/customdata:
+    get:
+      description: Provides the custom metadata stored for this IP Assignment in json format
+      operationId: findIPAssignmentCustomdata
+      parameters:
+      - description: Instance UUID
+        in: path
+        name: instance_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Ip Assignment UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve the custom metadata of an IP Assignment
+      tags:
+      - Devices
+  /organizations/{id}/devices:
+    get:
+      description: Provides a collection of devices for a given organization.
+      operationId: findOrganizationDevices
+      parameters:
+      - description: Organization UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Search by hostname, description, short_id, reservation short_id, tags, plan name, plan slug, facility code, facility name, operating system name, operating system slug, IP addresses.
+        in: query
+        name: search
+        schema:
+          type: string
+      - description: Filter by plan category
+        in: query
+        name: categories
+        schema:
+          items:
+            $ref: '#/components/schemas/findOrganizationDevices_categories_parameter_inner'
+          type: array
+      - description: Filter by device facility
+        in: query
+        name: facility
+        schema:
+          type: string
+      - description: Filter by partial hostname
+        in: query
+        name: hostname
+        schema:
+          type: string
+      - description: Filter only reserved instances. When set to true, only include reserved instances. When set to false, only include on-demand instances.
+        in: query
+        name: reserved
+        schema:
+          type: boolean
+      - description: Filter by device tag
+        in: query
+        name: tag
+        schema:
+          type: string
+      - description: Filter by instance type (ondemand,spot,reserved)
+        in: query
+        name: type
+        schema:
+          type: string
+      - description: Filter only instances marked for termination. When set to true, only include instances that have a termination time. When set to false, only include instances that do not have a termination time.
+        in: query
+        name: has_termination_time
+        schema:
+          type: boolean
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all devices of an organization
+      tags:
+      - Devices
+      x-equinix-metal-paginated-property: Devices
+  /projects/{id}/devices:
+    get:
+      description: Provides a collection of devices for a given project.
+      operationId: findProjectDevices
+      parameters:
+      - description: Project UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Search by hostname, description, short_id, reservation short_id, tags, plan name, plan slug, facility code, facility name, operating system name, operating system slug, IP addresses.
+        in: query
+        name: search
+        schema:
+          type: string
+      - description: Filter by plan category
+        in: query
+        name: categories
+        schema:
+          items:
+            $ref: '#/components/schemas/findOrganizationDevices_categories_parameter_inner'
+          type: array
+      - description: Filter by device facility
+        in: query
+        name: facility
+        schema:
+          type: string
+      - description: Filter by device metro
+        in: query
+        name: metro
+        schema:
+          type: string
+      - description: Filter by partial hostname
+        in: query
+        name: hostname
+        schema:
+          type: string
+      - description: Filter only reserved instances. When set to true, only include reserved instances. When set to false, only include on-demand instances.
+        in: query
+        name: reserved
+        schema:
+          type: boolean
+      - description: Filter by device tag
+        in: query
+        name: tag
+        schema:
+          type: string
+      - description: Filter by instance type (ondemand,spot,reserved)
+        in: query
+        name: type
+        schema:
+          type: string
+      - description: Filter only instances marked for termination. When set to true, only include instances that have a termination time. When set to false, only include instances that do not have a termination time.
+        in: query
+        name: has_termination_time
+        schema:
+          type: boolean
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page to return
+        in: query
+        name: page
+        schema:
+          default: 1
+          format: int32
+          maximum: 100000
+          minimum: 1
+          type: integer
+      - description: Items returned per page
+        in: query
+        name: per_page
+        schema:
+          default: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve all devices of a project
+      tags:
+      - Devices
+      x-equinix-metal-paginated-property: Devices
+    post:
+      description: 'Creates a new device and provisions it in the specified location.
+
+
+        Device type-specific options are accepted.  For example, `baremetal` devices accept `operating_system`, `hostname`, and `plan`. These parameters may not be accepted for other device types. The default device type is `baremetal`.'
+      operationId: createDevice
+      parameters:
+      - description: Project UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: 'Nested attributes to exclude. Excluded objects will return only the href
+
+          attribute. Attribute names can be dotted (up to 3 levels) to exclude deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: exclude
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createDevice_request'
+        description: Device to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create a device
+      tags:
+      - Devices
+components:
+  schemas:
+    Project:
+      example:
+        devices:
+        - href: href
+        - href: href
+        volumes:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        memberships:
+        - href: href
+        - href: href
+        bgp_config:
+          href: href
+        tags:
+        - tags
+        - tags
+        max_devices: '{}'
+        ssh_keys:
+        - href: href
+        - href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        invitations:
+        - href: href
+        - href: href
+        members:
+        - href: href
+        - href: href
+        organization:
+          website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        network_status: '{}'
+        customdata: '{}'
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        payment_method:
+          href: href
+      properties:
+        bgp_config:
+          $ref: '#/components/schemas/Href'
+        created_at:
+          format: date-time
+          type: string
+        customdata:
+          type: object
+        devices:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitations:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        max_devices:
+          type: object
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
+          type: string
+        network_status:
+          type: object
+        organization:
+          $ref: '#/components/schemas/Organization'
+        payment_method:
+          $ref: '#/components/schemas/Href'
+        ssh_keys:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        volumes:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        type:
+          $ref: '#/components/schemas/Project_type'
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    findTraffic_timeframe_parameter:
+      properties:
+        ended_at:
+          format: date-time
+          type: string
+        started_at:
+          format: date-time
+          type: string
+      required:
+      - ended_at
+      - started_at
+      type: object
+    HardwareReservation:
+      example:
+        custom_rate: 1050.5
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        switch_uuid: switch_uuid
+        short_id: short_id
+        termination_time: 2000-01-23 04:56:07+00:00
+        provisionable: true
+        need_of_service: true
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        device: null
+        facility:
+          features:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          code: code
+          ip_ranges:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          metro: null
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        plan:
+          legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+        spare: true
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        custom_rate:
+          description: Amount that will be charged for every billing_cycle.
+          example: 1050.5
+          format: float
+          type: number
+        device:
+          $ref: '#/components/schemas/Device'
+        facility:
+          $ref: '#/components/schemas/Facility'
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        need_of_service:
+          description: Whether this Device requires assistance from Equinix Metal.
+          type: boolean
+        plan:
+          $ref: '#/components/schemas/Plan'
+        project:
+          $ref: '#/components/schemas/Project'
+        provisionable:
+          description: Whether the reserved server is provisionable or not. Spare devices can't be provisioned unless they are activated first.
+          type: boolean
+        short_id:
+          description: Short version of the ID.
+          format: string
+          type: string
+        spare:
+          description: Whether the Hardware Reservation is a spare. Spare Hardware Reservations are used when a Hardware Reservations requires service from Equinix Metal
+          type: boolean
+        switch_uuid:
+          description: Switch short id. This can be used to determine if two devices are connected to the same switch, for example.
+          type: string
+        termination_time:
+          description: Expiration date for the reservation.
+          format: date-time
+          type: string
+      type: object
+    VirtualNetwork:
+      example:
+        vxlan: 4
+        instances:
+        - href: href
+        - href: href
+        description: description
+        created_at: 2000-01-23 04:56:07+00:00
+        assigned_to_virtual_circuit: true
+        tags:
+        - tags
+        - tags
+        metal_gateways:
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        metro_code: metro_code
+        metro:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        facility:
+          href: href
+        assigned_to:
+          href: href
+      properties:
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        assigned_to_virtual_circuit:
+          description: True if the virtual network is attached to a virtual circuit. False if not.
+          type: boolean
+        description:
+          type: string
+        facility:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        instances:
+          description: A list of instances with ports currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        metal_gateways:
+          description: A list of metal gateways currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/MetalGatewayLite'
+          type: array
+        metro:
+          $ref: '#/components/schemas/Href'
+        metro_code:
+          description: The Metro code of the metro in which this Virtual Network is defined.
+          type: string
+        vxlan:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Metadata_network:
+      example:
+        addresses:
+        - addresses
+        - addresses
+        interfaces:
+        - '{}'
+        - '{}'
+        network:
+          bonding:
+            link_aggregation: link_aggregation
+            mode: 0
+            mac: mac
+      properties:
+        addresses:
+          items:
+            type: string
+          type: array
+        interfaces:
+          items:
+            type: object
+          type: array
+        network:
+          $ref: '#/components/schemas/Metadata_network_network'
+      type: object
+    Plan:
+      example:
+        legacy: true
+        line: line
+        available_in_metros:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        description: description
+        available_in:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        type: null
+        specs:
+          features:
+            txt: true
+            uefi: true
+            raid: true
+          memory:
+            total: total
+          cpus:
+          - count: 6
+            type: type
+          - count: 6
+            type: type
+          drives:
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          nics:
+          - count: 2
+            type: type
+          - count: 2
+            type: type
+        deployment_types:
+        - null
+        - null
+        name: name
+        categories:
+        - categories
+        - categories
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        class: m3.large.x86
+        pricing: '{}'
+        slug: m3.large.x86
+      properties:
+        available_in:
+          description: Shows which facilities the plan is available in, and the facility-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_inner'
+          type: array
+        available_in_metros:
+          description: Shows which metros the plan is available in, and the metro-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_metros_inner'
+          type: array
+        categories:
+          description: Categories of the plan, like compute or storage. A Plan can belong to multiple categories.
+          items:
+            type: string
+          type: array
+        class:
+          example: m3.large.x86
+          type: string
+        description:
+          type: string
+        deployment_types:
+          items:
+            $ref: '#/components/schemas/Plan_deployment_types_inner'
+          minItems: 0
+          type: array
+          uniqueItems: true
+        id:
+          format: uuid
+          type: string
+        legacy:
+          description: Deprecated. Always return false
+          type: boolean
+          x-deprecated: true
+        line:
+          type: string
+        name:
+          type: string
+        pricing:
+          type: object
+        slug:
+          example: m3.large.x86
+          type: string
+        specs:
+          $ref: '#/components/schemas/Plan_specs'
+        type:
+          $ref: '#/components/schemas/Plan_type'
+      type: object
+    Partition:
+      example:
+        number: 3
+        size: size
+        label: label
+      properties:
+        label:
+          type: string
+        number:
+          format: int32
+          type: integer
+        size:
+          type: string
+      type: object
+    Component:
+      example:
+        component: bmc
+        filename: filename
+        updated_at: 2000-01-23 04:56:07+00:00
+        vendor: equinix
+        upstream_url: upstream_url
+        checksum: checksum
+        created_at: 2000-01-23 04:56:07+00:00
+        model:
+        - romed8hm3
+        - romed8hm3
+        repository_url: repository_url
+        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+        version: 1.5.0
+      properties:
+        uuid:
+          description: Component UUID
+          example: 0516463a-47ee-4809-9a66-ece8c740eed9
+          format: uuid
+          readOnly: true
+          type: string
+        vendor:
+          description: Component vendor
+          example: equinix
+          readOnly: true
+          type: string
+        model:
+          description: List of models where this component version can be applied
+          items:
+            example: romed8hm3
+            type: string
+          readOnly: true
+          type: array
+        filename:
+          description: name of the file
+          readOnly: true
+          type: string
+        version:
+          description: Version of the component
+          example: 1.5.0
+          readOnly: true
+          type: string
+        component:
+          description: Component type
+          example: bmc
+          readOnly: true
+          type: string
+        checksum:
+          description: File checksum
+          readOnly: true
+          type: string
+        upstream_url:
+          description: Location of the file
+          readOnly: true
+          type: string
+        repository_url:
+          description: Location of the file in the repository
+          readOnly: true
+          type: string
+        created_at:
+          description: Datetime when the block was created.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Datetime when the block was updated.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    findOrganizationDevices_categories_parameter_inner:
+      enum:
+      - compute
+      - storage
+      - vmce
+      - legacy_gen
+      - current_gen
+      example: compute
+      type: string
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    DeviceHealthRollup_health_rollup:
+      description: Health Status
+      enum:
+      - ok
+      - warning
+      - critical
+      readOnly: true
+      type: string
+    FirmwareSetResponse:
+      description: Represents single Firmware set response
+      example:
+        record:
+          updated_at: 2000-01-23 04:56:07+00:00
+          name: name
+          created_at: 2000-01-23 04:56:07+00:00
+          attributes:
+          - updated_at: 2000-01-23 04:56:07+00:00
+            data:
+              vendor: vendor
+              model: model
+              plan: plan
+              latest: true
+            namespace: namespace
+            created_at: 2000-01-23 04:56:07+00:00
+          - updated_at: 2000-01-23 04:56:07+00:00
+            data:
+              vendor: vendor
+              model: model
+              plan: plan
+              latest: true
+            namespace: namespace
+            created_at: 2000-01-23 04:56:07+00:00
+          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+          component_firmware:
+          - component: bmc
+            filename: filename
+            updated_at: 2000-01-23 04:56:07+00:00
+            vendor: equinix
+            upstream_url: upstream_url
+            checksum: checksum
+            created_at: 2000-01-23 04:56:07+00:00
+            model:
+            - romed8hm3
+            - romed8hm3
+            repository_url: repository_url
+            uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+            version: 1.5.0
+          - component: bmc
+            filename: filename
+            updated_at: 2000-01-23 04:56:07+00:00
+            vendor: equinix
+            upstream_url: upstream_url
+            checksum: checksum
+            created_at: 2000-01-23 04:56:07+00:00
+            model:
+            - romed8hm3
+            - romed8hm3
+            repository_url: repository_url
+            uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+            version: 1.5.0
+      properties:
+        record:
+          $ref: '#/components/schemas/FirmwareSet'
+      type: object
+    Plan_deployment_types_inner:
+      enum:
+      - on_demand
+      - spot_market
+      type: string
+    Device_actions_inner:
+      example:
+        name: name
+        type: type
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+      type: object
+    DeviceActionInput_type:
+      description: Action to perform. See Device.actions for possible actions.
+      enum:
+      - power_on
+      - power_off
+      - reboot
+      - rescue
+      - reinstall
+      type: string
+    DeviceList:
+      example:
+        devices:
+        - ip_addresses:
+          - address: address
+            parent_block:
+              netmask: netmask
+              cidr: 2
+              href: href
+              network: network
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            enabled: true
+            manageable: true
+            network: network
+            address_family: 5
+            public: true
+            management: true
+            netmask: netmask
+            metro: null
+            next_hop: next_hop
+            cidr: 5
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+            global_ip: true
+            gateway: gateway
+            assigned_to:
+              href: href
+          - address: address
+            parent_block:
+              netmask: netmask
+              cidr: 2
+              href: href
+              network: network
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            enabled: true
+            manageable: true
+            network: network
+            address_family: 5
+            public: true
+            management: true
+            netmask: netmask
+            metro: null
+            next_hop: next_hop
+            cidr: 5
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+            global_ip: true
+            gateway: gateway
+            assigned_to:
+              href: href
+          iqn: iqn
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          project:
+            devices:
+            - href: href
+            - href: href
+            volumes:
+            - href: href
+            - href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            memberships:
+            - href: href
+            - href: href
+            bgp_config:
+              href: href
+            tags:
+            - tags
+            - tags
+            max_devices: '{}'
+            ssh_keys:
+            - href: href
+            - href: href
+            updated_at: 2000-01-23 04:56:07+00:00
+            invitations:
+            - href: href
+            - href: href
+            members:
+            - href: href
+            - href: href
+            organization:
+              website: website
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              projects:
+              - href: href
+              - href: href
+              credit_amount: 1.4658129
+              created_at: 2000-01-23 04:56:07+00:00
+              description: description
+              billing_address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              memberships:
+              - href: href
+              - href: href
+              enforce_2fa_at: 2000-01-23 04:56:07+00:00
+              twitter: twitter
+              updated_at: 2000-01-23 04:56:07+00:00
+              terms: 5
+              members:
+              - href: href
+              - href: href
+              name: name
+              logo: logo
+              customdata: '{}'
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            name: name
+            network_status: '{}'
+            customdata: '{}'
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            payment_method:
+              href: href
+          switch_uuid: switch_uuid
+          storage:
+            disks:
+            - partitions:
+              - number: 3
+                size: size
+                label: label
+              - number: 3
+                size: size
+                label: label
+              wipeTable: true
+              device: device
+            - partitions:
+              - number: 3
+                size: size
+                label: label
+              - number: 3
+                size: size
+                label: label
+              wipeTable: true
+              device: device
+            filesystems:
+            - mount:
+                format: format
+                options:
+                - options
+                - options
+                device: device
+                point: point
+            - mount:
+                format: format
+                options:
+                - options
+                - options
+                device: device
+                point: point
+            raid:
+            - devices:
+              - devices
+              - devices
+              level: level
+              name: name
+            - devices:
+              - devices
+              - devices
+              level: level
+              name: name
+          bonding_mode: 0
+          provisioning_events:
+          - interpolated: interpolated
+            relationships:
+            - href: href
+            - href: href
+            ip: ip
+            modified_by: '{}'
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            body: body
+            type: type
+          - interpolated: interpolated
+            relationships:
+            - href: href
+            - href: href
+            ip: ip
+            modified_by: '{}'
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            body: body
+            type: type
+          network_ports:
+          - native_virtual_network:
+              vxlan: 4
+              instances:
+              - href: href
+              - href: href
+              description: description
+              created_at: 2000-01-23 04:56:07+00:00
+              assigned_to_virtual_circuit: true
+              tags:
+              - tags
+              - tags
+              metal_gateways:
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              metro_code: metro_code
+              metro:
+                href: href
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              facility:
+                href: href
+              assigned_to:
+                href: href
+            disbond_operation_supported: true
+            data:
+              bonded: true
+              mac: mac
+            name: bond0
+            virtual_networks:
+            - href: href
+            - href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            type: null
+            network_type: null
+            bond:
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - native_virtual_network:
+              vxlan: 4
+              instances:
+              - href: href
+              - href: href
+              description: description
+              created_at: 2000-01-23 04:56:07+00:00
+              assigned_to_virtual_circuit: true
+              tags:
+              - tags
+              - tags
+              metal_gateways:
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              metro_code: metro_code
+              metro:
+                href: href
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              facility:
+                href: href
+              assigned_to:
+                href: href
+            disbond_operation_supported: true
+            data:
+              bonded: true
+              mac: mac
+            name: bond0
+            virtual_networks:
+            - href: href
+            - href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            type: null
+            network_type: null
+            bond:
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userdata: userdata
+          hostname: hostname
+          updated_at: 2000-01-23 04:56:07+00:00
+          sos: sos
+          operating_system:
+            default_operating_system: true
+            distro: distro
+            preinstallable: true
+            licensed: true
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            provisionable_on:
+            - provisionable_on
+            - provisionable_on
+            version: version
+            pricing: '{}'
+            slug: slug
+            distro_label: distro_label
+          firmware_set_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          billing_cycle: billing_cycle
+          customdata:
+            key: ''
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          locked: true
+          spot_price_max: 9.301444
+          plan:
+            legacy: true
+            line: line
+            available_in_metros:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            description: description
+            available_in:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            type: null
+            specs:
+              features:
+                txt: true
+                uefi: true
+                raid: true
+              memory:
+                total: total
+              cpus:
+              - count: 6
+                type: type
+              - count: 6
+                type: type
+              drives:
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              nics:
+              - count: 2
+                type: type
+              - count: 2
+                type: type
+            deployment_types:
+            - null
+            - null
+            name: name
+            categories:
+            - categories
+            - categories
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class: m3.large.x86
+            pricing: '{}'
+            slug: m3.large.x86
+          provisioning_percentage: 7.0614014
+          network_frozen: true
+          image_url: image_url
+          root_password: root_password
+          volumes:
+          - href: href
+          - href: href
+          project_lite: null
+          short_id: short_id
+          termination_time: 2021-09-03 16:32:00+03:00
+          created_by: null
+          tags:
+          - tags
+          - tags
+          hardware_reservation:
+            custom_rate: 1050.5
+            created_at: 2000-01-23 04:56:07+00:00
+            project:
+              devices:
+              - href: href
+              - href: href
+              volumes:
+              - href: href
+              - href: href
+              created_at: 2000-01-23 04:56:07+00:00
+              type: null
+              memberships:
+              - href: href
+              - href: href
+              bgp_config:
+                href: href
+              tags:
+              - tags
+              - tags
+              max_devices: '{}'
+              ssh_keys:
+              - href: href
+              - href: href
+              updated_at: 2000-01-23 04:56:07+00:00
+              invitations:
+              - href: href
+              - href: href
+              members:
+              - href: href
+              - href: href
+              organization:
+                website: website
+                address:
+                  country: country
+                  address: address
+                  address2: address2
+                  city: city
+                  coordinates:
+                    latitude: latitude
+                    longitude: longitude
+                  state: state
+                  zip_code: zip_code
+                projects:
+                - href: href
+                - href: href
+                credit_amount: 1.4658129
+                created_at: 2000-01-23 04:56:07+00:00
+                description: description
+                billing_address:
+                  country: country
+                  address: address
+                  address2: address2
+                  city: city
+                  coordinates:
+                    latitude: latitude
+                    longitude: longitude
+                  state: state
+                  zip_code: zip_code
+                memberships:
+                - href: href
+                - href: href
+                enforce_2fa_at: 2000-01-23 04:56:07+00:00
+                twitter: twitter
+                updated_at: 2000-01-23 04:56:07+00:00
+                terms: 5
+                members:
+                - href: href
+                - href: href
+                name: name
+                logo: logo
+                customdata: '{}'
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              name: name
+              network_status: '{}'
+              customdata: '{}'
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              payment_method:
+                href: href
+            switch_uuid: switch_uuid
+            short_id: short_id
+            termination_time: 2000-01-23 04:56:07+00:00
+            provisionable: true
+            need_of_service: true
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            device: null
+            facility:
+              features:
+              - baremetal
+              - backend_transfer
+              - global_ipv4
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              code: code
+              ip_ranges:
+              - 2604:1380::/36
+              - 147.75.192.0/21
+              metro: null
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            plan:
+              legacy: true
+              line: line
+              available_in_metros:
+              - price:
+                  hour: 1.23
+                href: href
+              - price:
+                  hour: 1.23
+                href: href
+              description: description
+              available_in:
+              - price:
+                  hour: 1.23
+                href: href
+              - price:
+                  hour: 1.23
+                href: href
+              type: null
+              specs:
+                features:
+                  txt: true
+                  uefi: true
+                  raid: true
+                memory:
+                  total: total
+                cpus:
+                - count: 6
+                  type: type
+                - count: 6
+                  type: type
+                drives:
+                - size: 3.84TB
+                  count: 1
+                  type: type
+                  category: null
+                - size: 3.84TB
+                  count: 1
+                  type: type
+                  category: null
+                nics:
+                - count: 2
+                  type: type
+                - count: 2
+                  type: type
+              deployment_types:
+              - null
+              - null
+              name: name
+              categories:
+              - categories
+              - categories
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              class: m3.large.x86
+              pricing: '{}'
+              slug: m3.large.x86
+            spare: true
+          spot_instance: true
+          ssh_keys:
+          - href: href
+          - href: href
+          metro: null
+          always_pxe: true
+          ipxe_script_url: ipxe_script_url
+          facility:
+            features:
+            - baremetal
+            - backend_transfer
+            - global_ipv4
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            code: code
+            ip_ranges:
+            - 2604:1380::/36
+            - 147.75.192.0/21
+            metro: null
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          actions:
+          - name: name
+            type: type
+          - name: name
+            type: type
+          user: user
+        - ip_addresses:
+          - address: address
+            parent_block:
+              netmask: netmask
+              cidr: 2
+              href: href
+              network: network
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            enabled: true
+            manageable: true
+            network: network
+            address_family: 5
+            public: true
+            management: true
+            netmask: netmask
+            metro: null
+            next_hop: next_hop
+            cidr: 5
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+            global_ip: true
+            gateway: gateway
+            assigned_to:
+              href: href
+          - address: address
+            parent_block:
+              netmask: netmask
+              cidr: 2
+              href: href
+              network: network
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            enabled: true
+            manageable: true
+            network: network
+            address_family: 5
+            public: true
+            management: true
+            netmask: netmask
+            metro: null
+            next_hop: next_hop
+            cidr: 5
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+            global_ip: true
+            gateway: gateway
+            assigned_to:
+              href: href
+          iqn: iqn
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          project:
+            devices:
+            - href: href
+            - href: href
+            volumes:
+            - href: href
+            - href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            memberships:
+            - href: href
+            - href: href
+            bgp_config:
+              href: href
+            tags:
+            - tags
+            - tags
+            max_devices: '{}'
+            ssh_keys:
+            - href: href
+            - href: href
+            updated_at: 2000-01-23 04:56:07+00:00
+            invitations:
+            - href: href
+            - href: href
+            members:
+            - href: href
+            - href: href
+            organization:
+              website: website
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              projects:
+              - href: href
+              - href: href
+              credit_amount: 1.4658129
+              created_at: 2000-01-23 04:56:07+00:00
+              description: description
+              billing_address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              memberships:
+              - href: href
+              - href: href
+              enforce_2fa_at: 2000-01-23 04:56:07+00:00
+              twitter: twitter
+              updated_at: 2000-01-23 04:56:07+00:00
+              terms: 5
+              members:
+              - href: href
+              - href: href
+              name: name
+              logo: logo
+              customdata: '{}'
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            name: name
+            network_status: '{}'
+            customdata: '{}'
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            payment_method:
+              href: href
+          switch_uuid: switch_uuid
+          storage:
+            disks:
+            - partitions:
+              - number: 3
+                size: size
+                label: label
+              - number: 3
+                size: size
+                label: label
+              wipeTable: true
+              device: device
+            - partitions:
+              - number: 3
+                size: size
+                label: label
+              - number: 3
+                size: size
+                label: label
+              wipeTable: true
+              device: device
+            filesystems:
+            - mount:
+                format: format
+                options:
+                - options
+                - options
+                device: device
+                point: point
+            - mount:
+                format: format
+                options:
+                - options
+                - options
+                device: device
+                point: point
+            raid:
+            - devices:
+              - devices
+              - devices
+              level: level
+              name: name
+            - devices:
+              - devices
+              - devices
+              level: level
+              name: name
+          bonding_mode: 0
+          provisioning_events:
+          - interpolated: interpolated
+            relationships:
+            - href: href
+            - href: href
+            ip: ip
+            modified_by: '{}'
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            body: body
+            type: type
+          - interpolated: interpolated
+            relationships:
+            - href: href
+            - href: href
+            ip: ip
+            modified_by: '{}'
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            body: body
+            type: type
+          network_ports:
+          - native_virtual_network:
+              vxlan: 4
+              instances:
+              - href: href
+              - href: href
+              description: description
+              created_at: 2000-01-23 04:56:07+00:00
+              assigned_to_virtual_circuit: true
+              tags:
+              - tags
+              - tags
+              metal_gateways:
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              metro_code: metro_code
+              metro:
+                href: href
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              facility:
+                href: href
+              assigned_to:
+                href: href
+            disbond_operation_supported: true
+            data:
+              bonded: true
+              mac: mac
+            name: bond0
+            virtual_networks:
+            - href: href
+            - href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            type: null
+            network_type: null
+            bond:
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - native_virtual_network:
+              vxlan: 4
+              instances:
+              - href: href
+              - href: href
+              description: description
+              created_at: 2000-01-23 04:56:07+00:00
+              assigned_to_virtual_circuit: true
+              tags:
+              - tags
+              - tags
+              metal_gateways:
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              - gateway_address: 10.1.2.1/27
+                updated_at: 2000-01-23 04:56:07+00:00
+                vlan: 1001
+                created_at: 2000-01-23 04:56:07+00:00
+                href: href
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                state: null
+              metro_code: metro_code
+              metro:
+                href: href
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              facility:
+                href: href
+              assigned_to:
+                href: href
+            disbond_operation_supported: true
+            data:
+              bonded: true
+              mac: mac
+            name: bond0
+            virtual_networks:
+            - href: href
+            - href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            type: null
+            network_type: null
+            bond:
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userdata: userdata
+          hostname: hostname
+          updated_at: 2000-01-23 04:56:07+00:00
+          sos: sos
+          operating_system:
+            default_operating_system: true
+            distro: distro
+            preinstallable: true
+            licensed: true
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            provisionable_on:
+            - provisionable_on
+            - provisionable_on
+            version: version
+            pricing: '{}'
+            slug: slug
+            distro_label: distro_label
+          firmware_set_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          billing_cycle: billing_cycle
+          customdata:
+            key: ''
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          locked: true
+          spot_price_max: 9.301444
+          plan:
+            legacy: true
+            line: line
+            available_in_metros:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            description: description
+            available_in:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            type: null
+            specs:
+              features:
+                txt: true
+                uefi: true
+                raid: true
+              memory:
+                total: total
+              cpus:
+              - count: 6
+                type: type
+              - count: 6
+                type: type
+              drives:
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              nics:
+              - count: 2
+                type: type
+              - count: 2
+                type: type
+            deployment_types:
+            - null
+            - null
+            name: name
+            categories:
+            - categories
+            - categories
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class: m3.large.x86
+            pricing: '{}'
+            slug: m3.large.x86
+          provisioning_percentage: 7.0614014
+          network_frozen: true
+          image_url: image_url
+          root_password: root_password
+          volumes:
+          - href: href
+          - href: href
+          project_lite: null
+          short_id: short_id
+          termination_time: 2021-09-03 16:32:00+03:00
+          created_by: null
+          tags:
+          - tags
+          - tags
+          hardware_reservation:
+            custom_rate: 1050.5
+            created_at: 2000-01-23 04:56:07+00:00
+            project:
+              devices:
+              - href: href
+              - href: href
+              volumes:
+              - href: href
+              - href: href
+              created_at: 2000-01-23 04:56:07+00:00
+              type: null
+              memberships:
+              - href: href
+              - href: href
+              bgp_config:
+                href: href
+              tags:
+              - tags
+              - tags
+              max_devices: '{}'
+              ssh_keys:
+              - href: href
+              - href: href
+              updated_at: 2000-01-23 04:56:07+00:00
+              invitations:
+              - href: href
+              - href: href
+              members:
+              - href: href
+              - href: href
+              organization:
+                website: website
+                address:
+                  country: country
+                  address: address
+                  address2: address2
+                  city: city
+                  coordinates:
+                    latitude: latitude
+                    longitude: longitude
+                  state: state
+                  zip_code: zip_code
+                projects:
+                - href: href
+                - href: href
+                credit_amount: 1.4658129
+                created_at: 2000-01-23 04:56:07+00:00
+                description: description
+                billing_address:
+                  country: country
+                  address: address
+                  address2: address2
+                  city: city
+                  coordinates:
+                    latitude: latitude
+                    longitude: longitude
+                  state: state
+                  zip_code: zip_code
+                memberships:
+                - href: href
+                - href: href
+                enforce_2fa_at: 2000-01-23 04:56:07+00:00
+                twitter: twitter
+                updated_at: 2000-01-23 04:56:07+00:00
+                terms: 5
+                members:
+                - href: href
+                - href: href
+                name: name
+                logo: logo
+                customdata: '{}'
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              name: name
+              network_status: '{}'
+              customdata: '{}'
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              payment_method:
+                href: href
+            switch_uuid: switch_uuid
+            short_id: short_id
+            termination_time: 2000-01-23 04:56:07+00:00
+            provisionable: true
+            need_of_service: true
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            device: null
+            facility:
+              features:
+              - baremetal
+              - backend_transfer
+              - global_ipv4
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              code: code
+              ip_ranges:
+              - 2604:1380::/36
+              - 147.75.192.0/21
+              metro: null
+              name: name
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            plan:
+              legacy: true
+              line: line
+              available_in_metros:
+              - price:
+                  hour: 1.23
+                href: href
+              - price:
+                  hour: 1.23
+                href: href
+              description: description
+              available_in:
+              - price:
+                  hour: 1.23
+                href: href
+              - price:
+                  hour: 1.23
+                href: href
+              type: null
+              specs:
+                features:
+                  txt: true
+                  uefi: true
+                  raid: true
+                memory:
+                  total: total
+                cpus:
+                - count: 6
+                  type: type
+                - count: 6
+                  type: type
+                drives:
+                - size: 3.84TB
+                  count: 1
+                  type: type
+                  category: null
+                - size: 3.84TB
+                  count: 1
+                  type: type
+                  category: null
+                nics:
+                - count: 2
+                  type: type
+                - count: 2
+                  type: type
+              deployment_types:
+              - null
+              - null
+              name: name
+              categories:
+              - categories
+              - categories
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              class: m3.large.x86
+              pricing: '{}'
+              slug: m3.large.x86
+            spare: true
+          spot_instance: true
+          ssh_keys:
+          - href: href
+          - href: href
+          metro: null
+          always_pxe: true
+          ipxe_script_url: ipxe_script_url
+          facility:
+            features:
+            - baremetal
+            - backend_transfer
+            - global_ipv4
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            code: code
+            ip_ranges:
+            - 2604:1380::/36
+            - 147.75.192.0/21
+            metro: null
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          actions:
+          - name: name
+            type: type
+          - name: name
+            type: type
+          user: user
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+      properties:
+        devices:
+          items:
+            $ref: '#/components/schemas/Device'
+          type: array
+        meta:
+          $ref: '#/components/schemas/Meta'
+      type: object
+    IPAddress_address_family:
+      description: Address Family for IP Address
+      enum:
+      - 4
+      - 6
+      example: 4
+      format: int32
+      type: integer
+    BondPortData:
+      example:
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          description: ID of the bonding port
+          format: uuid
+          type: string
+        name:
+          description: Name of the port interface for the bond ("bond0")
+          type: string
+      type: object
+    IPAssignment_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the IP address is in
+        type: object
+    Plan_specs_drives_inner:
+      example:
+        size: 3.84TB
+        count: 1
+        type: type
+        category: null
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+        size:
+          example: 3.84TB
+          type: string
+        category:
+          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
+      type: object
+    findTraffic_interval_parameter:
+      enum:
+      - minute
+      - hour
+      - day
+      - week
+      - month
+      - year
+      - hour_of_day
+      - day_of_week
+      - day_of_month
+      - month_of_year
+      type: string
+    MetalGatewayLite:
+      example:
+        gateway_address: 10.1.2.1/27
+        updated_at: 2000-01-23 04:56:07+00:00
+        vlan: 1001
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        gateway_address:
+          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
+          example: 10.1.2.1/27
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        state:
+          $ref: '#/components/schemas/MetalGateway_state'
+        updated_at:
+          format: date-time
+          type: string
+        vlan:
+          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
+          example: 1001
+          type: integer
+      type: object
+    Plan_available_in_inner_price:
+      example:
+        hour: 1.23
+      properties:
+        hour:
+          example: 1.23
+          format: double
+          type: number
+      type: object
+    Mount:
+      example:
+        format: format
+        options:
+        - options
+        - options
+        device: device
+        point: point
+      properties:
+        device:
+          type: string
+        format:
+          type: string
+        point:
+          type: string
+        options:
+          items:
+            type: string
+          type: array
+      type: object
+    FirmwareSet:
+      description: Represents a Firmware Set
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        name: name
+        created_at: 2000-01-23 04:56:07+00:00
+        attributes:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          data:
+            vendor: vendor
+            model: model
+            plan: plan
+            latest: true
+          namespace: namespace
+          created_at: 2000-01-23 04:56:07+00:00
+        - updated_at: 2000-01-23 04:56:07+00:00
+          data:
+            vendor: vendor
+            model: model
+            plan: plan
+            latest: true
+          namespace: namespace
+          created_at: 2000-01-23 04:56:07+00:00
+        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+        component_firmware:
+        - component: bmc
+          filename: filename
+          updated_at: 2000-01-23 04:56:07+00:00
+          vendor: equinix
+          upstream_url: upstream_url
+          checksum: checksum
+          created_at: 2000-01-23 04:56:07+00:00
+          model:
+          - romed8hm3
+          - romed8hm3
+          repository_url: repository_url
+          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+          version: 1.5.0
+        - component: bmc
+          filename: filename
+          updated_at: 2000-01-23 04:56:07+00:00
+          vendor: equinix
+          upstream_url: upstream_url
+          checksum: checksum
+          created_at: 2000-01-23 04:56:07+00:00
+          model:
+          - romed8hm3
+          - romed8hm3
+          repository_url: repository_url
+          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+          version: 1.5.0
+      properties:
+        uuid:
+          description: Firmware Set UUID
+          example: 0516463a-47ee-4809-9a66-ece8c740eed9
+          format: uuid
+          readOnly: true
+          type: string
+        name:
+          description: Firmware Set Name
+          readOnly: true
+          type: string
+        created_at:
+          description: Datetime when the block was created.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Datetime when the block was updated.
+          format: date-time
+          readOnly: true
+          type: string
+        attributes:
+          description: Represents a list of attributes
+          items:
+            $ref: '#/components/schemas/Attribute'
+          type: array
+        component_firmware:
+          description: List of components versions
+          items:
+            $ref: '#/components/schemas/Component'
+          type: array
+      required:
+      - name
+      - uuid
+      type: object
+    IPAssignment_state:
+      description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+        Describes the current configuration state of this IP on the network.
+
+        '
+      enum:
+      - pending
+      - active
+      - deleting
+      type: string
+    BgpSessionNeighbors:
+      example:
+        bgp_neighbors:
+        - md5_password: md5_password
+          customer_as: 65000
+          address_family: 4
+          routes_in:
+          - exact: true
+            route: 10.32.16.0/31
+          customer_ip: 10.32.16.1 (IPv4) or 2604:1380:4111:2700::1 (IPv6)
+          multihop: true
+          peer_as: 65530
+          md5_enabled: true
+          peer_ips:
+          - 169.254.255.1
+          - 169.254.255.2
+          routes_out:
+          - exact: true
+            route: 0.0.0.0/0
+        - md5_password: md5_password
+          customer_as: 65000
+          address_family: 4
+          routes_in:
+          - exact: true
+            route: 10.32.16.0/31
+          customer_ip: 10.32.16.1 (IPv4) or 2604:1380:4111:2700::1 (IPv6)
+          multihop: true
+          peer_as: 65530
+          md5_enabled: true
+          peer_ips:
+          - 169.254.255.1
+          - 169.254.255.2
+          routes_out:
+          - exact: true
+            route: 0.0.0.0/0
+      properties:
+        bgp_neighbors:
+          description: A list of BGP session neighbor data
+          items:
+            $ref: '#/components/schemas/BgpNeighborData'
+          type: array
+      type: object
+    Plan_specs:
+      example:
+        features:
+          txt: true
+          uefi: true
+          raid: true
+        memory:
+          total: total
+        cpus:
+        - count: 6
+          type: type
+        - count: 6
+          type: type
+        drives:
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        nics:
+        - count: 2
+          type: type
+        - count: 2
+          type: type
+      properties:
+        cpus:
+          items:
+            $ref: '#/components/schemas/Plan_specs_cpus_inner'
+          type: array
+        memory:
+          $ref: '#/components/schemas/Plan_specs_memory'
+        drives:
+          items:
+            $ref: '#/components/schemas/Plan_specs_drives_inner'
+          type: array
+        nics:
+          items:
+            $ref: '#/components/schemas/Plan_specs_nics_inner'
+          type: array
+        features:
+          $ref: '#/components/schemas/Plan_specs_features'
+      type: object
+    UserLite:
+      properties:
+        avatar_thumb_url:
+          description: Avatar thumbnail URL of the User
+          type: string
+        created_at:
+          description: When the user was created
+          format: date-time
+          type: string
+        email:
+          description: Primary email address of the User
+          type: string
+        first_name:
+          description: First name of the User
+          type: string
+        full_name:
+          description: Full name of the User
+          type: string
+        href:
+          description: API URL uniquely representing the User
+          type: string
+        id:
+          description: ID of the User
+          format: uuid
+          type: string
+        last_name:
+          description: Last name of the User
+          type: string
+        short_id:
+          description: Short ID of the User
+          type: string
+        updated_at:
+          description: When the user details were last updated
+          format: date-time
+          type: string
+      required:
+      - id
+      - short_id
+      type: object
+    Storage:
+      example:
+        disks:
+        - partitions:
+          - number: 3
+            size: size
+            label: label
+          - number: 3
+            size: size
+            label: label
+          wipeTable: true
+          device: device
+        - partitions:
+          - number: 3
+            size: size
+            label: label
+          - number: 3
+            size: size
+            label: label
+          wipeTable: true
+          device: device
+        filesystems:
+        - mount:
+            format: format
+            options:
+            - options
+            - options
+            device: device
+            point: point
+        - mount:
+            format: format
+            options:
+            - options
+            - options
+            device: device
+            point: point
+        raid:
+        - devices:
+          - devices
+          - devices
+          level: level
+          name: name
+        - devices:
+          - devices
+          - devices
+          level: level
+          name: name
+      properties:
+        disks:
+          items:
+            $ref: '#/components/schemas/Disk'
+          type: array
+        raid:
+          items:
+            $ref: '#/components/schemas/Raid'
+          type: array
+        filesystems:
+          items:
+            $ref: '#/components/schemas/Filesystem'
+          type: array
+      type: object
+    Port:
+      description: Port is a hardware port associated with a reserved or instantiated hardware device.
+      example:
+        native_virtual_network:
+          vxlan: 4
+          instances:
+          - href: href
+          - href: href
+          description: description
+          created_at: 2000-01-23 04:56:07+00:00
+          assigned_to_virtual_circuit: true
+          tags:
+          - tags
+          - tags
+          metal_gateways:
+          - gateway_address: 10.1.2.1/27
+            updated_at: 2000-01-23 04:56:07+00:00
+            vlan: 1001
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+          - gateway_address: 10.1.2.1/27
+            updated_at: 2000-01-23 04:56:07+00:00
+            vlan: 1001
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+          metro_code: metro_code
+          metro:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          facility:
+            href: href
+          assigned_to:
+            href: href
+        disbond_operation_supported: true
+        data:
+          bonded: true
+          mac: mac
+        name: bond0
+        virtual_networks:
+        - href: href
+        - href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        type: null
+        network_type: null
+        bond:
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        bond:
+          $ref: '#/components/schemas/BondPortData'
+        data:
+          $ref: '#/components/schemas/PortData'
+        disbond_operation_supported:
+          description: Indicates whether or not the bond can be broken on the port (when applicable).
+          type: boolean
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          example: bond0
+          type: string
+        type:
+          $ref: '#/components/schemas/Port_type'
+        network_type:
+          $ref: '#/components/schemas/Port_network_type'
+        native_virtual_network:
+          $ref: '#/components/schemas/VirtualNetwork'
+        virtual_networks:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+      type: object
+    PortData:
+      example:
+        bonded: true
+        mac: mac
+      properties:
+        mac:
+          description: MAC address is set for NetworkPort ports
+          type: string
+        bonded:
+          description: Bonded is true for NetworkPort ports in a bond and NetworkBondPort ports that are active
+          type: boolean
+      type: object
+    Plan_available_in_metros_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Metro
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    SSHKeyInput:
+      example:
+        label: label
+        key: key
+        tags:
+        - tags
+        - tags
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    DeviceCreateInput:
+      properties:
+        always_pxe:
+          default: false
+          description: 'When true, devices with a `custom_ipxe` OS will always boot to iPXE. The
+
+            default setting of false ensures that iPXE will be used on only the
+
+            first boot.'
+          type: boolean
+        billing_cycle:
+          $ref: '#/components/schemas/DeviceCreateInput_billing_cycle'
+        customdata:
+          additionalProperties: true
+          default: {}
+          description: 'Customdata is an arbitrary JSON value that can be accessed via the
+
+            metadata service.'
+          type: object
+        description:
+          description: 'Any description of the device or how it will be used. This may be used
+
+            to inform other API consumers with project access.'
+          type: string
+        features:
+          description: 'The features attribute allows you to optionally specify what features your server should have.
+
+
+            In the API shorthand syntax, all features listed are `required`:
+
+
+            ```
+
+            { "features": ["tpm"] }
+
+            ```
+
+
+            Alternatively, if you do not require a certain feature, but would prefer to be assigned a server with that feature if there are any available, you may specify that feature with a `preferred` value. The request will not fail if we have no servers with that feature in our inventory. The API offers an alternative syntax for mixing preferred and required features:
+
+
+            ```
+
+            { "features": { "tpm": "required", "raid": "preferred" } }
+
+            ```
+
+
+            The request will only fail if there are no available servers matching the required `tpm` criteria.'
+          items:
+            type: string
+          type: array
+        hardware_reservation_id:
+          default: ''
+          description: 'The Hardware Reservation UUID to provision. Alternatively, `next-available` can be specified to select from any of the available hardware reservations. An error will be returned if the requested reservation option is not available.
+
+
+            See [Reserved Hardware](https://metal.equinix.com/developers/docs/deploy/reserved/) for more details.'
+          example: next-available
+          type: string
+        hostname:
+          description: The hostname to use within the operating system. The same hostname may be used on multiple devices within a project.
+          type: string
+        ip_addresses:
+          default:
+          - address_family: 4
+            public: true
+          - address_family: 4
+            public: false
+          - address_family: 6
+            public: true
+          description: 'The `ip_addresses attribute will allow you to specify the addresses you want created with your device.
+
+
+            The default value configures public IPv4, public IPv6, and private IPv4.
+
+
+            Private IPv4 address is required. When specifying `ip_addresses`, one of the array items must enable private IPv4.
+
+
+            Some operating systems require public IPv4 address. In those cases you will receive an error message if public IPv4 is not enabled.
+
+
+            For example, to only configure your server with a private IPv4 address, you can send `{ "ip_addresses": [{ "address_family": 4, "public": false }] }`.
+
+
+            It is possible to request a subnet size larger than a `/30` by assigning addresses using the UUID(s) of ip_reservations in your project.
+
+
+            For example, `{ "ip_addresses": [..., {"address_family": 4, "public": true, "ip_reservations": ["uuid1", "uuid2"]}] }`
+
+
+            To access a server without public IPs, you can use our Out-of-Band console access (SOS) or proxy through another server in the project with public IPs enabled.'
+          items:
+            $ref: '#/components/schemas/IPAddress'
+          type: array
+        ipxe_script_url:
+          description: 'When set, the device will chainload an iPXE Script at boot fetched from the supplied URL.
+
+
+            See [Custom iPXE](https://metal.equinix.com/developers/docs/operating-systems/custom-ipxe/) for more details.'
+          externalDocs:
+            url: https://metal.equinix.com/developers/docs/operating-systems/custom-ipxe/
+          type: string
+        locked:
+          default: false
+          description: Whether the device should be locked, preventing accidental deletion.
+          type: boolean
+        network_frozen:
+          description: If true, this instance can not be converted to a different network type.
+          type: boolean
+        no_ssh_keys:
+          default: false
+          description: Overrides default behaviour of attaching all of the organization members ssh keys and project ssh keys to device if no specific keys specified
+          type: boolean
+        operating_system:
+          description: The slug of the operating system to provision. Check the Equinix Metal operating system documentation for rules that may be imposed per operating system, including restrictions on IP address options and device plans.
+          type: string
+        plan:
+          description: The slug of the device plan to provision.
+          example: c3.large.x86
+          type: string
+        private_ipv4_subnet_size:
+          default: 28
+          description: Deprecated. Use ip_addresses. Subnet range for addresses allocated to this device.
+          format: int32
+          type: integer
+          x-deprecated: true
+        project_ssh_keys:
+          description: 'A list of UUIDs identifying the device parent project
+
+            that should be authorized to access this device (typically
+
+            via /root/.ssh/authorized_keys). These keys will also appear in the device metadata.
+
+
+            If no SSH keys are specified (`user_ssh_keys`, `project_ssh_keys`, and `ssh_keys` are all empty lists or omitted),
+
+            all parent project keys, parent project members keys and organization members keys will be included. This behaviour can
+
+            be changed with ''no_ssh_keys'' option to omit any SSH key being added.
+
+            '
+          items:
+            format: uuid
+            type: string
+          type: array
+        public_ipv4_subnet_size:
+          default: 31
+          description: Deprecated. Use ip_addresses. Subnet range for addresses allocated to this device. Your project must have addresses available for a non-default request.
+          format: int32
+          type: integer
+          x-deprecated: true
+        spot_instance:
+          description: Create a spot instance. Spot instances are created with a maximum bid price. If the bid price is not met, the spot instance will be terminated as indicated by the `termination_time` field.
+          type: boolean
+        spot_price_max:
+          description: The maximum amount to bid for a spot instance.
+          example: 1.23
+          format: float
+          type: number
+        ssh_keys:
+          description: "A list of new or existing project ssh_keys\nthat should be authorized to access this device (typically\nvia /root/.ssh/authorized_keys). These keys will also\nappear in the device metadata.\n\nThese keys are added in addition to any keys defined by\n  `project_ssh_keys` and `user_ssh_keys`.\n"
+          items:
+            $ref: '#/components/schemas/SSHKeyInput'
+          type: array
+        storage:
+          $ref: '#/components/schemas/Storage'
+        tags:
+          items:
+            type: string
+          type: array
+        termination_time:
+          description: 'When the device will be terminated. If you don''t supply timezone info, the timestamp is assumed to be in UTC.
+
+
+            This is commonly set in advance for
+
+            ephemeral spot market instances but this field may also be set with
+
+            on-demand and reservation instances to automatically delete the resource
+
+            at a given time. The termination time can also be used to release a
+
+            hardware reservation instance at a given time, keeping the reservation
+
+            open for other uses.  On a spot market device, the termination time will
+
+            be set automatically when outbid.
+
+            '
+          example: 2021-09-03 16:32:00+03:00
+          format: date-time
+          type: string
+        user_ssh_keys:
+          description: 'A list of UUIDs identifying the users
+
+            that should be authorized to access this device (typically
+
+            via /root/.ssh/authorized_keys).  These keys will also
+
+            appear in the device metadata.
+
+
+            The users must be members of the project or organization.
+
+
+            If no SSH keys are specified (`user_ssh_keys`, `project_ssh_keys`, and `ssh_keys` are all empty lists or omitted),
+
+            all parent project keys, parent project members keys and organization members keys will be included. This behaviour can
+
+            be changed with ''no_ssh_keys'' option to omit any SSH key being added.
+
+            '
+          items:
+            format: uuid
+            type: string
+          type: array
+        userdata:
+          description: 'The userdata presented in the metadata service for this device.  Userdata is fetched and interpreted by the operating system installed on the device. Acceptable formats are determined by the operating system, with the exception of a special iPXE enabling syntax which is handled before the operating system starts.
+
+
+            See [Server User Data](https://metal.equinix.com/developers/docs/servers/user-data/) and [Provisioning with Custom iPXE](https://metal.equinix.com/developers/docs/operating-systems/custom-ipxe/#provisioning-with-custom-ipxe) for more details.'
+          externalDocs:
+            url: https://metal.equinix.com/developers/docs/servers/user-data/
+          type: string
+      required:
+      - operating_system
+      - plan
+      type: object
+    Plan_specs_nics_inner:
+      example:
+        count: 2
+        type: type
+      properties:
+        count:
+          example: 2
+          type: integer
+        type:
+          type: string
+      type: object
+    DeviceCreateInMetroInput:
+      allOf:
+      - $ref: '#/components/schemas/MetroInput'
+      - $ref: '#/components/schemas/DeviceCreateInput'
+    Plan_specs_cpus_inner:
+      example:
+        count: 6
+        type: type
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+      type: object
+    IPAssignment:
+      example:
+        address: address
+        parent_block:
+          netmask: netmask
+          cidr: 2
+          href: href
+          network: network
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        enabled: true
+        manageable: true
+        network: network
+        address_family: 5
+        public: true
+        management: true
+        netmask: netmask
+        metro: null
+        next_hop: next_hop
+        cidr: 5
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+        global_ip: true
+        gateway: gateway
+        assigned_to:
+          href: href
+      properties:
+        address:
+          type: string
+        address_family:
+          type: integer
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        cidr:
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        enabled:
+          type: boolean
+        gateway:
+          type: string
+        global_ip:
+          type: boolean
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        manageable:
+          type: boolean
+        management:
+          type: boolean
+        metro:
+          $ref: '#/components/schemas/IPAssignment_metro'
+        netmask:
+          type: string
+        network:
+          type: string
+        parent_block:
+          $ref: '#/components/schemas/ParentBlock'
+        public:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/IPAssignment_state'
+        next_hop:
+          description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+            The IP address within the Metal Gateway to which requests to the Elastic IP are forwarded.
+
+            '
+          format: ipv4
+          type: string
+        type:
+          $ref: '#/components/schemas/IPAssignment_type'
+      type: object
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
+      type: object
+    BgpSession:
+      example:
+        address_family: null
+        updated_at: 2000-01-23 04:56:07+00:00
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        default_route: true
+        device:
+          href: href
+        learned_routes:
+        - 10.32.16.0/31
+        - 10.32.16.0/31
+        status: status
+      properties:
+        address_family:
+          $ref: '#/components/schemas/BgpSession_address_family'
+        created_at:
+          format: date-time
+          type: string
+        default_route:
+          type: boolean
+        device:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        learned_routes:
+          items:
+            description: IPv4 or IPv6 range
+            example: 10.32.16.0/31
+            type: string
+          type: array
+        status:
+          description: ' The status of the BGP Session. Multiple status values may be reported when the device is connected to multiple switches, one value per switch. Each status will start with "unknown" and progress to "up" or "down" depending on the connected device. Subsequent "unknown" values indicate a problem acquiring status from the switch. '
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - address_family
+      type: object
+    IPAssignmentInput:
+      example:
+        address: address
+        customdata: '{}'
+      properties:
+        address:
+          type: string
+        customdata:
+          type: object
+      required:
+      - address
+      type: object
+    Meta:
+      example:
+        next:
+          href: href
+        total: 0
+        last:
+          href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
+      properties:
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    BgpSessionList:
+      example:
+        bgp_sessions:
+        - address_family: null
+          updated_at: 2000-01-23 04:56:07+00:00
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          default_route: true
+          device:
+            href: href
+          learned_routes:
+          - 10.32.16.0/31
+          - 10.32.16.0/31
+          status: status
+        - address_family: null
+          updated_at: 2000-01-23 04:56:07+00:00
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          default_route: true
+          device:
+            href: href
+          learned_routes:
+          - 10.32.16.0/31
+          - 10.32.16.0/31
+          status: status
+      properties:
+        bgp_sessions:
+          items:
+            $ref: '#/components/schemas/BgpSession'
+          type: array
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    IPAddress:
+      properties:
+        address_family:
+          $ref: '#/components/schemas/IPAddress_address_family'
+        cidr:
+          description: Cidr Size for the IP Block created. Valid values depends on the operating system being provisioned. (28..32 for IPv4 addresses, 124..127 for IPv6 addresses)
+          example: 28
+          format: int32
+          type: integer
+        ip_reservations:
+          description: UUIDs of any IP reservations to use when assigning IPs
+          items:
+            type: string
+          type: array
+        public:
+          default: true
+          description: Address Type for IP Address
+          example: false
+          type: boolean
+      type: object
+    Plan_available_in_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Facility
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    Event:
+      example:
+        interpolated: interpolated
+        relationships:
+        - href: href
+        - href: href
+        ip: ip
+        modified_by: '{}'
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        body: body
+        type: type
+      properties:
+        body:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        interpolated:
+          type: string
+        relationships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        state:
+          type: string
+        type:
+          type: string
+        modified_by:
+          type: object
+        ip:
+          type: string
+      type: object
+    Device_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the facility is in
+        type: object
+    DeviceUpdateInput:
+      example:
+        userdata: userdata
+        hostname: hostname
+        spot_instance: true
+        network_frozen: true
+        description: description
+        firmware_set_id: firmware_set_id
+        always_pxe: true
+        billing_cycle: billing_cycle
+        customdata:
+          key: ''
+        ipxe_script_url: ipxe_script_url
+        locked: true
+        tags:
+        - tags
+        - tags
+      properties:
+        always_pxe:
+          type: boolean
+        billing_cycle:
+          type: string
+        customdata:
+          additionalProperties: true
+          default: {}
+          type: object
+        description:
+          type: string
+        hostname:
+          type: string
+        firmware_set_id:
+          type: string
+        ipxe_script_url:
+          type: string
+        locked:
+          description: Whether the device should be locked, preventing accidental deletion.
+          type: boolean
+        network_frozen:
+          description: If true, this instance can not be converted to a different network type.
+          type: boolean
+        spot_instance:
+          description: Can be set to false to convert a spot-market instance to on-demand.
+          externalDocs:
+            url: https://metal.equinix.com/developers/docs/deploy/spot-market/#converting-a-spot-market-server-to-on-demand
+          type: boolean
+        tags:
+          items:
+            type: string
+          type: array
+        userdata:
+          type: string
+      type: object
+    Port_network_type:
+      description: Composite network type of the bond
+      enum:
+      - layer2-bonded
+      - layer2-individual
+      - layer3
+      - hybrid
+      - hybrid-bonded
+      type: string
+    BgpRoute:
+      properties:
+        exact:
+          type: boolean
+        route:
+          example: 10.32.16.0/31
+          type: string
+      type: object
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
+    FacilityInput:
+      properties:
+        facility:
+          deprecated: true
+          description: 'The datacenter where the device should be created.
+
+
+            Either metro or facility must be provided.
+
+
+            The API will accept either a single facility `{ "facility": "f1" }`, or it can be instructed to create the device in the best available datacenter `{ "facility": "any" }`.
+
+
+            Additionally it is possible to set a prioritized location selection. For example `{ "facility": ["f3", "f2", "any"] }` can be used to prioritize `f3` and then `f2` before accepting `any` facility. If none of the facilities provided have availability for the requested device the request will fail.'
+          example:
+          - sv15
+          items:
+            type: string
+          type: array
+      required:
+      - facility
+      type: object
+    Device:
+      example:
+        ip_addresses:
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
+        iqn: iqn
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        project:
+          devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        switch_uuid: switch_uuid
+        storage:
+          disks:
+          - partitions:
+            - number: 3
+              size: size
+              label: label
+            - number: 3
+              size: size
+              label: label
+            wipeTable: true
+            device: device
+          - partitions:
+            - number: 3
+              size: size
+              label: label
+            - number: 3
+              size: size
+              label: label
+            wipeTable: true
+            device: device
+          filesystems:
+          - mount:
+              format: format
+              options:
+              - options
+              - options
+              device: device
+              point: point
+          - mount:
+              format: format
+              options:
+              - options
+              - options
+              device: device
+              point: point
+          raid:
+          - devices:
+            - devices
+            - devices
+            level: level
+            name: name
+          - devices:
+            - devices
+            - devices
+            level: level
+            name: name
+        bonding_mode: 0
+        provisioning_events:
+        - interpolated: interpolated
+          relationships:
+          - href: href
+          - href: href
+          ip: ip
+          modified_by: '{}'
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          body: body
+          type: type
+        - interpolated: interpolated
+          relationships:
+          - href: href
+          - href: href
+          ip: ip
+          modified_by: '{}'
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          body: body
+          type: type
+        network_ports:
+        - native_virtual_network:
+            vxlan: 4
+            instances:
+            - href: href
+            - href: href
+            description: description
+            created_at: 2000-01-23 04:56:07+00:00
+            assigned_to_virtual_circuit: true
+            tags:
+            - tags
+            - tags
+            metal_gateways:
+            - gateway_address: 10.1.2.1/27
+              updated_at: 2000-01-23 04:56:07+00:00
+              vlan: 1001
+              created_at: 2000-01-23 04:56:07+00:00
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              state: null
+            - gateway_address: 10.1.2.1/27
+              updated_at: 2000-01-23 04:56:07+00:00
+              vlan: 1001
+              created_at: 2000-01-23 04:56:07+00:00
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              state: null
+            metro_code: metro_code
+            metro:
+              href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            facility:
+              href: href
+            assigned_to:
+              href: href
+          disbond_operation_supported: true
+          data:
+            bonded: true
+            mac: mac
+          name: bond0
+          virtual_networks:
+          - href: href
+          - href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          type: null
+          network_type: null
+          bond:
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - native_virtual_network:
+            vxlan: 4
+            instances:
+            - href: href
+            - href: href
+            description: description
+            created_at: 2000-01-23 04:56:07+00:00
+            assigned_to_virtual_circuit: true
+            tags:
+            - tags
+            - tags
+            metal_gateways:
+            - gateway_address: 10.1.2.1/27
+              updated_at: 2000-01-23 04:56:07+00:00
+              vlan: 1001
+              created_at: 2000-01-23 04:56:07+00:00
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              state: null
+            - gateway_address: 10.1.2.1/27
+              updated_at: 2000-01-23 04:56:07+00:00
+              vlan: 1001
+              created_at: 2000-01-23 04:56:07+00:00
+              href: href
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              state: null
+            metro_code: metro_code
+            metro:
+              href: href
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            facility:
+              href: href
+            assigned_to:
+              href: href
+          disbond_operation_supported: true
+          data:
+            bonded: true
+            mac: mac
+          name: bond0
+          virtual_networks:
+          - href: href
+          - href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          type: null
+          network_type: null
+          bond:
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        userdata: userdata
+        hostname: hostname
+        updated_at: 2000-01-23 04:56:07+00:00
+        sos: sos
+        operating_system:
+          default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+        firmware_set_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        billing_cycle: billing_cycle
+        customdata:
+          key: ''
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+        locked: true
+        spot_price_max: 9.301444
+        plan:
+          legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+        provisioning_percentage: 7.0614014
+        network_frozen: true
+        image_url: image_url
+        root_password: root_password
+        volumes:
+        - href: href
+        - href: href
+        project_lite: null
+        short_id: short_id
+        termination_time: 2021-09-03 16:32:00+03:00
+        created_by: null
+        tags:
+        - tags
+        - tags
+        hardware_reservation:
+          custom_rate: 1050.5
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            devices:
+            - href: href
+            - href: href
+            volumes:
+            - href: href
+            - href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            memberships:
+            - href: href
+            - href: href
+            bgp_config:
+              href: href
+            tags:
+            - tags
+            - tags
+            max_devices: '{}'
+            ssh_keys:
+            - href: href
+            - href: href
+            updated_at: 2000-01-23 04:56:07+00:00
+            invitations:
+            - href: href
+            - href: href
+            members:
+            - href: href
+            - href: href
+            organization:
+              website: website
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              projects:
+              - href: href
+              - href: href
+              credit_amount: 1.4658129
+              created_at: 2000-01-23 04:56:07+00:00
+              description: description
+              billing_address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              memberships:
+              - href: href
+              - href: href
+              enforce_2fa_at: 2000-01-23 04:56:07+00:00
+              twitter: twitter
+              updated_at: 2000-01-23 04:56:07+00:00
+              terms: 5
+              members:
+              - href: href
+              - href: href
+              name: name
+              logo: logo
+              customdata: '{}'
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            name: name
+            network_status: '{}'
+            customdata: '{}'
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            payment_method:
+              href: href
+          switch_uuid: switch_uuid
+          short_id: short_id
+          termination_time: 2000-01-23 04:56:07+00:00
+          provisionable: true
+          need_of_service: true
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          device: null
+          facility:
+            features:
+            - baremetal
+            - backend_transfer
+            - global_ipv4
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            code: code
+            ip_ranges:
+            - 2604:1380::/36
+            - 147.75.192.0/21
+            metro: null
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          plan:
+            legacy: true
+            line: line
+            available_in_metros:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            description: description
+            available_in:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            type: null
+            specs:
+              features:
+                txt: true
+                uefi: true
+                raid: true
+              memory:
+                total: total
+              cpus:
+              - count: 6
+                type: type
+              - count: 6
+                type: type
+              drives:
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              nics:
+              - count: 2
+                type: type
+              - count: 2
+                type: type
+            deployment_types:
+            - null
+            - null
+            name: name
+            categories:
+            - categories
+            - categories
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class: m3.large.x86
+            pricing: '{}'
+            slug: m3.large.x86
+          spare: true
+        spot_instance: true
+        ssh_keys:
+        - href: href
+        - href: href
+        metro: null
+        always_pxe: true
+        ipxe_script_url: ipxe_script_url
+        facility:
+          features:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          code: code
+          ip_ranges:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          metro: null
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        actions:
+        - name: name
+          type: type
+        - name: name
+          type: type
+        user: user
+      properties:
+        always_pxe:
+          type: boolean
+        billing_cycle:
+          type: string
+        bonding_mode:
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/Device_created_by'
+        customdata:
+          additionalProperties: true
+          default: {}
+          type: object
+        description:
+          type: string
+        facility:
+          $ref: '#/components/schemas/Facility'
+        firmware_set_id:
+          description: The UUID of the firmware set to associate with the device.
+          format: uuid
+          type: string
+        hardware_reservation:
+          $ref: '#/components/schemas/HardwareReservation'
+        hostname:
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        image_url:
+          type: string
+        ip_addresses:
+          items:
+            $ref: '#/components/schemas/IPAssignment'
+          type: array
+        ipxe_script_url:
+          type: string
+        iqn:
+          type: string
+        locked:
+          description: Prevents accidental deletion of this resource when set to true.
+          type: boolean
+        metro:
+          $ref: '#/components/schemas/Device_metro'
+        network_frozen:
+          description: Whether network mode changes such as converting to/from Layer2 or Layer3 networking, bonding or disbonding network interfaces are permitted for the device.
+          type: boolean
+        network_ports:
+          description: By default, servers at Equinix Metal are configured in a “bonded” mode using LACP (Link Aggregation Control Protocol). Each 2-NIC server is configured with a single bond (namely bond0) with both interfaces eth0 and eth1 as members of the bond in a default Layer 3 mode. Some device plans may have a different number of ports and bonds available.
+          items:
+            $ref: '#/components/schemas/Port'
+          type: array
+        operating_system:
+          $ref: '#/components/schemas/OperatingSystem'
+        actions:
+          description: Actions supported by the device instance.
+          items:
+            $ref: '#/components/schemas/Device_actions_inner'
+          type: array
+        plan:
+          $ref: '#/components/schemas/Plan'
+        project:
+          $ref: '#/components/schemas/Project'
+        project_lite:
+          $ref: '#/components/schemas/Device_project_lite'
+        provisioning_events:
+          items:
+            $ref: '#/components/schemas/Event'
+          type: array
+        provisioning_percentage:
+          description: Only visible while device provisioning
+          format: float
+          type: number
+        root_password:
+          description: Root password is automatically generated when server is provisioned and it is removed after 24 hours
+          type: string
+        short_id:
+          type: string
+        spot_instance:
+          description: Whether or not the device is a spot instance.
+          type: boolean
+        spot_price_max:
+          description: 'The maximum price per hour you are willing to pay to keep this spot
+
+            instance.  If you are outbid, the termination will be set allowing two
+
+            minutes before shutdown.'
+          format: float
+          type: number
+        ssh_keys:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        state:
+          $ref: '#/components/schemas/Device_state'
+        storage:
+          $ref: '#/components/schemas/Storage'
+        switch_uuid:
+          description: 'Switch short id. This can be used to determine if two devices are
+
+            connected to the same switch, for example.'
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        termination_time:
+          description: 'When the device will be terminated. If you don''t supply timezone info, the timestamp is assumed to be in UTC.
+
+
+            This is commonly set in advance for
+
+            ephemeral spot market instances but this field may also be set with
+
+            on-demand and reservation instances to automatically delete the resource
+
+            at a given time. The termination time can also be used to release a
+
+            hardware reservation instance at a given time, keeping the reservation
+
+            open for other uses.  On a spot market device, the termination time will
+
+            be set automatically when outbid.'
+          example: 2021-09-03 16:32:00+03:00
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        user:
+          type: string
+        userdata:
+          type: string
+        volumes:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        sos:
+          description: Hostname used to connect to the instance via the SOS (Serial over SSH) out-of-band console.
+          type: string
+      type: object
+    Attribute:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        data:
+          vendor: vendor
+          model: model
+          plan: plan
+          latest: true
+        namespace: namespace
+        created_at: 2000-01-23 04:56:07+00:00
+      properties:
+        namespace:
+          description: Attribute namespace
+          readOnly: true
+          type: string
+        created_at:
+          description: Datetime when the block was created.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Datetime when the block was updated.
+          format: date-time
+          readOnly: true
+          type: string
+        data:
+          $ref: '#/components/schemas/AttributeData'
+      type: object
+    AttributeData:
+      example:
+        vendor: vendor
+        model: model
+        plan: plan
+        latest: true
+      properties:
+        latest:
+          description: Boolean flag to know if the firmware set is the latest for the model and vendor
+          readOnly: true
+          type: boolean
+        model:
+          description: Model on which this firmware set can be applied
+          readOnly: true
+          type: string
+        vendor:
+          description: Vendor on which this firmware set can be applied
+          readOnly: true
+          type: string
+        plan:
+          description: Plan where the firmware set can be applied
+          readOnly: true
+          type: string
+      type: object
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    Plan_specs_memory:
+      example:
+        total: total
+      properties:
+        total:
+          type: string
+      type: object
+    Plan_specs_features:
+      example:
+        txt: true
+        uefi: true
+        raid: true
+      properties:
+        raid:
+          type: boolean
+        txt:
+          type: boolean
+        uefi:
+          type: boolean
+      type: object
+    findTraffic_direction_parameter:
+      enum:
+      - inbound
+      - outbound
+      type: string
+    Device_project_lite:
+      allOf:
+      - $ref: '#/components/schemas/Href'
+      - description: Lite version of project object when included
+        type: object
+    BGPSessionInput:
+      example:
+        address_family: ipv4
+        default_route: false
+      properties:
+        address_family:
+          $ref: '#/components/schemas/BGPSessionInput_address_family'
+        default_route:
+          default: false
+          description: Set the default route policy.
+          type: boolean
+      type: object
+    Facility:
+      example:
+        features:
+        - baremetal
+        - backend_transfer
+        - global_ipv4
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        code: code
+        ip_ranges:
+        - 2604:1380::/36
+        - 147.75.192.0/21
+        metro: null
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        code:
+          type: string
+        features:
+          example:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          items:
+            $ref: '#/components/schemas/Facility_features_inner'
+          type: array
+        id:
+          format: uuid
+          type: string
+        ip_ranges:
+          description: IP ranges registered in facility. Can be used for GeoIP location
+          example:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          items:
+            type: string
+          type: array
+        metro:
+          $ref: '#/components/schemas/Device_metro'
+        name:
+          type: string
+      type: object
+    Filesystem:
+      example:
+        mount:
+          format: format
+          options:
+          - options
+          - options
+          device: device
+          point: point
+      properties:
+        mount:
+          $ref: '#/components/schemas/Mount'
+      type: object
+    IPAssignment_type:
+      enum:
+      - IPAssignment
+      type: string
+    BgpSession_address_family:
+      enum:
+      - ipv4
+      - ipv6
+      type: string
+    Metadata_network_network_bonding:
+      example:
+        link_aggregation: link_aggregation
+        mode: 0
+        mac: mac
+      properties:
+        link_aggregation:
+          type: string
+        mac:
+          type: string
+        mode:
+          type: integer
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    Metadata_network_network:
+      example:
+        bonding:
+          link_aggregation: link_aggregation
+          mode: 0
+          mac: mac
+      properties:
+        bonding:
+          $ref: '#/components/schemas/Metadata_network_network_bonding'
+      type: object
+    Organization:
+      example:
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        projects:
+        - href: href
+        - href: href
+        credit_amount: 1.4658129
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        memberships:
+        - href: href
+        - href: href
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        twitter: twitter
+        updated_at: 2000-01-23 04:56:07+00:00
+        terms: 5
+        members:
+        - href: href
+        - href: href
+        name: name
+        logo: logo
+        customdata: '{}'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        logo:
+          type: string
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        terms:
+          type: integer
+        twitter:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        website:
+          type: string
+      type: object
+    Raid:
+      example:
+        devices:
+        - devices
+        - devices
+        level: level
+        name: name
+      properties:
+        devices:
+          items:
+            type: string
+          type: array
+        level:
+          type: string
+        name:
+          type: string
+      type: object
+    DeviceHealthRollup:
+      description: Represents a Device Health Status
+      example:
+        health_rollup: null
+        updated_at: 2000-01-23 04:56:07+00:00
+      properties:
+        health_rollup:
+          $ref: '#/components/schemas/DeviceHealthRollup_health_rollup'
+        updated_at:
+          description: Last update of health status.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    createDevice_request:
+      oneOf:
+      - $ref: '#/components/schemas/DeviceCreateInMetroInput'
+      - $ref: '#/components/schemas/DeviceCreateInFacilityInput'
+    findTraffic_bucket_parameter:
+      enum:
+      - internal
+      - external
+      type: string
+    Device_state:
+      description: "The current state the instance is in.\n\n* When an instance is initially created it will be in the `queued` state until it is picked up by the provisioner.\n* Once provisioning has begun on the instance it's state will move to `provisioning`.\n* When an instance is deleted, it will move to `deprovisioning` state until the deprovision is completed and the instance state moves to `deleted`.\n* If an instance fails to provision or deprovision it will move to `failed` state.\n* Once an instance has completed provisioning it will move to `active` state.\n* If an instance is currently powering off or powering on it will move to `powering_off` or `powering_on` states respectively. \n* When the instance is powered off completely it will move to the `inactive` state.\n* When an instance is powered on completely it will move to the `active` state.\n* Using the reinstall action to install a new OS on the instance will cause the instance state to change to `reinstalling`.\n* When the reinstall action is complete the instance will move to `active` state."
+      enum:
+      - queued
+      - provisioning
+      - deprovisioning
+      - reinstalling
+      - active
+      - inactive
+      - failed
+      - powering_on
+      - powering_off
+      - deleted
+      type: string
+    DeviceCreateInput_billing_cycle:
+      description: The billing cycle of the device.
+      enum:
+      - hourly
+      - daily
+      - monthly
+      - yearly
+      type: string
+    MetalGateway_state:
+      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
+      enum:
+      - ready
+      - active
+      - deleting
+      type: string
+    MetroInput:
+      properties:
+        metro:
+          description: 'Metro code or ID of where the instance should be provisioned in.
+
+            Either metro or facility must be provided.'
+          example: sv
+          type: string
+      required:
+      - metro
+      type: object
+    ParentBlock:
+      example:
+        netmask: netmask
+        cidr: 2
+        href: href
+        network: network
+      properties:
+        cidr:
+          type: integer
+        href:
+          type: string
+        netmask:
+          type: string
+        network:
+          type: string
+      type: object
+    BGPSessionInput_address_family:
+      description: Address family for BGP session.
+      enum:
+      - ipv4
+      - ipv6
+      example: ipv4
+      type: string
+    Plan_type:
+      description: The plan type
+      enum:
+      - standard
+      - workload_optimized
+      - custom
+      type: string
+    Port_type:
+      description: Type is either "NetworkBondPort" for bond ports or "NetworkPort" for bondable ethernet ports
+      enum:
+      - NetworkPort
+      - NetworkBondPort
+      type: string
+    Disk:
+      example:
+        partitions:
+        - number: 3
+          size: size
+          label: label
+        - number: 3
+          size: size
+          label: label
+        wipeTable: true
+        device: device
+      properties:
+        device:
+          type: string
+        wipeTable:
+          type: boolean
+        partitions:
+          items:
+            $ref: '#/components/schemas/Partition'
+          type: array
+      type: object
+    OperatingSystem:
+      example:
+        default_operating_system: true
+        distro: distro
+        preinstallable: true
+        licensed: true
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        provisionable_on:
+        - provisionable_on
+        - provisionable_on
+        version: version
+        pricing: '{}'
+        slug: slug
+        distro_label: distro_label
+      properties:
+        distro:
+          type: string
+        distro_label:
+          type: string
+        id:
+          format: uuid
+          type: string
+        licensed:
+          description: Licenced OS is priced according to pricing property
+          type: boolean
+        name:
+          type: string
+        preinstallable:
+          description: Servers can be already preinstalled with OS in order to shorten provision time.
+          type: boolean
+        pricing:
+          description: This object contains price per time unit and optional multiplier value if licence price depends on hardware plan or components (e.g. number of cores)
+          type: object
+        provisionable_on:
+          items:
+            type: string
+          type: array
+        slug:
+          type: string
+        version:
+          type: string
+        default_operating_system:
+          description: Default operating system for the distro.
+          readOnly: true
+          type: boolean
+      type: object
+    Userdata:
+      example:
+        userdata: userdata
+      properties:
+        userdata:
+          type: string
+      type: object
+    Metadata:
+      example:
+        switch_short_id: switch_short_id
+        iqn: iqn
+        volumes:
+        - volumes
+        - volumes
+        network:
+          addresses:
+          - addresses
+          - addresses
+          interfaces:
+          - '{}'
+          - '{}'
+          network:
+            bonding:
+              link_aggregation: link_aggregation
+              mode: 0
+              mac: mac
+        tags:
+        - tags
+        - tags
+        specs: '{}'
+        hostname: hostname
+        ssh_keys:
+        - ssh_keys
+        - ssh_keys
+        reserved: true
+        metro: metro
+        private_subnets:
+        - private_subnets
+        - private_subnets
+        operating_system: '{}'
+        customdata:
+          key: ''
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+        class: class
+        facility: facility
+        plan: plan
+      properties:
+        class:
+          type: string
+        customdata:
+          additionalProperties: true
+          default: {}
+          type: object
+        facility:
+          description: The facility code of the instance
+          type: string
+        hostname:
+          type: string
+        id:
+          format: uuid
+          type: string
+        iqn:
+          type: string
+        metro:
+          description: The metro code of the instance
+          type: string
+        network:
+          $ref: '#/components/schemas/Metadata_network'
+        operating_system:
+          type: object
+        plan:
+          description: The plan slug of the instance
+          type: string
+        private_subnets:
+          description: An array of the private subnets
+          items:
+            type: string
+          type: array
+        reserved:
+          type: boolean
+        specs:
+          description: The specs of the plan version of the instance
+          type: object
+        ssh_keys:
+          items:
+            type: string
+          type: array
+        switch_short_id:
+          type: string
+        state:
+          $ref: '#/components/schemas/Device_state'
+        tags:
+          items:
+            type: string
+          type: array
+        volumes:
+          items:
+            type: string
+          type: array
+      type: object
+    BgpNeighborData:
+      example:
+        md5_password: md5_password
+        customer_as: 65000
+        address_family: 4
+        routes_in:
+        - exact: true
+          route: 10.32.16.0/31
+        customer_ip: 10.32.16.1 (IPv4) or 2604:1380:4111:2700::1 (IPv6)
+        multihop: true
+        peer_as: 65530
+        md5_enabled: true
+        peer_ips:
+        - 169.254.255.1
+        - 169.254.255.2
+        routes_out:
+        - exact: true
+          route: 0.0.0.0/0
+      properties:
+        address_family:
+          description: Address Family for IP Address. Accepted values are 4 or 6
+          example: 4
+          format: int32
+          type: integer
+        customer_as:
+          description: The customer's ASN. In a local BGP deployment, this will be an internal ASN used to route within the data center. For a global BGP deployment, this will be the your own ASN, configured when you set up BGP for your project.
+          example: 65000
+          format: int32
+          type: integer
+        customer_ip:
+          description: The device's IP address. For an IPv4 BGP session, this is typically the private bond0 address for the device.
+          example: 10.32.16.1 (IPv4) or 2604:1380:4111:2700::1 (IPv6)
+          type: string
+        md5_enabled:
+          description: True if an MD5 password is configured for the project.
+          type: boolean
+        md5_password:
+          description: The MD5 password configured for the project, if set.
+          type: string
+        multihop:
+          description: True when the BGP session should be configured as multihop.
+          type: boolean
+        peer_as:
+          description: The Peer ASN to use when configuring BGP on your device.
+          example: 65530
+          format: int32
+          type: integer
+        peer_ips:
+          description: A list of one or more IP addresses to use for the Peer IP section of your BGP configuration. For non-multihop sessions, this will typically be a single gateway address for the device. For multihop sessions, it will be a list of IPs.
+          example:
+          - 169.254.255.1
+          - 169.254.255.2
+          items:
+            type: string
+          type: array
+        routes_in:
+          description: A list of project subnets
+          example:
+          - exact: true
+            route: 10.32.16.0/31
+          items:
+            $ref: '#/components/schemas/BgpRoute'
+          type: array
+        routes_out:
+          description: A list of outgoing routes. Only populated if the BGP session has default route enabled.
+          example:
+          - exact: true
+            route: 0.0.0.0/0
+          items:
+            $ref: '#/components/schemas/BgpRoute'
+          type: array
+      type: object
+    IPAssignmentList:
+      example:
+        ip_addresses:
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
+      properties:
+        ip_addresses:
+          items:
+            $ref: '#/components/schemas/IPAssignment'
+          type: array
+      type: object
+    DeviceActionInput:
+      example:
+        preserve_data: true
+        force_delete: true
+        operating_system: ubuntu_22_04
+        ipxe_script_url: ipxe_script_url
+        type: null
+        deprovision_fast: true
+      properties:
+        type:
+          $ref: '#/components/schemas/DeviceActionInput_type'
+        force_delete:
+          description: May be required to perform actions under certain conditions
+          type: boolean
+        deprovision_fast:
+          description: When type is `reinstall`, enabling fast deprovisioning will bypass full disk wiping.
+          type: boolean
+        preserve_data:
+          description: When type is `reinstall`, preserve the existing data on all disks except the operating-system disk.
+          type: boolean
+        operating_system:
+          description: When type is `reinstall`, use this `operating_system` (defaults to the current `operating system`)
+          example: ubuntu_22_04
+          type: string
+        ipxe_script_url:
+          description: When type is `reinstall`, use this `ipxe_script_url` (`operating_system` must be `custom_ipxe`, defaults to the current `ipxe_script_url`)
+          type: string
+      required:
+      - type
+      type: object
+    Device_created_by:
+      allOf:
+      - $ref: '#/components/schemas/UserLite'
+      - description: The user that created the device.
+        type: object
+    Facility_features_inner:
+      enum:
+      - baremetal
+      - backend_transfer
+      - layer_2
+      - global_ipv4
+      - ibx
+      type: string
+    DeviceCreateInFacilityInput:
+      allOf:
+      - $ref: '#/components/schemas/FacilityInput'
+      - $ref: '#/components/schemas/DeviceCreateInput'
+    Plan_specs_drives_inner_category:
+      enum:
+      - boot
+      - cache
+      - storage
+      type: string
+  securitySchemes:
+    x_auth_token:
+      description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.
+
+        '
+      in: header
+      name: X-Auth-Token
+      type: apiKey
+      x-displayName: X-Auth-Token
+x-tagGroups:
+- name: Accounts and Organization
+  tags:
+  - Authentication
+  - Emails
+  - Invitations
+  - Memberships
+  - Organizations
+  - OTPs
+  - PasswordResetTokens
+  - PaymentMethods
+  - Projects
+  - SSHKeys
+  - SupportRequest
+  - TransferRequests
+  - TwoFactorAuth
+  - Users
+  - UserVerificationTokens
+- name: Services and Billing
+  tags:
+  - Events
+  - Facilities
+  - Incidents
+  - Invoices
+  - Licenses
+  - Metros
+  - Plans
+  - Usages
+- name: Servers
+  tags:
+  - Devices
+  - Batches
+  - Capacity
+  - HardwareReservations
+  - OperatingSystems
+  - Ports
+  - SelfServiceReservations
+  - SpotMarket
+  - Userdata
+  - Volumes
+- name: Networking
+  tags:
+  - BGP
+  - Interconnections
+  - IPAddresses
+  - MetalGateways
+  - VLANs
+  - VRFs

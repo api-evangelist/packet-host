@@ -1,0 +1,1294 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@equinixmetal.com
+    name: Equinix Metal API Team
+  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  license:
+    name: Equinix Metal
+    url: https://metal.equinix.com/legal/
+  termsOfService: https://metal.equinix.com/legal/
+  title: Metal Authentication SpotMarket API
+  version: 1.0.0
+servers:
+- url: https://api.equinix.com/metal/v1
+security:
+- x_auth_token: []
+tags:
+- description: 'Spot Market Pricing and Requests Management. Check out the product docs to learn more about [Spot Market features](https://metal.equinix.com/developers/docs/deploy/spot-market/).
+
+    '
+  externalDocs:
+    url: https://metal.equinix.com/developers/docs/deploy/spot-market/
+  name: SpotMarket
+paths:
+  /market/spot/prices:
+    get:
+      description: Get Equinix Metal current spot market prices.
+      operationId: findSpotMarketPrices
+      parameters:
+      - description: Facility to check spot market prices
+        in: query
+        name: facility
+        schema:
+          type: string
+      - description: Plan to check spot market prices
+        in: query
+        name: plan
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotMarketPricesList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Get current spot market prices
+      tags:
+      - SpotMarket
+  /market/spot/prices/history:
+    get:
+      description: 'Get spot market prices for a given plan and facility in a fixed period of time
+
+
+        *Note: In the `200` response, the property `datapoints` contains arrays of `[float, integer]`.*'
+      operationId: findSpotMarketPricesHistory
+      parameters:
+      - description: Facility to check spot market prices
+        in: query
+        name: facility
+        required: true
+        schema:
+          type: string
+      - description: Plan to check spot market prices
+        in: query
+        name: plan
+        required: true
+        schema:
+          type: string
+      - description: Metro to check spot market price history
+        in: query
+        name: metro
+        schema:
+          type: string
+      - description: Timestamp from range
+        in: query
+        name: from
+        required: true
+        schema:
+          type: string
+      - description: Timestamp to range
+        in: query
+        name: until
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotPricesHistoryReport'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Get spot market prices for a given period of time
+      tags:
+      - SpotMarket
+  /market/spot/prices/metros:
+    get:
+      description: Get Equinix Metal current spot market prices for all metros.
+      operationId: findMetroSpotMarketPrices
+      parameters:
+      - description: Metro to filter spot market prices
+        in: query
+        name: metro
+        schema:
+          type: string
+      - description: Plan to filter spot market prices
+        in: query
+        name: plan
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotMarketPricesPerMetroList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Get current spot market prices for metros
+      tags:
+      - SpotMarket
+  /projects/{id}/spot-market-requests:
+    get:
+      description: View all spot market requests for a given project.
+      operationId: listSpotMarketRequests
+      parameters:
+      - description: Project UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotMarketRequestList'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: List spot market requests
+      tags:
+      - SpotMarket
+    post:
+      description: 'Creates a new spot market request.
+
+
+        Type-specific options (such as operating_system for baremetal devices) should be included in the main data structure alongside hostname and plan.
+
+
+        The features attribute allows you to optionally specify what features your server should have. For example, if you require a server with a TPM chip, you may specify `{ "features": { "tpm": "required" } }` (or `{ "features": ["tpm"] }` in shorthand).
+
+
+        The request will fail if there are no available servers matching your criteria. Alternatively, if you do not require a certain feature, but would prefer to be assigned a server with that feature if there are any available, you may specify that feature with a preferred value (see the example request below).
+
+
+        The request will not fail if we have no servers with that feature in our inventory.'
+      operationId: createSpotMarketRequest
+      parameters:
+      - description: Project UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotMarketRequestCreateInput'
+        description: Spot Market Request to create
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotMarketRequest'
+          description: created
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unprocessable entity
+      summary: Create a spot market request
+      tags:
+      - SpotMarket
+  /spot-market-requests/{id}:
+    delete:
+      description: Deletes the spot market request.
+      operationId: deleteSpotMarketRequest
+      parameters:
+      - description: SpotMarketRequest UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: Terminate associated spot instances
+        in: query
+        name: force_termination
+        schema:
+          type: boolean
+      responses:
+        '204':
+          description: no content
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Delete the spot market request
+      tags:
+      - SpotMarket
+    get:
+      description: Returns a single spot market request
+      operationId: findSpotMarketRequestById
+      parameters:
+      - description: SpotMarketRequest UUID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - description: 'Nested attributes to include. Included objects will return their full
+
+          attributes. Attribute names can be dotted (up to 3 levels) to included deeply
+
+          nested objects.'
+        explode: false
+        in: query
+        name: include
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotMarketRequest'
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Retrieve a spot market request
+      tags:
+      - SpotMarket
+components:
+  schemas:
+    SpotPricesHistoryReport:
+      example:
+        prices_history:
+          datapoints:
+          - null
+          - null
+      properties:
+        prices_history:
+          $ref: '#/components/schemas/SpotPricesDatapoints'
+      type: object
+    SpotMarketRequest:
+      example:
+        end_at: 2000-01-23 04:56:07+00:00
+        instances:
+          href: href
+        metro: null
+        created_at: 2000-01-23 04:56:07+00:00
+        devices_min: 6
+        project:
+          href: href
+        devices_max: 0
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        max_bid_price: 1.4658129
+        facilities:
+          href: href
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        devices_max:
+          type: integer
+        devices_min:
+          type: integer
+        end_at:
+          format: date-time
+          type: string
+        facilities:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        instances:
+          $ref: '#/components/schemas/Href'
+        max_bid_price:
+          format: float
+          type: number
+        metro:
+          $ref: '#/components/schemas/SpotMarketRequest_metro'
+        project:
+          $ref: '#/components/schemas/Href'
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    SpotMarketRequestList:
+      example:
+        spot_market_requests:
+        - end_at: 2000-01-23 04:56:07+00:00
+          instances:
+            href: href
+          metro: null
+          created_at: 2000-01-23 04:56:07+00:00
+          devices_min: 6
+          project:
+            href: href
+          devices_max: 0
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          max_bid_price: 1.4658129
+          facilities:
+            href: href
+        - end_at: 2000-01-23 04:56:07+00:00
+          instances:
+            href: href
+          metro: null
+          created_at: 2000-01-23 04:56:07+00:00
+          devices_min: 6
+          project:
+            href: href
+          devices_max: 0
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          max_bid_price: 1.4658129
+          facilities:
+            href: href
+      properties:
+        spot_market_requests:
+          items:
+            $ref: '#/components/schemas/SpotMarketRequest'
+          type: array
+      type: object
+    SpotPricesDatapoints:
+      example:
+        datapoints:
+        - null
+        - null
+      properties:
+        datapoints:
+          items:
+            $ref: '#/components/schemas/SpotPricesDatapointsList'
+          type: array
+      type: object
+    SpotPricesPerBaremetal:
+      example:
+        price: 0.8008282
+      properties:
+        price:
+          format: float
+          type: number
+      type: object
+    SpotMarketPricesPerMetroReport:
+      example:
+        sv:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        sg:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        ch:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        la:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        ny:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        am:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        da:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+      properties:
+        am:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        ch:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        da:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        la:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        ny:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        sg:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        sv:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+      type: object
+    SpotMarketRequest_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the spot market request was created in
+        type: object
+    SpotPricesReport:
+      example:
+        ord1:
+          baremetal_1e:
+            price: 0.8008282
+        syd1:
+          baremetal_1e:
+            price: 0.8008282
+        ams1:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        fra1:
+          baremetal_1e:
+            price: 0.8008282
+        sin1:
+          baremetal_1e:
+            price: 0.8008282
+        yyz1:
+          baremetal_1e:
+            price: 0.8008282
+        sjc1:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        nrt1:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+        dfw1:
+          baremetal_1e:
+            price: 0.8008282
+        iad1:
+          baremetal_1e:
+            price: 0.8008282
+        atl1:
+          baremetal_1e:
+            price: 0.8008282
+        sea1:
+          baremetal_1e:
+            price: 0.8008282
+        lax1:
+          baremetal_1e:
+            price: 0.8008282
+        ewr1:
+          c2.medium.x86:
+            price: 0.8008282
+          baremetal_2a2:
+            price: 0.8008282
+          m2.xlarge.x86:
+            price: 0.8008282
+          baremetal_1:
+            price: 0.8008282
+          baremetal_0:
+            price: 0.8008282
+          baremetal_2a:
+            price: 0.8008282
+          baremetal_3:
+            price: 0.8008282
+          baremetal_s:
+            price: 0.8008282
+          baremetal_2:
+            price: 0.8008282
+      properties:
+        ams1:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        atl1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        dfw1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        ewr1:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        fra1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        iad1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        lax1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        nrt1:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        ord1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        sea1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        sin1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        sjc1:
+          $ref: '#/components/schemas/SpotPricesPerFacility'
+        syd1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+        yyz1:
+          $ref: '#/components/schemas/SpotPricesPerNewFacility'
+      type: object
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    SpotPricesPerFacility:
+      example:
+        c2.medium.x86:
+          price: 0.8008282
+        baremetal_2a2:
+          price: 0.8008282
+        m2.xlarge.x86:
+          price: 0.8008282
+        baremetal_1:
+          price: 0.8008282
+        baremetal_0:
+          price: 0.8008282
+        baremetal_2a:
+          price: 0.8008282
+        baremetal_3:
+          price: 0.8008282
+        baremetal_s:
+          price: 0.8008282
+        baremetal_2:
+          price: 0.8008282
+      properties:
+        baremetal_0:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_1:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_2:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_2a:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_2a2:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_3:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        baremetal_s:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        c2.medium.x86:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+        m2.xlarge.x86:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+      type: object
+    SpotMarketPricesList:
+      example:
+        spot_market_prices:
+          ord1:
+            baremetal_1e:
+              price: 0.8008282
+          syd1:
+            baremetal_1e:
+              price: 0.8008282
+          ams1:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          fra1:
+            baremetal_1e:
+              price: 0.8008282
+          sin1:
+            baremetal_1e:
+              price: 0.8008282
+          yyz1:
+            baremetal_1e:
+              price: 0.8008282
+          sjc1:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          nrt1:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          dfw1:
+            baremetal_1e:
+              price: 0.8008282
+          iad1:
+            baremetal_1e:
+              price: 0.8008282
+          atl1:
+            baremetal_1e:
+              price: 0.8008282
+          sea1:
+            baremetal_1e:
+              price: 0.8008282
+          lax1:
+            baremetal_1e:
+              price: 0.8008282
+          ewr1:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+      properties:
+        spot_market_prices:
+          $ref: '#/components/schemas/SpotPricesReport'
+      type: object
+    SpotMarketPricesPerMetroList:
+      example:
+        spot_market_prices:
+          sv:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          sg:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          ch:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          la:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          ny:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          am:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+          da:
+            c2.medium.x86:
+              price: 0.8008282
+            baremetal_2a2:
+              price: 0.8008282
+            m2.xlarge.x86:
+              price: 0.8008282
+            baremetal_1:
+              price: 0.8008282
+            baremetal_0:
+              price: 0.8008282
+            baremetal_2a:
+              price: 0.8008282
+            baremetal_3:
+              price: 0.8008282
+            baremetal_s:
+              price: 0.8008282
+            baremetal_2:
+              price: 0.8008282
+      properties:
+        spot_market_prices:
+          $ref: '#/components/schemas/SpotMarketPricesPerMetroReport'
+      type: object
+    SpotPricesDatapointsList:
+      items:
+        type: number
+      type: array
+    SpotMarketRequestCreateInput_instance_parameters:
+      example:
+        user_ssh_keys:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        private_ipv4_subnet_size: 1
+        description: description
+        hostnames:
+        - hostnames
+        - hostnames
+        termination_time: 2000-01-23 04:56:07+00:00
+        project_ssh_keys:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tags:
+        - tags
+        - tags
+        features:
+        - features
+        - features
+        userdata: userdata
+        hostname: hostname
+        no_ssh_keys: true
+        public_ipv4_subnet_size: 5
+        operating_system: operating_system
+        always_pxe: true
+        billing_cycle: billing_cycle
+        customdata: '{}'
+        locked: true
+        plan: plan
+      properties:
+        always_pxe:
+          type: boolean
+        billing_cycle:
+          type: string
+        customdata:
+          type: object
+        description:
+          type: string
+        features:
+          items:
+            type: string
+          type: array
+        hostname:
+          type: string
+        hostnames:
+          items:
+            type: string
+          type: array
+        locked:
+          description: Whether the device should be locked, preventing accidental deletion.
+          type: boolean
+        no_ssh_keys:
+          type: boolean
+        operating_system:
+          type: string
+        plan:
+          type: string
+        private_ipv4_subnet_size:
+          type: integer
+        project_ssh_keys:
+          items:
+            format: uuid
+            type: string
+          type: array
+        public_ipv4_subnet_size:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+        termination_time:
+          format: date-time
+          type: string
+        user_ssh_keys:
+          description: The UUIDs of users whose SSH keys should be included on the provisioned device.
+          items:
+            format: uuid
+            type: string
+          type: array
+        userdata:
+          type: string
+      type: object
+    SpotPricesPerNewFacility:
+      example:
+        baremetal_1e:
+          price: 0.8008282
+      properties:
+        baremetal_1e:
+          $ref: '#/components/schemas/SpotPricesPerBaremetal'
+      type: object
+    SpotMarketRequestCreateInput:
+      example:
+        end_at: 2000-01-23 04:56:07+00:00
+        instance_parameters:
+          user_ssh_keys:
+          - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          private_ipv4_subnet_size: 1
+          description: description
+          hostnames:
+          - hostnames
+          - hostnames
+          termination_time: 2000-01-23 04:56:07+00:00
+          project_ssh_keys:
+          - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tags:
+          - tags
+          - tags
+          features:
+          - features
+          - features
+          userdata: userdata
+          hostname: hostname
+          no_ssh_keys: true
+          public_ipv4_subnet_size: 5
+          operating_system: operating_system
+          always_pxe: true
+          billing_cycle: billing_cycle
+          customdata: '{}'
+          locked: true
+          plan: plan
+        metro: metro
+        devices_min: 6
+        devices_max: 0
+        max_bid_price: 5.637377
+        facilities:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        devices_max:
+          type: integer
+        devices_min:
+          type: integer
+        end_at:
+          format: date-time
+          type: string
+        facilities:
+          deprecated: true
+          items:
+            format: uuid
+            type: string
+          type: array
+        instance_parameters:
+          $ref: '#/components/schemas/SpotMarketRequestCreateInput_instance_parameters'
+        max_bid_price:
+          format: float
+          type: number
+        metro:
+          description: The metro ID or code the spot market request will be created in.
+          type: string
+      type: object
+  securitySchemes:
+    x_auth_token:
+      description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.
+
+        '
+      in: header
+      name: X-Auth-Token
+      type: apiKey
+      x-displayName: X-Auth-Token
+x-tagGroups:
+- name: Accounts and Organization
+  tags:
+  - Authentication
+  - Emails
+  - Invitations
+  - Memberships
+  - Organizations
+  - OTPs
+  - PasswordResetTokens
+  - PaymentMethods
+  - Projects
+  - SSHKeys
+  - SupportRequest
+  - TransferRequests
+  - TwoFactorAuth
+  - Users
+  - UserVerificationTokens
+- name: Services and Billing
+  tags:
+  - Events
+  - Facilities
+  - Incidents
+  - Invoices
+  - Licenses
+  - Metros
+  - Plans
+  - Usages
+- name: Servers
+  tags:
+  - Devices
+  - Batches
+  - Capacity
+  - HardwareReservations
+  - OperatingSystems
+  - Ports
+  - SelfServiceReservations
+  - SpotMarket
+  - Userdata
+  - Volumes
+- name: Networking
+  tags:
+  - BGP
+  - Interconnections
+  - IPAddresses
+  - MetalGateways
+  - VLANs
+  - VRFs
