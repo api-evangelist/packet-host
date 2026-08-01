@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/packet-host-metal-openapi-original.yml
+note: >-
+  Cross-cutting standards conformance derived from the Metal API OpenAPI. No
+  published compliance/certification program is asserted here (no Compliance
+  pointer emitted).
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: OpenAPI 3.0.0 document published (metal-go / metal-python generators).
+  - id: rest-json
+    conforms: true
+    evidence: Resource-oriented JSON over HTTPS.
+  - id: api-key-auth
+    conforms: true
+    evidence: apiKey security scheme (X-Auth-Token header).
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 security scheme in the spec.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a plain application/json envelope, not application/problem+json.
+  - id: pagination
+    conforms: true
+    evidence: page / per_page query parameters with meta pagination fields.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency-key mechanism documented.

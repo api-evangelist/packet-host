@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.equinix.com/metal/
+note: >-
+  Packet (packet.com / api.packet.net) was acquired by Equinix in 2020 and
+  rebranded Equinix Metal. Equinix Metal has been fully retired: End-of-Sale was
+  announced 2024-11-07 and the service was sunset 2026-06-30. The Metal API host
+  (api.equinix.com/metal/v1) still responds (401) but no new resources can be
+  created via Console or API.
+status: retired
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.equinix.com/metal/v1
+  legacy_base_url: https://api.packet.net
+deprecation:
+  policy: service-wide end-of-life
+  eol: true
+  docs: https://docs.equinix.com/metal/
+end_of_life:
+  announced: '2024-11-07'
+  event: End-of-Sale announced
+  sunset: '2026-06-30'
+  resources_removed: '2026-07-01'
+  docs_removal: '2026-09-30'
+  final_invoice_access_until: '2027-01-01'
+  timeline:
+    - date: '2024-11-07'
+      event: End-of-Sale announced for Equinix Metal
+    - date: '2025-01-05'
+      event: Stopped accepting orders for new storage appliances
+    - date: '2025-01-10'
+      event: Load balancers sunset
+    - date: '2025-03-21'
+      event: Live chat in the Metal Console removed
+    - date: '2026-06-30'
+      event: Equinix Metal sunset
+    - date: '2026-07-01'
+      event: All Metal resources removed; new resource creation via Console/API no longer permitted
+    - date: '2026-09-30'
+      event: User documentation to be removed
+status_page: https://status.equinix.com/
+deprecated_operations: []

@@ -1,0 +1,45 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/equinix/metal-cli
+name: metal
+description: >-
+  Official Equinix Metal command-line interface (formerly the Packet CLI). Wraps
+  the Metal API (api.equinix.com/metal/v1). Note: Equinix Metal was sunset
+  2026-06-30, so the CLI now targets a retired service.
+repo: https://github.com/equinix/metal-cli
+binary: metal
+install:
+  - method: homebrew
+    command: brew install equinix/tap/metal-cli
+  - method: go
+    command: go install github.com/equinix/metal-cli/cmd/metal@latest
+  - method: github-releases
+    url: https://github.com/equinix/metal-cli/releases
+auth:
+  env: METAL_AUTH_TOKEN
+  config: metal init
+command_groups:
+  - name: device
+    description: Create, list, reboot, and delete bare-metal devices.
+  - name: project
+    description: Manage projects.
+  - name: organization
+    description: Manage organizations.
+  - name: ip
+    description: Manage IP addresses and reservations.
+  - name: ssh-key
+    description: Manage SSH keys.
+  - name: vlan
+    description: Manage VLANs.
+  - name: operating-system
+    description: List available operating systems.
+  - name: plan
+    description: List server plans.
+  - name: facility
+    description: List facilities.
+  - name: metro
+    description: List metros.
+  - name: capacity
+    description: Check server capacity by plan/metro.
+  - name: event
+    description: List events.

@@ -1,0 +1,17 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/packet-host-metal-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: x_auth_token
+  type: apiKey
+  in: header
+  parameter: X-Auth-Token
+  description: HTTP header containing the User or Project API key that will be used to authenticate
+    the request.
+  sources:
+  - openapi/packet-host-metal-openapi-original.yml

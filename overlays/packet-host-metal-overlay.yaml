@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Packet Host (Equinix Metal API)
+  version: 1.0.0
+extends: openapi/packet-host-metal-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: packet-host
+      x-apievangelist-lineage: Packet (packet.com) -> acquired by Equinix (2020) -> Equinix Metal
+      x-apievangelist-lifecycle: retired
+      x-apievangelist-sunset: '2026-06-30'
+      x-apievangelist-auth: apiKey header X-Auth-Token (User or Project key)
+      x-apievangelist-pagination: page/per_page with meta fields; include/exclude for sparse fields

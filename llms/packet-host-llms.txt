@@ -1,0 +1,42 @@
+# Packet Host (Equinix Metal)
+
+> Packet Host, Inc. (packet.com / api.packet.net) was a New York-based
+> bare-metal cloud provider backed by Battery Ventures. Equinix acquired Packet
+> in 2020 and rebranded it Equinix Metal. Equinix Metal was sunset on
+> 2026-06-30; its REST API (api.equinix.com/metal/v1) still authenticates but no
+> longer permits new resource creation. This profile captures the Metal API
+> surface and its lineage.
+
+## API
+- [Metal API (OpenAPI 3.0)](openapi/packet-host-metal-openapi-original.yml): 220 operations across 40 tags — Devices, Projects, Organizations, IP Addresses, Ports, VLANs, VRFs, Metros, Facilities, Plans, Operating Systems, SSH Keys, Events, Capacity, and more. Base URL https://api.equinix.com/metal/v1. Auth: X-Auth-Token API key.
+
+## Docs
+- [Developer portal](https://deploy.equinix.com/)
+- [Metal documentation](https://docs.equinix.com/metal/)
+- [API reference / catalog](https://docs.equinix.com/api-catalog/metalv1/)
+- [Metal shutdown / end-of-life](https://docs.equinix.com/metal/)
+- [Status page](https://status.equinix.com/)
+
+## SDKs & tools
+- [equinix-metal (Python)](https://pypi.org/project/equinix-metal/)
+- [packet-python (Python, legacy)](https://pypi.org/project/packet-python/)
+- [equinix-sdk-go (Go)](https://pkg.go.dev/github.com/equinix/equinix-sdk-go)
+- [packngo (Go, legacy)](https://pkg.go.dev/github.com/packethost/packngo)
+- [metal-cli (CLI)](https://github.com/equinix/metal-cli)
+- [Equinix Terraform provider](https://registry.terraform.io/providers/equinix/equinix/latest)
+
+## Repo artifacts
+- [Authentication](authentication/packet-host-authentication.yml)
+- [Conventions](conventions/packet-host-conventions.yml)
+- [Error catalog](errors/packet-host-problem-types.yml)
+- [Lifecycle / end-of-life](lifecycle/packet-host-lifecycle.yml)
+- [Data model](data-model/packet-host-data-model.yml)
+- [CLI](cli/packet-host-cli.yml)
+- [Packages / SDKs](packages/packet-host-packages.yml)
+- [Agent skills](skills/_index.yml)
+- [MCP candidate tools](mcp/packet-host-mcp.yml)
+
+## GitHub
+- [github.com/equinix](https://github.com/equinix)
+- [github.com/equinix-labs](https://github.com/equinix-labs)
+- [github.com/packethost](https://github.com/packethost)

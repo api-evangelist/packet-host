@@ -1,0 +1,76 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  GitHub orgs github.com/equinix, github.com/equinix-labs, github.com/packethost;
+  PyPI; pkg.go.dev. Packet was acquired by Equinix (2020) and rebranded Equinix
+  Metal; Equinix Metal was sunset 2026-06-30, so these client libraries are
+  first-party but now target a retired service.
+packages:
+  - language: python
+    registry: pypi
+    name: equinix-metal
+    url: https://pypi.org/project/equinix-metal/
+    install: pip install equinix-metal
+    repo: https://github.com/equinix-labs/metal-python
+    official: true
+    note: Current OpenAPI-generated Python SDK for the Metal API.
+  - language: python
+    registry: pypi
+    name: packet-python
+    url: https://pypi.org/project/packet-python/
+    install: pip install packet-python
+    repo: https://github.com/packethost/packet-python
+    official: true
+    note: Legacy first-party Packet/Equinix Metal Python client.
+  - language: go
+    registry: pkg.go.dev
+    name: github.com/equinix/equinix-sdk-go
+    url: https://pkg.go.dev/github.com/equinix/equinix-sdk-go
+    install: go get github.com/equinix/equinix-sdk-go
+    repo: https://github.com/equinix/equinix-sdk-go
+    official: true
+    note: Current unified Go SDK for Equinix APIs (includes metalv1).
+  - language: go
+    registry: pkg.go.dev
+    name: github.com/packethost/packngo
+    url: https://pkg.go.dev/github.com/packethost/packngo
+    install: go get github.com/packethost/packngo
+    repo: https://github.com/packethost/packngo
+    official: true
+    note: Legacy first-party Go client (packngo) for the Packet/Metal API.
+  - language: go
+    registry: github
+    name: metal-go
+    url: https://github.com/equinix-labs/metal-go
+    repo: https://github.com/equinix-labs/metal-go
+    official: true
+    note: Deprecated OpenAPI-generated Go client for Equinix Metal.
+  - language: java
+    registry: github
+    name: equinix-sdk-java
+    url: https://github.com/equinix/equinix-sdk-java
+    repo: https://github.com/equinix/equinix-sdk-java
+    official: true
+    note: Current Java SDK for Equinix APIs.
+  - language: java
+    registry: github
+    name: metal-java
+    url: https://github.com/equinix-labs/metal-java
+    repo: https://github.com/equinix-labs/metal-java
+    official: true
+    note: Experimental OpenAPI-generated Java SDK for Equinix Metal.
+  - language: go
+    registry: github
+    name: metal-cli
+    url: https://github.com/equinix/metal-cli
+    install: brew install equinix/tap/metal-cli
+    repo: https://github.com/equinix/metal-cli
+    official: true
+    note: Official Equinix Metal command-line interface (the `metal` binary).
+  - language: hcl
+    registry: terraform
+    name: equinix/equinix
+    url: https://registry.terraform.io/providers/equinix/equinix/latest
+    repo: https://github.com/equinix/terraform-provider-equinix
+    official: true
+    note: Official Equinix Terraform provider (supersedes terraform-provider-packet / -metal).

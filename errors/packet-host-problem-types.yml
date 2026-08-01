@@ -1,0 +1,52 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/packet-host-metal-openapi-original.yml
+format: json
+note: Derived from Metal API OpenAPI 4xx/5xx responses. Errors return a JSON body
+  with an `errors` array and/or `error` string; the API does not use application/problem+json.
+envelope:
+  fields:
+  - error
+  - errors
+  content_type: application/json
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 2
+  description: bad request
+  example_operation: openapi/packet-host-metal-openapi-original.yml#receiveCodes
+- status: 401
+  title: Unauthorized
+  occurrences: 198
+  description: unauthorized
+  example_operation: openapi/packet-host-metal-openapi-original.yml#deleteAPIKey
+- status: 403
+  title: Forbidden
+  occurrences: 133
+  description: forbidden
+  example_operation: openapi/packet-host-metal-openapi-original.yml#deleteBatch
+- status: 404
+  title: Not Found
+  occurrences: 175
+  description: not found
+  example_operation: openapi/packet-host-metal-openapi-original.yml#deleteAPIKey
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 71
+  description: unprocessable entity
+  example_operation: openapi/packet-host-metal-openapi-original.yml#updateBgpSession
+- status: 429
+  title: Too Many Requests
+  occurrences: 1
+  description: Too Many Requests
+  example_operation: openapi/packet-host-metal-openapi-original.yml#updateVrfRouteById
+- status: 500
+  title: Internal Server Error
+  occurrences: 5
+  description: Internal Server Error
+  example_operation: openapi/packet-host-metal-openapi-original.yml#getDeviceHealthRollup
+- status: 501
+  title: Not Implemented
+  occurrences: 1
+  description: not implemented for device
+  example_operation: openapi/packet-host-metal-openapi-original.yml#captureScreenshot

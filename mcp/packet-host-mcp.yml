@@ -1,0 +1,189 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+note: Candidate MCP tool list derived from Metal API OpenAPI operations (marquee tags).
+  No official hosted Metal MCP server exists; Equinix Metal was sunset 2026-06-30.
+server:
+  name: packet-host-metal
+  transport: stdio
+tools:
+- name: findCapacityForFacility
+  description: View capacity
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findCapacityForFacility
+- name: checkCapacityForFacility
+  description: Check capacity
+  source_operation: openapi/packet-host-metal-openapi-original.yml#checkCapacityForFacility
+- name: findCapacityForMetro
+  description: View capacity for metros
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findCapacityForMetro
+- name: checkCapacityForMetro
+  description: Check capacity for a metro
+  source_operation: openapi/packet-host-metal-openapi-original.yml#checkCapacityForMetro
+- name: findInterconnectionEvents
+  description: Retrieve interconnection events
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findInterconnectionEvents
+- name: findInterconnectionPortEvents
+  description: Retrieve interconnection port events
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findInterconnectionPortEvents
+- name: deleteDevice
+  description: Delete the device
+  source_operation: openapi/packet-host-metal-openapi-original.yml#deleteDevice
+- name: findDeviceById
+  description: Retrieve a device
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceById
+- name: updateDevice
+  description: Update the device
+  source_operation: openapi/packet-host-metal-openapi-original.yml#updateDevice
+- name: performAction
+  description: Perform an action
+  source_operation: openapi/packet-host-metal-openapi-original.yml#performAction
+- name: findInstanceBandwidth
+  description: Retrieve an instance bandwidth
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findInstanceBandwidth
+- name: getBgpNeighborData
+  description: Retrieve BGP neighbor data for this device
+  source_operation: openapi/packet-host-metal-openapi-original.yml#getBgpNeighborData
+- name: findBgpSessions
+  description: Retrieve all BGP sessions
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findBgpSessions
+- name: createBgpSession
+  description: Create a BGP session
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createBgpSession
+- name: findDeviceCustomdata
+  description: Retrieve the custom metadata of an instance
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceCustomdata
+- name: getDeviceHealthRollup
+  description: Get Device's Health Status
+  source_operation: openapi/packet-host-metal-openapi-original.yml#getDeviceHealthRollup
+- name: findDeviceEvents
+  description: Retrieve device's events
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceEvents
+- name: getDeviceFirmwareSets
+  description: Get Device's associated Firmware Set
+  source_operation: openapi/packet-host-metal-openapi-original.yml#getDeviceFirmwareSets
+- name: findIPAssignments
+  description: Retrieve all ip assignments
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findIPAssignments
+- name: createIPAssignment
+  description: Create an ip assignment
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createIPAssignment
+- name: findDeviceMetadataByID
+  description: Retrieve metadata
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceMetadataByID
+- name: findDeviceSSHKeys
+  description: Retrieve a device's ssh keys
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceSSHKeys
+- name: findTraffic
+  description: Retrieve device traffic
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findTraffic
+- name: findDeviceUserdataByID
+  description: Retrieve userdata
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findDeviceUserdataByID
+- name: findIPAssignmentCustomdata
+  description: Retrieve the custom metadata of an IP Assignment
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findIPAssignmentCustomdata
+- name: findEvents
+  description: Retrieve current user's events
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findEvents
+- name: findEventById
+  description: Retrieve an event
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findEventById
+- name: findFacilities
+  description: Retrieve all facilities
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findFacilities
+- name: deleteIPAddress
+  description: Unassign an ip address
+  source_operation: openapi/packet-host-metal-openapi-original.yml#deleteIPAddress
+- name: findIPAddressById
+  description: Retrieve an ip address
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findIPAddressById
+- name: updateIPAddress
+  description: Update an ip address
+  source_operation: openapi/packet-host-metal-openapi-original.yml#updateIPAddress
+- name: findIPAvailabilities
+  description: Retrieve all available subnets of a particular reservation
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findIPAvailabilities
+- name: findIPAddressCustomdata
+  description: Retrieve the custom metadata of an IP Reservation or IP Assignment
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findIPAddressCustomdata
+- name: findMetros
+  description: Retrieve all metros
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findMetros
+- name: getMetro
+  description: Retrieve a specific Metro's details
+  source_operation: openapi/packet-host-metal-openapi-original.yml#getMetro
+- name: findOperatingSystemVersion
+  description: Retrieve all operating system versions
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOperatingSystemVersion
+- name: findOperatingSystems
+  description: Retrieve all operating systems
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOperatingSystems
+- name: findOrganizations
+  description: Retrieve all organizations
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizations
+- name: createOrganization
+  description: Create an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createOrganization
+- name: deleteOrganization
+  description: Delete the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#deleteOrganization
+- name: findOrganizationById
+  description: Retrieve an organization's details
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationById
+- name: updateOrganization
+  description: Update the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#updateOrganization
+- name: findOrganizationCapacityPerFacility
+  description: View available hardware plans per Facility for given organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationCapacityPerFacility
+- name: findOrganizationCapacityPerMetro
+  description: View available hardware plans per Metro for given organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationCapacityPerMetro
+- name: findOrganizationCustomdata
+  description: Retrieve the custom metadata of an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationCustomdata
+- name: findOrganizationDevices
+  description: Retrieve all devices of an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationDevices
+- name: findOrganizationEvents
+  description: Retrieve organization's events
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationEvents
+- name: findFacilitiesByOrganization
+  description: Retrieve all facilities visible by the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findFacilitiesByOrganization
+- name: findOrganizationInvitations
+  description: Retrieve organization invitations
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationInvitations
+- name: createOrganizationInvitation
+  description: Create an invitation for an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createOrganizationInvitation
+- name: findOperatingSystemsByOrganization
+  description: Retrieve all operating systems visible by the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOperatingSystemsByOrganization
+- name: findOrganizationPaymentMethods
+  description: Retrieve all payment methods of an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationPaymentMethods
+- name: createPaymentMethod
+  description: Create a payment method for the given organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createPaymentMethod
+- name: findPlansByOrganization
+  description: Retrieve all plans visible by the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findPlansByOrganization
+- name: findOrganizationProjects
+  description: Retrieve all projects of an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationProjects
+- name: createOrganizationProject
+  description: Create a project for the organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#createOrganizationProject
+- name: findOrganizationTransfers
+  description: Retrieve all project transfer requests from or to an organization
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findOrganizationTransfers
+- name: findPlans
+  description: Retrieve all plans
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findPlans
+- name: findPortById
+  description: Retrieve a port
+  source_operation: openapi/packet-host-metal-openapi-original.yml#findPortById
+- name: assignPort
+  description: Assign a port to virtual network
+  source_operation: openapi/packet-host-metal-openapi-original.yml#assignPort

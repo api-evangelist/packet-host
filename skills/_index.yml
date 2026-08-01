@@ -1,0 +1,12 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/packet-host-metal-openapi-original.yml
+skills:
+  - file: packet-host-provision-device.md
+    name: Provision a bare-metal device
+    api: openapi/packet-host-metal-openapi-original.yml
+    operations: [findProjects, findPlans, findMetros, findOperatingSystems, createDevice, findDeviceById, deleteDevice]
+  - file: packet-host-manage-project-access.md
+    name: Manage a project and its SSH access
+    api: openapi/packet-host-metal-openapi-original.yml
+    operations: [createProject, findProjectById, createProjectSSHKey, findProjectSSHKeys, createProjectInvitation, deleteProject]

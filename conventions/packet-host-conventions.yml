@@ -1,0 +1,54 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/packet-host-metal-openapi-original.yml
+note: >-
+  Cross-cutting request/response semantics for the Metal API, derived from the
+  OpenAPI document. Metal is a REST/JSON bare-metal provisioning API.
+authentication:
+  style: api-key
+  header: X-Auth-Token
+  scheme: x_auth_token
+  keys: User API key or Project API key
+  docs: https://docs.equinix.com/metal/
+  see: authentication/packet-host-authentication.yml
+idempotency:
+  supported: false
+  note: The Metal API does not document an idempotency-key header or parameter.
+pagination:
+  style: page-number
+  params:
+    - name: page
+      in: query
+      description: Page number to return.
+    - name: per_page
+      in: query
+      description: Items per page.
+  response_fields:
+    - meta.total
+    - meta.current_page
+    - meta.last_page
+    - meta.previous
+    - meta.next
+sparse_fields:
+  supported: true
+  params:
+    - name: include
+      in: query
+      description: Nested attributes to sideload/expand in the response.
+    - name: exclude
+      in: query
+      description: Attributes to omit from the response.
+versioning:
+  style: uri-path
+  current: v1
+error_envelope:
+  content_type: application/json
+  fields:
+    - error
+    - errors
+  see: errors/packet-host-problem-types.yml
+rate_limiting:
+  signaled: true
+  note: The API returns HTTP 429 (Too Many Requests) when rate limits are exceeded.
+lifecycle:
+  see: lifecycle/packet-host-lifecycle.yml

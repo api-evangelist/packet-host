@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: probed
+host: https://api.equinix.com/metal/v1
+note: >-
+  Probed the Metal API host, the api.equinix.com root, and the deploy.equinix.com
+  developer host for /.well-known/ discovery documents. No discovery documents are
+  published (all 404); deploy.equinix.com returns 301 SPA rewrites, not real
+  well-known resources. Recorded absence is valid data — no WellKnown/SecurityTxt
+  pointer is emitted.
+documents:
+  - path: /.well-known/security.txt
+    host: https://api.equinix.com/metal/v1
+    status: 404
+  - path: /.well-known/openid-configuration
+    host: https://api.equinix.com/metal/v1
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    host: https://api.equinix.com/metal/v1
+    status: 404
+  - path: /.well-known/api-catalog
+    host: https://api.equinix.com/metal/v1
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    host: https://api.equinix.com/metal/v1
+    status: 404
+  - path: /.well-known/security.txt
+    host: https://api.equinix.com
+    status: 404
+  - path: /.well-known/security.txt
+    host: https://www.equinix.com
+    status: 404

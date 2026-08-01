@@ -1,8 +1,27 @@
 aid: packet-host
 name: Packet Host
-description: Packet Host is a company surfaced as a portfolio company of battery-ventures and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Packet Host, Inc. (packet.com / api.packet.net) was a New York-based bare-metal
+  cloud provider, backed by Battery Ventures, that let developers provision
+  dedicated single-tenant servers on demand through a REST API, CLI, and
+  Terraform. Equinix acquired Packet in 2020 and rebranded the service Equinix
+  Metal, moving the API to api.equinix.com/metal/v1. Equinix Metal was fully
+  retired: End-of-Sale was announced 2024-11-07 and the service was sunset
+  2026-06-30. This profile captures the Metal API surface (220 operations across
+  40 tags) and the Packet-to-Equinix-Metal lineage.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://raw.githubusercontent.com/packethost/metal-logo/main/Horizontal/Full%20Color/Equinix%20Metal%20Horizontal%20RGB.png
 url: https://raw.githubusercontent.com/api-evangelist/packet-host/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,14 +29,627 @@ x-backed-by:
 - battery-ventures
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-lineage: Packet (packet.com) -> acquired by Equinix (2020) -> Equinix Metal -> sunset 2026-06-30
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-apis: []
+- Bare Metal
+- Cloud Infrastructure
+- Infrastructure as a Service
+- Servers
+- Compute
+- Provisioning
+- Equinix Metal
+- Retired
+apis:
+- aid: packet-host:packet-host-authentication-api
+  name: Packet Host Authentication API
+  description: >-
+    Nearly all of the endpoints in the API require authentication. Authentication is performed by providing
+    an authentication token (interchangeably referred to as an API key) in the `X-Auth-Token` HTTP request
+    header.
+
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+
+
+    User API keys can be obtained by creating them in the Equinix Metal Portal or by using the [Create
+    a User API Key](#operation/createAPIKey) endpoint.
+
+
+    Project API keys can also be obtained by creating them in the Equinix Metal Portal or by using the
+    [Create a Project API Key](#operation/createProjectAPIKey) endpoint. Project API keys are scoped to
+    a single project and can only be used to access resources within that project.
+
+
+    For example, to use an authenticated API token, you would make a request like the following:
+
+
+    ```bash
+
+    curl -H 'X-Auth-Token: my_authentication_token' \
+      https://api.equinix.com/metal/v1/user/api-keys
+    ```
+
+
+    Applications can take advantage of the Equinix Metal API and API keys to perform any of the actions
+    that can be performed in the Equinix Metal Portal. For example, you can use the API to create and
+    manage devices, projects, and other resources.
+
+
+    API keys can be deleted without affecting any of the resources created with them. Access to applications
+    using the API can be revoked by deleting the API key used to authenticate the application.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-authentication-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-batches-api
+  name: Packet Host Batches API
+  description: >-
+    Manage device batches. See project endpoints to list batches for a particular project. Check out the
+    product docs to learn more about [Batch Deployment](https://metal.equinix.com/developers/docs/deploy/batch-deployment/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-batches-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-bgp-api
+  name: Packet Host BGP API
+  description: >-
+    Manage BGP configs and sessions. See device endpoints to create and list BGP sessions for a particular
+    device. Check out the product docs to learn more about [Local and Global BGP](https://metal.equinix.com/developers/docs/networking/local-global-bgp/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - BGP
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-bgp-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-capacity-api
+  name: Packet Host Capacity API
+  description: >-
+    Capacity Management. Check out the product docs to learn more about [Capacity](https://metal.equinix.com/developers/docs/locations/capacity/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Capacity
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-capacity-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-console-log-details-api
+  name: Packet Host Console Log Details API
+  description: >-
+    Console Log Details. Notice: This is a test feature currently under active development, and only available
+    to certain users. Please contact Customer Success for more information.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Console Log Details
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-console-log-details-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-devices-api
+  name: Packet Host Devices API
+  description: >-
+    Device Management. Check out the product docs to learn more about [Server Devices](https://metal.equinix.com/developers/docs/servers/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-devices-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-emails-api
+  name: Packet Host Emails API
+  description: Email Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-emails-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-events-api
+  name: Packet Host Events API
+  description: Event Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-events-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-facilities-api
+  name: Packet Host Facilities API
+  description: >-
+    Facility Management. Check out the product docs to learn more about [Facilities](https://metal.equinix.com/developers/docs/locations/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Facilities
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-facilities-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-firmware-sets-api
+  name: Packet Host Firmware Sets API
+  description: >-
+    Firmware Sets Management. Notice: Firmware Sets are a test feature currently under active development,
+    and only available to certain users. Please contact Customer Success for more information.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Firmware Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-firmware-sets-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-hardwarereservations-api
+  name: Packet Host HardwareReservations API
+  description: >-
+    Hardware Reservation Management. Check out the product docs to learn more about [Reserved Hardware](https://metal.equinix.com/developers/docs/deploy/reserved/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - HardwareReservations
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-hardwarereservations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-incidents-api
+  name: Packet Host Incidents API
+  description: Incident Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Incidents
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-incidents-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-interconnections-api
+  name: Packet Host Interconnections API
+  description: >-
+    Network Interconnections. See Instructions to create Network Interconnections at Check out the product
+    docs to learn more about [Equinix Fabric](https://metal.equinix.com/developers/docs/networking/fabric/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Interconnections
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-interconnections-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-invitations-api
+  name: Packet Host Invitations API
+  description: >-
+    Manage invitations. See project endpoints to create a new invitation. Check out the product docs to
+    learn more about [Invitations](https://metal.equinix.com/developers/docs/accounts/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Invitations
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-invitations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-invoices-api
+  name: Packet Host Invoices API
+  description: The Invoices API from Packet Host — 2 operation(s) for invoices.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-invoices-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-ipaddresses-api
+  name: Packet Host IPAddresses API
+  description: >-
+    Manage IP addresses. See device and project endpoints to list and create IP assignments for a particular
+    project or device. Check out the product docs to learn more about [the basic networking features](https://metal.equinix.com/developers/docs/networking/standard-ips/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - IPAddresses
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-ipaddresses-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-licenses-api
+  name: Packet Host Licenses API
+  description: >-
+    Manage licenses. See project endpoints to list and create licenses for a particular project.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Licenses
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-licenses-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-memberships-api
+  name: Packet Host Memberships API
+  description: >-
+    Membership Management (Project). Check out the product docs to learn more about [Membership](https://metal.equinix.com/developers/docs/accounts/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-memberships-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-metalgateways-api
+  name: Packet Host MetalGateways API
+  description: >-
+    Metal Gateway Management.Check out the product docs to learn more about [Metal Gateways](https://metal.equinix.com/developers/docs/networking/metal-gateway/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - MetalGateways
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-metalgateways-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-metros-api
+  name: Packet Host Metros API
+  description: >-
+    Metro Management. Check out the product docs to learn more about [Metros](https://metal.equinix.com/developers/docs/locations/metros/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Metros
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-metros-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-operatingsystems-api
+  name: Packet Host OperatingSystems API
+  description: >-
+    Operating System Management. Check out the product docs to learn more about [Operating Systems choices](https://metal.equinix.com/developers/docs/operating-systems/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - OperatingSystems
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-operatingsystems-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-organizations-api
+  name: Packet Host Organizations API
+  description: >-
+    Organizations Management. Check out the product docs to learn more about [Organizations](https://metal.equinix.com/developers/docs/accounts/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-organizations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-otps-api
+  name: Packet Host OTPs API
+  description: >-
+    OTP Management. Check out the product docs to learn more about [OTP](https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - OTPs
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-otps-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-passwordresettokens-api
+  name: Packet Host PasswordResetTokens API
+  description: Password Reset Token Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - PasswordResetTokens
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-passwordresettokens-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-paymentmethods-api
+  name: Packet Host PaymentMethods API
+  description: Payment Method Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - PaymentMethods
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-paymentmethods-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-plans-api
+  name: Packet Host Plans API
+  description: >-
+    Plan Management (Device). Check out the product docs to learn more about [Device Plans](https://metal.equinix.com/developers/docs/servers/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Plans
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-plans-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-ports-api
+  name: Packet Host Ports API
+  description: >-
+    Port ManagementCheck out the product docs to learn more about [Port configurations](https://metal.equinix.com/developers/docs/layer2-networking/overview/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Ports
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-ports-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-projects-api
+  name: Packet Host Projects API
+  description: >-
+    Project Management. Check out the product docs to learn more about [Projects](https://metal.equinix.com/developers/docs/accounts/projects/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-projects-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-selfservicereservations-api
+  name: Packet Host SelfServiceReservations API
+  description: Self Service Reservations
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - SelfServiceReservations
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-selfservicereservations-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-spotmarket-api
+  name: Packet Host SpotMarket API
+  description: >-
+    Spot Market Pricing and Requests Management. Check out the product docs to learn more about [Spot
+    Market features](https://metal.equinix.com/developers/docs/deploy/spot-market/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - SpotMarket
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-spotmarket-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-sshkeys-api
+  name: Packet Host SSHKeys API
+  description: Manage SSH keys. See project endpoints to list and create project-level SSH keys.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - SSHKeys
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-sshkeys-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-supportrequest-api
+  name: Packet Host SupportRequest API
+  description: Support request
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - SupportRequest
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-supportrequest-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-transferrequests-api
+  name: Packet Host TransferRequests API
+  description: Project Transfer Requests Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - TransferRequests
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-transferrequests-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-twofactorauth-api
+  name: Packet Host TwoFactorAuth API
+  description: >-
+    Two Factor Authentication Management. Check out the product docs to learn more about [2FA](https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - TwoFactorAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-twofactorauth-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-usages-api
+  name: Packet Host Usages API
+  description: Usage Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Usages
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-usages-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-userdata-api
+  name: Packet Host Userdata API
+  description: Userdata Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Userdata
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-userdata-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-users-api
+  name: Packet Host Users API
+  description: User Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-users-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-userverificationtokens-api
+  name: Packet Host UserVerificationTokens API
+  description: User Verification Token Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - UserVerificationTokens
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-userverificationtokens-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-vlans-api
+  name: Packet Host VLANs API
+  description: >-
+    Manage virtual networks (VLANs). See project endpoints to list and create virtual networks. Check
+    out the product docs to learn more about [VLANs](https://metal.equinix.com/developers/docs/networking/layer2/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - VLANs
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-vlans-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-vrfs-api
+  name: Packet Host VRFs API
+  description: >-
+    VRF Management. A VRF is a project-scoped virtual router resource that defines a collection of customer-managed
+    IP blocks that can be used in BGP peering on one or more virtual networks. Metal Gateways and Interconnection
+    Virtual Circuits can take advantage of VRFs to enable Layer 3 routing with bespoke network ranges.
+    Notice: VRFs are a test feature currently under active development, and only available to certain
+    users. Please contact Customer Success for more information.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - VRFs
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-vrfs-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DeveloperPortal
+  url: https://deploy.equinix.com/
+- type: Documentation
+  url: https://docs.equinix.com/metal/
+- type: APIReference
+  url: https://docs.equinix.com/api-catalog/metalv1/
+- type: GitHubOrganization
+  url: https://github.com/equinix
+- type: TermsOfService
+  url: https://www.equinix.com/company/legal/terms
+- type: PrivacyPolicy
+  url: https://www.equinix.com/privacy
+- type: StatusPage
+  url: https://status.equinix.com/
+- type: Deprecation
+  url: https://docs.equinix.com/metal/
+- type: Authentication
+  url: authentication/packet-host-authentication.yml
+- type: Conventions
+  url: conventions/packet-host-conventions.yml
+- type: ErrorCatalog
+  url: errors/packet-host-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/packet-host-lifecycle.yml
+- type: DataModel
+  url: data-model/packet-host-data-model.yml
+- type: Conformance
+  url: conformance/packet-host-conformance.yml
+- type: Packages
+  url: packages/packet-host-packages.yml
+- type: SDKs
+  url: packages/packet-host-packages.yml
+- type: CLI
+  url: cli/packet-host-cli.yml
+- type: MCPServer
+  url: mcp/packet-host-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/packet-host-llms.txt
+- type: Overlay
+  url: overlays/packet-host-metal-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/packet-host-agentic-access.yml
+- type: DomainSecurity
+  url: security/packet-host-domain-security.yml
