@@ -1,0 +1,747 @@
+{
+  "item": [
+    {
+      "id": "0bf354e4-6f64-408e-ac0d-728a5917b22a",
+      "name": "SelfServiceReservations",
+      "description": {
+        "content": "Self Service Reservations\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fab66e6f-0f68-477d-9b6e-7981c5430445",
+          "name": "Retrieve all reservations",
+          "request": {
+            "name": "Retrieve all reservations",
+            "description": {
+              "content": "Returns all reservations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":project_id",
+                "self-service",
+                "reservations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Items returned per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "categories",
+                  "value": "<string>",
+                  "description": "Filter reservations by items category"
+                },
+                {
+                  "disabled": false,
+                  "key": "categories",
+                  "value": "<string>",
+                  "description": "Filter reservations by items category"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92b196d5-064b-4c0c-a58d-eb706547d43d",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "compute"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "compute"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reservations\": [\n    {\n      \"created_at\": \"1976-03-21T15:13:56.291Z\",\n      \"item\": [\n        {\n          \"plan_slug\": \"plan_slug\",\n          \"amount\": 0.8008282,\n          \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"quantity\": 6,\n          \"metro_code\": \"metro_code\",\n          \"metro_name\": \"metro_name\",\n          \"term\": \"term\",\n          \"plan_categories\": [\n            \"plan_categories\",\n            \"plan_categories\"\n          ],\n          \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"plan_name\": \"plan_name\"\n        },\n        {\n          \"plan_slug\": \"plan_slug\",\n          \"amount\": 0.8008282,\n          \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"quantity\": 6,\n          \"metro_code\": \"metro_code\",\n          \"metro_name\": \"metro_name\",\n          \"term\": \"term\",\n          \"plan_categories\": [\n            \"plan_categories\",\n            \"plan_categories\"\n          ],\n          \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"plan_name\": \"plan_name\"\n        }\n      ],\n      \"notes\": \"string\",\n      \"organization\": \"string\",\n      \"organization_id\": \"ae3a0dab-e459-3d10-827f-3dcb58ffeed8\",\n      \"period\": {\n        \"count\": 12,\n        \"unit\": \"monthly\"\n      },\n      \"project\": \"string\",\n      \"project_id\": \"eaba91cd-6e67-9cb2-34b8-01505cd60078\",\n      \"start_date\": \"2003-01-16T04:32:51.146Z\",\n      \"status\": \"string\",\n      \"total_cost\": 7297\n    },\n    {\n      \"created_at\": \"1970-08-14T22:47:34.221Z\",\n      \"item\": [\n        {\n          \"plan_slug\": \"plan_slug\",\n          \"amount\": 0.8008282,\n          \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"quantity\": 6,\n          \"metro_code\": \"metro_code\",\n          \"metro_name\": \"metro_name\",\n          \"term\": \"term\",\n          \"plan_categories\": [\n            \"plan_categories\",\n            \"plan_categories\"\n          ],\n          \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"plan_name\": \"plan_name\"\n        },\n        {\n          \"plan_slug\": \"plan_slug\",\n          \"amount\": 0.8008282,\n          \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"quantity\": 6,\n          \"metro_code\": \"metro_code\",\n          \"metro_name\": \"metro_name\",\n          \"term\": \"term\",\n          \"plan_categories\": [\n            \"plan_categories\",\n            \"plan_categories\"\n          ],\n          \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n          \"plan_name\": \"plan_name\"\n        }\n      ],\n      \"notes\": \"string\",\n      \"organization\": \"string\",\n      \"organization_id\": \"88b7d248-1b75-38e4-6232-7ff991a3e69d\",\n      \"period\": {\n        \"count\": 36,\n        \"unit\": \"monthly\"\n      },\n      \"project\": \"string\",\n      \"project_id\": \"c635e353-09f1-94d9-899c-8d1033921725\",\n      \"start_date\": \"2023-01-15T04:14:43.491Z\",\n      \"status\": \"string\",\n      \"total_cost\": 4906\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "953d33dc-a41f-40dc-87fe-e6503cde9f93",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "compute"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "compute"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4bbca22c-75b0-408f-a4c9-fa16ec7d9af5",
+          "name": "Create a reservation",
+          "request": {
+            "name": "Create a reservation",
+            "description": {
+              "content": "Creates a reservation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":project_id",
+                "self-service",
+                "reservations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item\": [\n    {\n      \"amount\": \"<float>\",\n      \"metro_id\": \"<uuid>\",\n      \"plan_id\": \"<uuid>\",\n      \"quantity\": \"<integer>\",\n      \"term\": \"<string>\"\n    },\n    {\n      \"amount\": \"<float>\",\n      \"metro_id\": \"<uuid>\",\n      \"plan_id\": \"<uuid>\",\n      \"quantity\": \"<integer>\",\n      \"term\": \"<string>\"\n    }\n  ],\n  \"notes\": \"<string>\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"start_date\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f80702c-82a4-4ece-b51e-ce32adcf93b2",
+              "name": "created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"item\": [\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    },\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    }\n  ],\n  \"notes\": \"<string>\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"start_date\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1964-04-28T03:36:26.163Z\",\n  \"item\": [\n    {\n      \"plan_slug\": \"plan_slug\",\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"metro_code\": \"metro_code\",\n      \"metro_name\": \"metro_name\",\n      \"term\": \"term\",\n      \"plan_categories\": [\n        \"plan_categories\",\n        \"plan_categories\"\n      ],\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"plan_name\": \"plan_name\"\n    },\n    {\n      \"plan_slug\": \"plan_slug\",\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"metro_code\": \"metro_code\",\n      \"metro_name\": \"metro_name\",\n      \"term\": \"term\",\n      \"plan_categories\": [\n        \"plan_categories\",\n        \"plan_categories\"\n      ],\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"plan_name\": \"plan_name\"\n    }\n  ],\n  \"notes\": \"string\",\n  \"organization\": \"string\",\n  \"organization_id\": \"4b7d2ba7-c140-e978-6f3d-adfb8ff33430\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"project\": \"string\",\n  \"project_id\": \"24cf87d6-cd16-93f1-5af5-b231e4791905\",\n  \"start_date\": \"1951-08-10T00:42:09.987Z\",\n  \"status\": \"string\",\n  \"total_cost\": 2744\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c3f9389-1da9-4e21-9046-65bf0c3ef1fb",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"item\": [\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    },\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    }\n  ],\n  \"notes\": \"<string>\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"start_date\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38da9272-0cb1-42c4-8480-5233d9afe6f3",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"item\": [\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    },\n    {\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"term\": \"term\",\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n    }\n  ],\n  \"notes\": \"<string>\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"start_date\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e196715d-bb7a-4ec9-8a8d-cd5375b60678",
+          "name": "Retrieve a reservation",
+          "request": {
+            "name": "Retrieve a reservation",
+            "description": {
+              "content": "Returns a reservation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":project_id",
+                "self-service",
+                "reservations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Reservation short_id"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "project_id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "77709e06-e1ee-4dd5-b415-b19256943d89",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Reservation short_id"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1964-04-28T03:36:26.163Z\",\n  \"item\": [\n    {\n      \"plan_slug\": \"plan_slug\",\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"metro_code\": \"metro_code\",\n      \"metro_name\": \"metro_name\",\n      \"term\": \"term\",\n      \"plan_categories\": [\n        \"plan_categories\",\n        \"plan_categories\"\n      ],\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"plan_name\": \"plan_name\"\n    },\n    {\n      \"plan_slug\": \"plan_slug\",\n      \"amount\": 0.8008282,\n      \"metro_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"quantity\": 6,\n      \"metro_code\": \"metro_code\",\n      \"metro_name\": \"metro_name\",\n      \"term\": \"term\",\n      \"plan_categories\": [\n        \"plan_categories\",\n        \"plan_categories\"\n      ],\n      \"plan_id\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"plan_name\": \"plan_name\"\n    }\n  ],\n  \"notes\": \"string\",\n  \"organization\": \"string\",\n  \"organization_id\": \"4b7d2ba7-c140-e978-6f3d-adfb8ff33430\",\n  \"period\": {\n    \"count\": \"<integer>\",\n    \"unit\": \"<string>\"\n  },\n  \"project\": \"string\",\n  \"project_id\": \"24cf87d6-cd16-93f1-5af5-b231e4791905\",\n  \"start_date\": \"1951-08-10T00:42:09.987Z\",\n  \"status\": \"string\",\n  \"total_cost\": 2744\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6889e8e-d956-42eb-86b9-07ed2301848f",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Reservation short_id"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b98ae0d-ddd7-480d-8d82-6895323f3cec",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":project_id",
+                    "self-service",
+                    "reservations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Reservation short_id"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "project_id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.equinix.com/metal/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1a8ede9a-a235-4574-a2f7-96ba25c26440",
+    "name": "Metal Authentication SelfServiceReservations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n\n\nContact Support:\n Name: Equinix Metal API Team\n Email: support@equinixmetal.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication Invitations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invitations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "View an invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Invitation UUID"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+              }
+            ]
+          },
+          "docs": "Returns a single invitation. (It include the `invitable` to maintain backward compatibility but will be removed soon)"
+        },
+        {
+          "info": {
+            "name": "Accept an invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.equinix.com/metal/v1/invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Invitation UUID"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+              }
+            ]
+          },
+          "docs": "Accept an invitation."
+        },
+        {
+          "info": {
+            "name": "Decline an invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.equinix.com/metal/v1/invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Invitation UUID"
+              }
+            ]
+          },
+          "docs": "Decline an invitation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

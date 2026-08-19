@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication Userdata API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Userdata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate user data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/userdata/validate",
+            "params": [
+              {
+                "name": "userdata",
+                "value": "",
+                "type": "query",
+                "description": "Userdata to validate"
+              }
+            ]
+          },
+          "docs": "Validates user data (Userdata)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

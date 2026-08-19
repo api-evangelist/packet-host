@@ -1,8 +1,8 @@
 generated: '2026-07-20'
 method: derived
 status: candidate
-note: Candidate MCP tool list derived from Metal API OpenAPI operations (marquee tags).
-  No official hosted Metal MCP server exists; Equinix Metal was sunset 2026-06-30.
+note: Candidate MCP tool list derived from Metal API OpenAPI operations (marquee tags). No official hosted
+  Metal MCP server exists; Equinix Metal was sunset 2026-06-30.
 server:
   name: packet-host-metal
   transport: stdio
@@ -187,3 +187,9 @@ tools:
 - name: assignPort
   description: Assign a port to virtual network
   source_operation: openapi/packet-host-metal-openapi-original.yml#assignPort
+deployment:
+  mode: none
+  verified: derived
+  tools: 60
+  checked: '2026-08-12'
+  source: catalog MCP census

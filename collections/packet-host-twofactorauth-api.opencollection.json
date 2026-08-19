@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication TwoFactorAuth API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TwoFactorAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Enable two factor auth using app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/user/otp/app"
+          },
+          "docs": "Enables two factor authentication using authenticator app."
+        },
+        {
+          "info": {
+            "name": "Disable two factor authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.equinix.com/metal/v1/user/otp/app"
+          },
+          "docs": "Disables two factor authentication."
+        },
+        {
+          "info": {
+            "name": "Enable two factor auth using sms",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/user/otp/sms"
+          },
+          "docs": "Enables two factor authentication with sms."
+        },
+        {
+          "info": {
+            "name": "Disable two factor authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.equinix.com/metal/v1/user/otp/sms"
+          },
+          "docs": "Disables two factor authentication."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

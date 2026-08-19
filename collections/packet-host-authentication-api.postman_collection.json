@@ -1,0 +1,1492 @@
+{
+  "item": [
+    {
+      "id": "e858a625-e6cc-4848-a1fe-b842c9e4c7d3",
+      "name": "Authentication",
+      "description": {
+        "content": "Nearly all of the endpoints in the API require authentication. Authentication is performed by providing an authentication token (interchangeably referred to as an API key) in the `X-Auth-Token` HTTP request header.\n\n<!-- ReDoc-Inject: <security-definitions> -->\n\nUser API keys can be obtained by creating them in the Equinix Metal Portal or by using the [Create a User API Key](#operation/createAPIKey) endpoint.\n\nProject API keys can also be obtained by creating them in the Equinix Metal Portal or by using the [Create a Project API Key](#operation/createProjectAPIKey) endpoint. Project API keys are scoped to a single project and can only be used to access resources within that project.\n\nFor example, to use an authenticated API token, you would make a request like the following:\n\n```bash\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user/api-keys\n```\n\nApplications can take advantage of the Equinix Metal API and API keys to perform any of the actions that can be performed in the Equinix Metal Portal. For example, you can use the API to create and manage devices, projects, and other resources.\n\nAPI keys can be deleted without affecting any of the resources created with them. Access to applications using the API can be revoked by deleting the API key used to authenticate the application.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d838928f-f6f9-41a0-9e4c-427af941ebdc",
+          "name": "Delete the API key",
+          "request": {
+            "name": "Delete the API key",
+            "description": {
+              "content": "Deletes the API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api-keys",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) API Key UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8bd39216-c52e-4952-bedd-9d9e202cb9a4",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "05d26e0f-a302-4fd0-a2c4-f6596367c0e3",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8385f44a-654b-48b2-b312-6923c219880d",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "168ad47b-02d1-4047-becc-a1c2f0dc0bce",
+          "name": "Retrieve all API keys for the project.",
+          "request": {
+            "name": "Retrieve all API keys for the project.",
+            "description": {
+              "content": "Returns all API keys for a specific project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab1076e5-00f8-48a6-9721-4a26c9f1c652",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_keys\": [\n    {\n      \"created_at\": \"1980-02-17T15:22:26.833Z\",\n      \"description\": \"string\",\n      \"id\": \"1b052e1a-e06a-5b23-c105-70c10740b801\",\n      \"project\": {\n        \"bgp_config\": {\n          \"href\": \"href\"\n        },\n        \"created_at\": \"1948-03-28T20:49:42.692Z\",\n        \"customdata\": {},\n        \"devices\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"href\": \"string\",\n        \"id\": \"bdab6b24-d582-e959-ee6c-29e462970fce\",\n        \"invitations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"max_devices\": {},\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"name\": \"string\",\n        \"network_status\": {},\n        \"organization\": {\n          \"website\": \"website\",\n          \"address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"projects\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"credit_amount\": 1.4658129,\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"description\": \"description\",\n          \"billing_address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"memberships\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"enforce_2fa_at\": \"2000-01-23 04:56:07+00:00\",\n          \"twitter\": \"twitter\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"terms\": 5,\n          \"members\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"name\": \"name\",\n          \"logo\": \"logo\",\n          \"customdata\": \"{}\"\n        },\n        \"payment_method\": {\n          \"href\": \"href\"\n        },\n        \"ssh_keys\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"updated_at\": \"1954-02-01T03:09:30.766Z\",\n        \"volumes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"type\": \"default\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"read_only\": true,\n      \"token\": \"string\",\n      \"updated_at\": \"1994-08-13T07:05:03.229Z\",\n      \"user\": {\n        \"avatar_thumb_url\": \"string\",\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1962-01-02T16:44:28.566Z\",\n        \"customdata\": {},\n        \"default_organization_id\": \"5c3f7075-6d29-e489-1649-81de5eff4258\",\n        \"default_project_id\": \"d1c52841-fa25-496c-73b3-8caf8d8af830\",\n        \"email\": \"string\",\n        \"emails\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"first_name\": \"string\",\n        \"fraud_score\": \"string\",\n        \"full_name\": \"string\",\n        \"href\": \"string\",\n        \"id\": \"dce4091c-12ce-7385-673a-d3efeb56b35e\",\n        \"last_login_at\": \"2015-02-12T11:43:48.214Z\",\n        \"last_name\": \"string\",\n        \"max_organizations\": 1455,\n        \"max_projects\": 7315,\n        \"phone_number\": \"string\",\n        \"short_id\": \"string\",\n        \"timezone\": \"string\",\n        \"two_factor_auth\": \"string\",\n        \"updated_at\": \"1963-05-26T12:22:01.332Z\"\n      }\n    },\n    {\n      \"created_at\": \"1956-09-28T02:29:26.907Z\",\n      \"description\": \"string\",\n      \"id\": \"b17a0040-0519-b60c-f528-a79ac4bbae01\",\n      \"project\": {\n        \"bgp_config\": {\n          \"href\": \"href\"\n        },\n        \"created_at\": \"1984-10-30T17:54:54.192Z\",\n        \"customdata\": {},\n        \"devices\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"href\": \"string\",\n        \"id\": \"58e23107-83b2-6413-0883-bb462517af4c\",\n        \"invitations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"max_devices\": {},\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"name\": \"string\",\n        \"network_status\": {},\n        \"organization\": {\n          \"website\": \"website\",\n          \"address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"projects\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"credit_amount\": 1.4658129,\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"description\": \"description\",\n          \"billing_address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"memberships\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"enforce_2fa_at\": \"2000-01-23 04:56:07+00:00\",\n          \"twitter\": \"twitter\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"terms\": 5,\n          \"members\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"name\": \"name\",\n          \"logo\": \"logo\",\n          \"customdata\": \"{}\"\n        },\n        \"payment_method\": {\n          \"href\": \"href\"\n        },\n        \"ssh_keys\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"updated_at\": \"1966-05-23T03:28:34.151Z\",\n        \"volumes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"type\": \"default\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"read_only\": true,\n      \"token\": \"string\",\n      \"updated_at\": \"1981-12-11T11:09:42.909Z\",\n      \"user\": {\n        \"avatar_thumb_url\": \"string\",\n        \"avatar_url\": \"string\",\n        \"created_at\": \"2014-05-07T05:24:04.411Z\",\n        \"customdata\": {},\n        \"default_organization_id\": \"007276b6-5db6-7ea0-0b2b-494bdc3aef9e\",\n        \"default_project_id\": \"e5e9743b-5f56-cd06-3fbe-4552b83bf7bb\",\n        \"email\": \"string\",\n        \"emails\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"first_name\": \"string\",\n        \"fraud_score\": \"string\",\n        \"full_name\": \"string\",\n        \"href\": \"string\",\n        \"id\": \"28880caa-6c52-cab2-53b6-691608216a32\",\n        \"last_login_at\": \"2007-04-16T14:38:39.764Z\",\n        \"last_name\": \"string\",\n        \"max_organizations\": 9094,\n        \"max_projects\": 74,\n        \"phone_number\": \"string\",\n        \"short_id\": \"string\",\n        \"timezone\": \"string\",\n        \"two_factor_auth\": \"string\",\n        \"updated_at\": \"1951-03-16T12:51:00.040Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9625dc0e-932b-488d-a416-75f9c2f31ca0",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acfc0a8e-8e02-4f10-9015-eb9d7b449373",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0dc0c6f-6509-448b-a879-fbd7ae46c4e5",
+          "name": "Create an API key for a project.",
+          "request": {
+            "name": "Create an API key for a project.",
+            "description": {
+              "content": "Creates an API key for a project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":id",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"read_only\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "098d9df0-241c-4d7b-9b21-678126c0e51b",
+              "name": "created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1998-05-31T15:38:42.422Z\",\n  \"description\": \"string\",\n  \"id\": \"198c1c76-07f0-0963-9eab-b4da2185309c\",\n  \"project\": {\n    \"bgp_config\": {\n      \"href\": \"href\"\n    },\n    \"created_at\": \"1988-07-12T16:43:03.863Z\",\n    \"customdata\": {},\n    \"devices\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"href\": \"string\",\n    \"id\": \"3d7e6c71-4ff4-b292-d04d-cd0605906d33\",\n    \"invitations\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"max_devices\": {},\n    \"members\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"memberships\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"name\": \"st\",\n    \"network_status\": {},\n    \"organization\": {\n      \"address\": {\n        \"country\": \"country\",\n        \"address\": \"address\",\n        \"address2\": \"address2\",\n        \"city\": \"city\",\n        \"coordinates\": {\n          \"latitude\": \"latitude\",\n          \"longitude\": \"longitude\"\n        },\n        \"state\": \"state\",\n        \"zip_code\": \"zip_code\"\n      },\n      \"billing_address\": {\n        \"country\": \"country\",\n        \"address\": \"address\",\n        \"address2\": \"address2\",\n        \"city\": \"city\",\n        \"coordinates\": {\n          \"latitude\": \"latitude\",\n          \"longitude\": \"longitude\"\n        },\n        \"state\": \"state\",\n        \"zip_code\": \"zip_code\"\n      },\n      \"created_at\": \"2017-11-08T03:43:35.017Z\",\n      \"credit_amount\": 3903.4768683301613,\n      \"customdata\": {},\n      \"description\": \"string\",\n      \"enforce_2fa_at\": \"2001-05-04T17:34:23.906Z\",\n      \"id\": \"89e5035e-736b-25e9-e77b-a5574c7d23ef\",\n      \"logo\": \"string\",\n      \"members\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"name\": \"string\",\n      \"projects\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"terms\": 2630,\n      \"twitter\": \"string\",\n      \"updated_at\": \"1950-03-13T04:13:46.982Z\",\n      \"website\": \"string\"\n    },\n    \"payment_method\": {\n      \"href\": \"href\"\n    },\n    \"ssh_keys\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"updated_at\": \"2020-01-09T12:37:21.663Z\",\n    \"volumes\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"type\": \"default\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"read_only\": true,\n  \"token\": \"string\",\n  \"updated_at\": \"1972-05-03T03:26:57.933Z\",\n  \"user\": {\n    \"avatar_thumb_url\": \"string\",\n    \"avatar_url\": \"string\",\n    \"created_at\": \"2010-06-04T18:27:33.194Z\",\n    \"customdata\": {},\n    \"default_organization_id\": \"83fc5825-7d18-8a38-f742-f11547531bd7\",\n    \"default_project_id\": \"ec4af31c-a18e-34c6-67cc-34fe8d682d17\",\n    \"email\": \"string\",\n    \"emails\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"first_name\": \"string\",\n    \"fraud_score\": \"string\",\n    \"full_name\": \"string\",\n    \"href\": \"string\",\n    \"id\": \"3e04dbf8-953f-1669-304a-6ad9bc0ff8ef\",\n    \"last_login_at\": \"2025-08-08T12:49:08.539Z\",\n    \"last_name\": \"string\",\n    \"max_organizations\": 1653,\n    \"max_projects\": 4564,\n    \"phone_number\": \"string\",\n    \"short_id\": \"string\",\n    \"timezone\": \"string\",\n    \"two_factor_auth\": \"string\",\n    \"updated_at\": \"1955-07-07T02:51:56.682Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99bd5895-1a83-4448-9e68-60008be70a43",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e268a50-db62-4967-816e-cfaf8d462945",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02cd1041-5198-455d-a888-51da6da38220",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f36040b-d1be-4c5f-aab6-cd0474286de9",
+          "name": "Retrieve all user API keys",
+          "request": {
+            "name": "Retrieve all user API keys",
+            "description": {
+              "content": "Returns all API keys for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "user",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search by description"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29614432-bd90-490e-8d5a-0e03eb132eb7",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_keys\": [\n    {\n      \"created_at\": \"1999-03-22T13:13:27.116Z\",\n      \"description\": \"string\",\n      \"id\": \"89fff9dc-b21d-23d8-0460-23a3e5dd6720\",\n      \"project\": {\n        \"bgp_config\": {\n          \"href\": \"href\"\n        },\n        \"created_at\": \"1969-12-12T23:38:25.621Z\",\n        \"customdata\": {},\n        \"devices\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"href\": \"string\",\n        \"id\": \"42dcd51b-afe8-4086-9f1d-a85dd000173d\",\n        \"invitations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"max_devices\": {},\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"name\": \"string\",\n        \"network_status\": {},\n        \"organization\": {\n          \"website\": \"website\",\n          \"address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"projects\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"credit_amount\": 1.4658129,\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"description\": \"description\",\n          \"billing_address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"memberships\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"enforce_2fa_at\": \"2000-01-23 04:56:07+00:00\",\n          \"twitter\": \"twitter\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"terms\": 5,\n          \"members\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"name\": \"name\",\n          \"logo\": \"logo\",\n          \"customdata\": \"{}\"\n        },\n        \"payment_method\": {\n          \"href\": \"href\"\n        },\n        \"ssh_keys\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"updated_at\": \"2001-01-28T06:01:28.916Z\",\n        \"volumes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"type\": \"default\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"read_only\": true,\n      \"token\": \"string\",\n      \"updated_at\": \"1985-04-15T01:26:16.838Z\",\n      \"user\": {\n        \"avatar_thumb_url\": \"string\",\n        \"avatar_url\": \"string\",\n        \"created_at\": \"1951-03-08T12:05:56.396Z\",\n        \"customdata\": {},\n        \"default_organization_id\": \"cf5047b6-1125-8371-356b-382216c8e5bc\",\n        \"default_project_id\": \"b5885d31-ac40-76eb-da13-da6327b2fd93\",\n        \"email\": \"string\",\n        \"emails\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"first_name\": \"string\",\n        \"fraud_score\": \"string\",\n        \"full_name\": \"string\",\n        \"href\": \"string\",\n        \"id\": \"7d1c6172-0b59-81ea-ac63-572c33f0a9bc\",\n        \"last_login_at\": \"1981-09-28T00:12:47.255Z\",\n        \"last_name\": \"string\",\n        \"max_organizations\": 6951,\n        \"max_projects\": 2494,\n        \"phone_number\": \"string\",\n        \"short_id\": \"string\",\n        \"timezone\": \"string\",\n        \"two_factor_auth\": \"string\",\n        \"updated_at\": \"1987-01-01T14:32:39.881Z\"\n      }\n    },\n    {\n      \"created_at\": \"1984-07-03T22:38:29.556Z\",\n      \"description\": \"string\",\n      \"id\": \"32ea4799-d0d2-90b0-5155-616fc69d48af\",\n      \"project\": {\n        \"bgp_config\": {\n          \"href\": \"href\"\n        },\n        \"created_at\": \"1992-01-15T23:31:33.070Z\",\n        \"customdata\": {},\n        \"devices\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"href\": \"string\",\n        \"id\": \"70e90284-b671-0e69-2917-faf8a0f659ba\",\n        \"invitations\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"max_devices\": {},\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"memberships\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"name\": \"string\",\n        \"network_status\": {},\n        \"organization\": {\n          \"website\": \"website\",\n          \"address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"projects\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"credit_amount\": 1.4658129,\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"description\": \"description\",\n          \"billing_address\": {\n            \"country\": \"country\",\n            \"address\": \"address\",\n            \"address2\": \"address2\",\n            \"city\": \"city\",\n            \"coordinates\": {\n              \"latitude\": \"latitude\",\n              \"longitude\": \"longitude\"\n            },\n            \"state\": \"state\",\n            \"zip_code\": \"zip_code\"\n          },\n          \"memberships\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"enforce_2fa_at\": \"2000-01-23 04:56:07+00:00\",\n          \"twitter\": \"twitter\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"terms\": 5,\n          \"members\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"name\": \"name\",\n          \"logo\": \"logo\",\n          \"customdata\": \"{}\"\n        },\n        \"payment_method\": {\n          \"href\": \"href\"\n        },\n        \"ssh_keys\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"updated_at\": \"2016-05-31T12:59:45.975Z\",\n        \"volumes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"type\": \"default\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"read_only\": false,\n      \"token\": \"string\",\n      \"updated_at\": \"1995-07-29T08:24:42.772Z\",\n      \"user\": {\n        \"avatar_thumb_url\": \"string\",\n        \"avatar_url\": \"string\",\n        \"created_at\": \"2005-05-15T07:27:47.234Z\",\n        \"customdata\": {},\n        \"default_organization_id\": \"38a62a0b-e044-b3b9-c01a-3e264194b018\",\n        \"default_project_id\": \"93583a35-3389-1445-db5e-0163e4e6023b\",\n        \"email\": \"string\",\n        \"emails\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"first_name\": \"string\",\n        \"fraud_score\": \"string\",\n        \"full_name\": \"string\",\n        \"href\": \"string\",\n        \"id\": \"6254e56f-7ed3-08f6-8c8a-6534da66008a\",\n        \"last_login_at\": \"1954-02-26T00:17:07.162Z\",\n        \"last_name\": \"string\",\n        \"max_organizations\": 6999,\n        \"max_projects\": 5357,\n        \"phone_number\": \"string\",\n        \"short_id\": \"string\",\n        \"timezone\": \"string\",\n        \"two_factor_auth\": \"string\",\n        \"updated_at\": \"1948-06-03T18:31:09.887Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31bfb8dc-c795-4ae6-9406-ca8de657645b",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baed040a-d3dd-493a-bf70-14d1dee6f600",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0800c64-7ff9-4302-8c84-f46fe6e4d29b",
+          "name": "Create an API key",
+          "request": {
+            "name": "Create an API key",
+            "description": {
+              "content": "Creates a API key for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "user",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"read_only\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1543a7e5-cf5d-4978-9c0a-ec63d3aca2b4",
+              "name": "created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1995-03-10T11:55:13.796Z\",\n  \"description\": \"string\",\n  \"id\": \"57c5f298-fd95-9b93-9135-a6f7afb8c0af\",\n  \"project\": {\n    \"bgp_config\": {\n      \"href\": \"href\"\n    },\n    \"created_at\": \"1992-07-27T09:33:21.488Z\",\n    \"customdata\": {},\n    \"devices\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"href\": \"string\",\n    \"id\": \"dcc4b6ea-2c57-268b-c182-cde3ace50708\",\n    \"invitations\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"max_devices\": {},\n    \"members\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"memberships\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"name\": \"string\",\n    \"network_status\": {},\n    \"organization\": {\n      \"address\": {\n        \"country\": \"country\",\n        \"address\": \"address\",\n        \"address2\": \"address2\",\n        \"city\": \"city\",\n        \"coordinates\": {\n          \"latitude\": \"latitude\",\n          \"longitude\": \"longitude\"\n        },\n        \"state\": \"state\",\n        \"zip_code\": \"zip_code\"\n      },\n      \"billing_address\": {\n        \"country\": \"country\",\n        \"address\": \"address\",\n        \"address2\": \"address2\",\n        \"city\": \"city\",\n        \"coordinates\": {\n          \"latitude\": \"latitude\",\n          \"longitude\": \"longitude\"\n        },\n        \"state\": \"state\",\n        \"zip_code\": \"zip_code\"\n      },\n      \"created_at\": \"1949-04-22T05:24:08.884Z\",\n      \"credit_amount\": 6740.365031851599,\n      \"customdata\": {},\n      \"description\": \"string\",\n      \"enforce_2fa_at\": \"1997-07-14T15:44:17.832Z\",\n      \"id\": \"0df6aeaf-fc73-abdf-afae-45ecccd80dd6\",\n      \"logo\": \"string\",\n      \"members\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"memberships\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"name\": \"string\",\n      \"projects\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"terms\": 7650,\n      \"twitter\": \"string\",\n      \"updated_at\": \"2026-03-03T01:39:52.739Z\",\n      \"website\": \"string\"\n    },\n    \"payment_method\": {\n      \"href\": \"href\"\n    },\n    \"ssh_keys\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"updated_at\": \"1973-10-27T21:45:40.778Z\",\n    \"volumes\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"type\": \"default\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"read_only\": true,\n  \"token\": \"string\",\n  \"updated_at\": \"2015-03-21T00:51:15.696Z\",\n  \"user\": {\n    \"avatar_thumb_url\": \"string\",\n    \"avatar_url\": \"string\",\n    \"created_at\": \"1997-06-30T05:59:47.649Z\",\n    \"customdata\": {},\n    \"default_organization_id\": \"3327285f-55ca-a710-d4c1-2f68b354c106\",\n    \"default_project_id\": \"7410afa1-aa6c-e05c-10b5-c752f0c595a6\",\n    \"email\": \"string\",\n    \"emails\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"first_name\": \"string\",\n    \"fraud_score\": \"string\",\n    \"full_name\": \"string\",\n    \"href\": \"string\",\n    \"id\": \"ff5b1470-586f-b187-3da9-9af24c113488\",\n    \"last_login_at\": \"1960-02-29T15:06:40.359Z\",\n    \"last_name\": \"string\",\n    \"max_organizations\": 2335,\n    \"max_projects\": 3991,\n    \"phone_number\": \"string\",\n    \"short_id\": \"string\",\n    \"timezone\": \"string\",\n    \"two_factor_auth\": \"string\",\n    \"updated_at\": \"2018-09-06T16:26:37.648Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9090e3c-281d-4131-8439-67e02f702531",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d862f72-c837-45c2-8ff1-2d9153b2696b",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c4cd5d-a811-4203-9423-04c0be5b26a4",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"read_only\": true,\n  \"description\": \"description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2d710d5-8f25-4e6e-8289-9b629cfecb01",
+          "name": "Delete the API key",
+          "request": {
+            "name": "Delete the API key",
+            "description": {
+              "content": "Deletes the current user API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "user",
+                "api-keys",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) API Key UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f40868ef-4255-4664-bfe6-c940a4b50b37",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3a6fa39-29aa-40d7-aae7-b1d18249af1c",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e9039ec-99f1-4dbf-8164-069964951af8",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "api-keys",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) API Key UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.equinix.com/metal/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "96470341-c988-4539-bab1-6fb6e9e0f077",
+    "name": "Metal Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n\n\nContact Support:\n Name: Equinix Metal API Team\n Email: support@equinixmetal.com",
+      "type": "text/plain"
+    }
+  }
+}

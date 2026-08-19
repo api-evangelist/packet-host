@@ -1,0 +1,4713 @@
+{
+  "item": [
+    {
+      "id": "ba202481-88ae-4a45-8b94-7c8d9813b6a7",
+      "name": "Ports",
+      "description": {
+        "content": "Port ManagementCheck out the product docs to learn more about [Port configurations](https://metal.equinix.com/developers/docs/layer2-networking/overview/).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc7d64a9-fb10-402f-8fa2-cf3a9f4f1fdd",
+          "name": "Retrieve a port",
+          "request": {
+            "name": "Retrieve a port",
+            "description": {
+              "content": "Returns a port",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e32aa57-6b5d-429a-8653-c9e5b9eb340d",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": false,\n  \"href\": \"string\",\n  \"id\": \"8458a592-bd3c-e69d-36fc-e1d59ba40a1c\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkPort\",\n  \"network_type\": \"hybrid\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"2022-05-23T06:31:38.386Z\",\n    \"id\": \"19b7432c-a493-a3d4-1f12-315a629872ff\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"1969-09-07T01:04:07.491Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"170160a4-0cc7-c633-ed0d-028b4f1e38b9\",\n        \"state\": \"ready\",\n        \"updated_at\": \"2021-02-02T20:25:24.977Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1961-12-23T10:06:07.890Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"a117b389-64d3-f107-543d-abd75f73dc4c\",\n        \"state\": \"active\",\n        \"updated_at\": \"1961-12-04T19:30:24.228Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 9413,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "110b7507-b987-4bce-9d1f-b5cef8d0f86e",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f11db633-0ca8-4914-93f4-69a4efee8c34",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed0347cc-3327-423e-81db-5be73700dcb7",
+          "name": "Assign a port to virtual network",
+          "request": {
+            "name": "Assign a port to virtual network",
+            "description": {
+              "content": "Assign a hardware port to a virtual network.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "assign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vnid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60018592-b163-4e6e-ac10-057b6b772c4e",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3890c9e-bb66-48b1-832d-9553a8ae1db8",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "060581f3-058b-47ae-8b7e-94df44dc713d",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26ebb9a6-1d4b-4cef-acdc-c8f5a89cf7db",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a095628-4802-4ba3-a887-dcc7bafde484",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9824649d-4040-4bb6-8e73-66e4da3a3fe1",
+          "name": "Enabling bonding",
+          "request": {
+            "name": "Enabling bonding",
+            "description": {
+              "content": "Enabling bonding for one or all ports",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "bond"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bulk_enable",
+                  "value": "<boolean>",
+                  "description": "enable both ports"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f43599e7-dfdb-4cd3-b335-0762100e0749",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "bond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_enable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10c9700a-0220-4a2d-a5a1-084f636a8819",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "bond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_enable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c588e35c-1aee-4ca7-815a-b65002b5cab4",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "bond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_enable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff176aa9-8f41-48c4-b91e-ed8a1327538c",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "bond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_enable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc1b5a6b-e3c5-4da1-829e-93851b5afa7a",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "bond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_enable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd0be26d-d9f5-41f4-b58e-eddf9b851801",
+          "name": "Convert to Layer 2",
+          "request": {
+            "name": "Convert to Layer 2",
+            "description": {
+              "content": "Converts a bond port to Layer 2. IP assignments of the port will be removed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "convert",
+                "layer-2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vnid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b687b4a-d435-428c-8dbf-7059b874fc35",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b9869f3-6ac9-47ab-ba1b-9672b294e876",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda990ae-98f0-43f6-97e5-c04bac5a3552",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb5c6451-da04-42ac-9026-9fe0c1891d31",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a875a4f8-ffbf-440f-b494-86efcc07db2e",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "417036a8-77e8-433a-b409-b8127925a84e",
+          "name": "Convert to Layer 3",
+          "request": {
+            "name": "Convert to Layer 3",
+            "description": {
+              "content": "Converts a bond port to Layer 3. VLANs must first be unassigned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "convert",
+                "layer-3"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": \"<integer>\",\n      \"public\": \"<boolean>\"\n    },\n    {\n      \"address_family\": \"<integer>\",\n      \"public\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f612edc-edab-4009-a954-3352229ddfaa",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": 0,\n      \"public\": true\n    },\n    {\n      \"address_family\": 0,\n      \"public\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b37e5fdb-d76c-452b-830c-d06360f303f2",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": 0,\n      \"public\": true\n    },\n    {\n      \"address_family\": 0,\n      \"public\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fda2f645-e93e-4689-af65-39bb02888f4e",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": 0,\n      \"public\": true\n    },\n    {\n      \"address_family\": 0,\n      \"public\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c65386e-1297-4bf9-9905-f0606caa789e",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": 0,\n      \"public\": true\n    },\n    {\n      \"address_family\": 0,\n      \"public\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1729bfd5-0cd7-42ce-acd3-3261f6c15726",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "convert",
+                    "layer-3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ips\": [\n    {\n      \"address_family\": 0,\n      \"public\": true\n    },\n    {\n      \"address_family\": 0,\n      \"public\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4e184b6-c77d-45f6-8f2f-a42b5ecdbdf7",
+          "name": "Disabling bonding",
+          "request": {
+            "name": "Disabling bonding",
+            "description": {
+              "content": "Disabling bonding for one or all ports",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "disbond"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bulk_disable",
+                  "value": "<boolean>",
+                  "description": "disable both ports"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc8c7ad9-13ce-4031-a4c3-28ef1641cfe5",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "disbond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_disable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5e1d783-2f7c-4631-9563-13633e761a47",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "disbond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_disable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fb19b38-c8cc-4120-8639-a64c8d6a1c67",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "disbond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_disable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a7ccd5a-2731-4d70-a45b-35559d3127a2",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "disbond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_disable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96abacb8-4fed-4259-9c8c-16d1de5c2682",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "disbond"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bulk_disable",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d1ffeba-e4ab-4cd4-97ba-a83a5a07c436",
+          "name": "Remove native VLAN",
+          "request": {
+            "name": "Remove native VLAN",
+            "description": {
+              "content": "Removes the native VLAN from this port",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "native-vlan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db7ac6b8-4f7c-462d-8197-2c5af9066bad",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb8253d3-6601-40c2-ab60-f4b5b81c9d6c",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7c94e5f-f10a-4970-bbe9-9980445390e0",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1be85ac-a11e-4bd6-bfc1-d233f3fb73ed",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "827c3b3a-8cc5-4cf8-aeed-33c936754a1d",
+          "name": "Assign a native VLAN",
+          "request": {
+            "name": "Assign a native VLAN",
+            "description": {
+              "content": "Sets a virtual network on this port as a \"native VLAN\". The VLAN must have already been assigned using the using the \"Assign a port to a virtual network\" operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "native-vlan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "vnid",
+                  "value": "<string>",
+                  "description": "(Required) Virtual Network ID. May be the UUID of the Virtual Network record, or the VLAN value itself (ex: '1001')."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d6758e5-99fb-4408-b86e-cd23bc9a964e",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vnid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "004d1e1e-3bdd-4415-b9f5-736a9671dc9d",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vnid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c52da613-c5b8-4004-a832-992e507b2eac",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vnid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3473f78b-c680-4a05-9011-08bd720746fc",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "native-vlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "vnid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2957fce-83d0-41c4-9e32-d3a4321eaec9",
+          "name": "Unassign a port",
+          "request": {
+            "name": "Unassign a port",
+            "description": {
+              "content": "Unassign a port for a hardware.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "unassign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vnid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd0d1f5b-2c34-4f9b-bfe7-2f77bc96880c",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bond\": {\n    \"name\": \"name\"\n  },\n  \"data\": {\n    \"bonded\": true,\n    \"mac\": \"mac\"\n  },\n  \"disbond_operation_supported\": true,\n  \"href\": \"string\",\n  \"id\": \"c9dbb4a2-7d98-f5ed-bab7-cd335b00e122\",\n  \"name\": \"bond0\",\n  \"type\": \"NetworkBondPort\",\n  \"network_type\": \"layer2-bonded\",\n  \"native_virtual_network\": {\n    \"assigned_to\": {\n      \"href\": \"href\"\n    },\n    \"assigned_to_virtual_circuit\": false,\n    \"description\": \"string\",\n    \"facility\": {\n      \"href\": \"href\"\n    },\n    \"href\": \"string\",\n    \"created_at\": \"1976-12-21T05:22:30.301Z\",\n    \"id\": \"d21cea17-b07c-b123-4235-b639d3de2b49\",\n    \"instances\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ],\n    \"metal_gateways\": [\n      {\n        \"created_at\": \"2008-01-02T05:00:35.016Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"d54de500-fd97-d058-a5e9-c7eca550cfcf\",\n        \"state\": \"ready\",\n        \"updated_at\": \"1996-06-24T03:22:47.484Z\",\n        \"vlan\": 1001\n      },\n      {\n        \"created_at\": \"1957-01-16T04:21:21.487Z\",\n        \"gateway_address\": \"10.1.2.1/27\",\n        \"href\": \"string\",\n        \"id\": \"b0f0d309-44a4-d07a-5a23-01abb2830190\",\n        \"state\": \"active\",\n        \"updated_at\": \"1966-02-08T18:42:52.520Z\",\n        \"vlan\": 1001\n      }\n    ],\n    \"metro\": {\n      \"href\": \"href\"\n    },\n    \"metro_code\": \"string\",\n    \"vxlan\": 4519,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"virtual_networks\": [\n    {\n      \"href\": \"href\"\n    },\n    {\n      \"href\": \"href\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6e24cbe-8442-4b8b-b6ee-53f759596a50",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72be324c-c285-4d2a-a2c5-8e42c74a42b3",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "480972d0-1218-4b3a-be6d-42497f4ea77f",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b20741b3-db2f-435b-9079-1e71a9071bfb",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "unassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa39c50f-3366-4e69-86ff-58a1afbea6a3",
+          "name": "List Current VLAN assignments for a port",
+          "request": {
+            "name": "List Current VLAN assignments for a port",
+            "description": {
+              "content": "Show the port's current VLAN assignments, including if this VLAN is set as native, and the current state of the assignment (ex. 'assigned' or 'unassigning')",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "vlan-assignments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "port",
+                  "description": "Nested attributes to include. Included objects will return their full attributes. Attribute names can be dotted (up to 3 levels) to included deeply nested objects."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "virtual_network",
+                  "description": "Nested attributes to include. Included objects will return their full attributes. Attribute names can be dotted (up to 3 levels) to included deeply nested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdbddfe9-e4e2-4d4c-958e-4f0e9e64dc15",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vlan_assignments\": [\n    {\n      \"created_at\": \"1996-09-27T10:04:10.231Z\",\n      \"id\": \"8e5d8310-0d91-3d41-1fc1-9aad6fbe9c44\",\n      \"native\": false,\n      \"port\": {\n        \"href\": \"href\"\n      },\n      \"state\": \"unassigning\",\n      \"updated_at\": \"1948-08-29T07:19:14.444Z\",\n      \"virtual_network\": {\n        \"href\": \"href\"\n      },\n      \"vlan\": 4229\n    },\n    {\n      \"created_at\": \"1965-06-05T02:30:23.190Z\",\n      \"id\": \"7d5eef8f-b9ea-2d3c-3ec7-9a42f780572b\",\n      \"native\": true,\n      \"port\": {\n        \"href\": \"href\"\n      },\n      \"state\": \"unassigning\",\n      \"updated_at\": \"1977-12-17T01:13:19.579Z\",\n      \"virtual_network\": {\n        \"href\": \"href\"\n      },\n      \"vlan\": 7326\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64ee8711-ba4e-4b99-a80d-a551418d4e6c",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a618dd4-1e7e-47a6-a14d-9c664cc7eb48",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eb2ce51-9d4f-4444-8d44-c2ff41b52f54",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "adee3f53-9232-4393-b051-510449f98f7f",
+          "name": "Show a particular Port VLAN assignment's details",
+          "request": {
+            "name": "Show a particular Port VLAN assignment's details",
+            "description": {
+              "content": "Show the details of a specific Port-VLAN assignment, including the current state and if the VLAN is set as native.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "vlan-assignments",
+                ":assignment_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "port",
+                  "description": "Nested attributes to include. Included objects will return their full attributes. Attribute names can be dotted (up to 3 levels) to included deeply nested objects."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "virtual_network",
+                  "description": "Nested attributes to include. Included objects will return their full attributes. Attribute names can be dotted (up to 3 levels) to included deeply nested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "assignment_id",
+                  "description": "(Required) Assignment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9148fb06-563e-4de2-8308-4655e8940b49",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    ":assignment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "assignment_id",
+                      "description": "(Required) Assignment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1977-02-09T22:58:42.446Z\",\n  \"id\": \"5feed834-857a-bc97-47c3-c8fe511bd23b\",\n  \"native\": true,\n  \"port\": {\n    \"href\": \"href\"\n  },\n  \"state\": \"unassigning\",\n  \"updated_at\": \"1974-07-02T01:36:15.077Z\",\n  \"virtual_network\": {\n    \"href\": \"href\"\n  },\n  \"vlan\": 5077\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab8d5f55-49c8-48a9-ae33-0c4d95dd6421",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    ":assignment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "assignment_id",
+                      "description": "(Required) Assignment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "474dfeca-6892-4588-aeda-9f8fa86e3a99",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    ":assignment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "assignment_id",
+                      "description": "(Required) Assignment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2d8871f-297e-48b5-9ca6-3ad963a66723",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    ":assignment_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "port"
+                    },
+                    {
+                      "key": "include",
+                      "value": "virtual_network"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "assignment_id",
+                      "description": "(Required) Assignment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bc334b7-e62a-4149-b232-8458b549d0a2",
+          "name": "List the VLAN Assignment Batches for a port",
+          "request": {
+            "name": "List the VLAN Assignment Batches for a port",
+            "description": {
+              "content": "Show all the VLAN assignment batches that have been created for managing this port's VLAN assignments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "vlan-assignments",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3eb07ddf-c92d-4b62-a7a2-5b04cddd6e64",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batches\": [\n    {\n      \"created_at\": \"1963-11-16T12:22:17.724Z\",\n      \"error_messages\": [\n        \"string\",\n        \"string\"\n      ],\n      \"id\": \"db8ecf5b-1e8e-671f-840f-c3e49ecc4e49\",\n      \"port\": {\n        \"bond\": {\n          \"name\": \"name\"\n        },\n        \"data\": {\n          \"bonded\": true,\n          \"mac\": \"mac\"\n        },\n        \"disbond_operation_supported\": false,\n        \"href\": \"string\",\n        \"id\": \"b307beef-43db-432e-76b5-5d5888fb41f9\",\n        \"name\": \"bond0\",\n        \"type\": \"NetworkBondPort\",\n        \"network_type\": \"layer2-individual\",\n        \"native_virtual_network\": {\n          \"vxlan\": 4,\n          \"instances\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"description\": \"description\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"assigned_to_virtual_circuit\": true,\n          \"tags\": [\n            \"tags\",\n            \"tags\"\n          ],\n          \"metal_gateways\": [\n            {\n              \"gateway_address\": \"10.1.2.1/27\",\n              \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n              \"vlan\": 1001,\n              \"created_at\": \"2000-01-23 04:56:07+00:00\",\n              \"href\": \"href\",\n              \"state\": null\n            },\n            {\n              \"gateway_address\": \"10.1.2.1/27\",\n              \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n              \"vlan\": 1001,\n              \"created_at\": \"2000-01-23 04:56:07+00:00\",\n              \"href\": \"href\",\n              \"state\": null\n            }\n          ],\n          \"metro_code\": \"metro_code\",\n          \"metro\": {\n            \"href\": \"href\"\n          },\n          \"href\": \"href\",\n          \"facility\": {\n            \"href\": \"href\"\n          },\n          \"assigned_to\": {\n            \"href\": \"href\"\n          }\n        },\n        \"virtual_networks\": [\n          {\n            \"href\": \"href\"\n          },\n          {\n            \"href\": \"href\"\n          }\n        ]\n      },\n      \"quantity\": 4067,\n      \"state\": \"in_progress\",\n      \"updated_at\": \"1951-03-29T22:13:17.641Z\",\n      \"vlan_assignments\": [\n        {\n          \"id\": \"fd970b1b-f685-16d0-0e11-bf99facef554\",\n          \"native\": false,\n          \"state\": \"unassigned\",\n          \"vlan\": 7994\n        },\n        {\n          \"id\": \"9145f1e0-7062-0b29-d0bb-b512303c5145\",\n          \"native\": false,\n          \"state\": \"unassigned\",\n          \"vlan\": 7201\n        }\n      ],\n      \"project\": {\n        \"href\": \"href\"\n      }\n    },\n    {\n      \"created_at\": \"1975-01-17T06:07:21.675Z\",\n      \"error_messages\": [\n        \"string\",\n        \"string\"\n      ],\n      \"id\": \"e2c14a4c-2924-2e8b-2a11-e89c4c0e1ba3\",\n      \"port\": {\n        \"bond\": {\n          \"name\": \"name\"\n        },\n        \"data\": {\n          \"bonded\": true,\n          \"mac\": \"mac\"\n        },\n        \"disbond_operation_supported\": true,\n        \"href\": \"string\",\n        \"id\": \"48a631b7-8da2-e4b6-1044-836e07f64519\",\n        \"name\": \"bond0\",\n        \"type\": \"NetworkBondPort\",\n        \"network_type\": \"hybrid\",\n        \"native_virtual_network\": {\n          \"vxlan\": 4,\n          \"instances\": [\n            {\n              \"href\": \"href\"\n            },\n            {\n              \"href\": \"href\"\n            }\n          ],\n          \"description\": \"description\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"assigned_to_virtual_circuit\": true,\n          \"tags\": [\n            \"tags\",\n            \"tags\"\n          ],\n          \"metal_gateways\": [\n            {\n              \"gateway_address\": \"10.1.2.1/27\",\n              \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n              \"vlan\": 1001,\n              \"created_at\": \"2000-01-23 04:56:07+00:00\",\n              \"href\": \"href\",\n              \"state\": null\n            },\n            {\n              \"gateway_address\": \"10.1.2.1/27\",\n              \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n              \"vlan\": 1001,\n              \"created_at\": \"2000-01-23 04:56:07+00:00\",\n              \"href\": \"href\",\n              \"state\": null\n            }\n          ],\n          \"metro_code\": \"metro_code\",\n          \"metro\": {\n            \"href\": \"href\"\n          },\n          \"href\": \"href\",\n          \"facility\": {\n            \"href\": \"href\"\n          },\n          \"assigned_to\": {\n            \"href\": \"href\"\n          }\n        },\n        \"virtual_networks\": [\n          {\n            \"href\": \"href\"\n          },\n          {\n            \"href\": \"href\"\n          }\n        ]\n      },\n      \"quantity\": 1969,\n      \"state\": \"failed\",\n      \"updated_at\": \"1949-09-17T15:26:17.455Z\",\n      \"vlan_assignments\": [\n        {\n          \"id\": \"cddfa386-bd66-0750-b781-d4616dc02b2c\",\n          \"native\": true,\n          \"state\": \"unassigned\",\n          \"vlan\": 3853\n        },\n        {\n          \"id\": \"d30dd607-437e-d4a7-1aa9-f608d1f93fad\",\n          \"native\": false,\n          \"state\": \"assigned\",\n          \"vlan\": 4096\n        }\n      ],\n      \"project\": {\n        \"href\": \"href\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c37ef5a-e7db-4122-a630-e47d775af478",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f24bcf23-7abd-4873-b8be-fa2f8c32abbf",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0117a6b1-9f0c-4e21-869e-ec8ccba6b157",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "787c87ef-e260-4803-b147-07e2f9bfcd5d",
+          "name": "Create a new Port-VLAN Assignment management batch",
+          "request": {
+            "name": "Create a new Port-VLAN Assignment management batch",
+            "description": {
+              "content": "Create a new asynchronous batch request which handles adding and/or removing the VLANs to which the port is assigned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "vlan-assignments",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1a57f76-8e14-4cb8-a932-60d412ee3529",
+              "name": "created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-12-13T13:01:01.021Z\",\n  \"error_messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"id\": \"892e17d6-7d27-c85e-e801-46b940810113\",\n  \"port\": {\n    \"bond\": {\n      \"name\": \"name\"\n    },\n    \"data\": {\n      \"bonded\": true,\n      \"mac\": \"mac\"\n    },\n    \"disbond_operation_supported\": true,\n    \"href\": \"string\",\n    \"id\": \"d3d438e6-c627-6622-6722-427ae406f9bb\",\n    \"name\": \"bond0\",\n    \"type\": \"NetworkPort\",\n    \"network_type\": \"layer3\",\n    \"native_virtual_network\": {\n      \"assigned_to\": {\n        \"href\": \"href\"\n      },\n      \"assigned_to_virtual_circuit\": false,\n      \"description\": \"string\",\n      \"facility\": {\n        \"href\": \"href\"\n      },\n      \"href\": \"string\",\n      \"created_at\": \"1962-03-05T01:07:12.563Z\",\n      \"id\": \"3472d2da-bb31-14d4-61e9-311c7022b406\",\n      \"instances\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"metal_gateways\": [\n        {\n          \"created_at\": \"2012-03-04T05:00:31.973Z\",\n          \"gateway_address\": \"10.1.2.1/27\",\n          \"href\": \"string\",\n          \"id\": \"d1588d29-00f3-d56e-4ca7-fb97c20f7b0d\",\n          \"state\": \"ready\",\n          \"updated_at\": \"1953-10-26T05:20:36.779Z\",\n          \"vlan\": 1001\n        },\n        {\n          \"created_at\": \"1990-11-12T06:49:23.017Z\",\n          \"gateway_address\": \"10.1.2.1/27\",\n          \"href\": \"string\",\n          \"id\": \"d484b98c-a0fb-d673-bae1-2d75904e6426\",\n          \"state\": \"active\",\n          \"updated_at\": \"1957-05-01T13:17:07.690Z\",\n          \"vlan\": 1001\n        }\n      ],\n      \"metro\": {\n        \"href\": \"href\"\n      },\n      \"metro_code\": \"string\",\n      \"vxlan\": 1225,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"virtual_networks\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ]\n  },\n  \"quantity\": 5842,\n  \"state\": \"in_progress\",\n  \"updated_at\": \"1954-08-22T10:04:48.403Z\",\n  \"vlan_assignments\": [\n    {\n      \"id\": \"5a7b48aa-8037-ca31-24e0-c422fe6e020b\",\n      \"native\": false,\n      \"state\": \"<string>\",\n      \"vlan\": 4254\n    },\n    {\n      \"id\": \"5d3bee73-8071-210e-582c-d3e50fb87d91\",\n      \"native\": true,\n      \"state\": \"<string>\",\n      \"vlan\": 3899\n    }\n  ],\n  \"project\": {\n    \"href\": \"href\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb4bd364-4585-4c04-af90-956e73b462e3",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c148e0c-19ec-4b57-803d-eedfedee9b2d",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8b49043-90e2-4be5-bb28-1278dd542ce6",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2f7b364-f89c-453e-8d3a-ce5e0a1f21ce",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vlan_assignments\": [\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    },\n    {\n      \"native\": \"<boolean>\",\n      \"state\": \"<string>\",\n      \"vlan\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7826459-cef7-48ac-bbbe-50603a44a8a8",
+          "name": "Retrieve a VLAN Assignment Batch's details",
+          "request": {
+            "name": "Retrieve a VLAN Assignment Batch's details",
+            "description": {
+              "content": "Returns the details of an existing Port-VLAN Assignment batch, including the list of VLANs to assign or unassign, and the current state of the batch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ports",
+                ":id",
+                "vlan-assignments",
+                "batches",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Port UUID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "batch_id",
+                  "description": "(Required) Batch ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89708149-5a79-4fa5-8ad9-6b210a614b08",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "batch_id",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1997-12-13T13:01:01.021Z\",\n  \"error_messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"id\": \"892e17d6-7d27-c85e-e801-46b940810113\",\n  \"port\": {\n    \"bond\": {\n      \"name\": \"name\"\n    },\n    \"data\": {\n      \"bonded\": true,\n      \"mac\": \"mac\"\n    },\n    \"disbond_operation_supported\": true,\n    \"href\": \"string\",\n    \"id\": \"d3d438e6-c627-6622-6722-427ae406f9bb\",\n    \"name\": \"bond0\",\n    \"type\": \"NetworkPort\",\n    \"network_type\": \"layer3\",\n    \"native_virtual_network\": {\n      \"assigned_to\": {\n        \"href\": \"href\"\n      },\n      \"assigned_to_virtual_circuit\": false,\n      \"description\": \"string\",\n      \"facility\": {\n        \"href\": \"href\"\n      },\n      \"href\": \"string\",\n      \"created_at\": \"1962-03-05T01:07:12.563Z\",\n      \"id\": \"3472d2da-bb31-14d4-61e9-311c7022b406\",\n      \"instances\": [\n        {\n          \"href\": \"href\"\n        },\n        {\n          \"href\": \"href\"\n        }\n      ],\n      \"metal_gateways\": [\n        {\n          \"created_at\": \"2012-03-04T05:00:31.973Z\",\n          \"gateway_address\": \"10.1.2.1/27\",\n          \"href\": \"string\",\n          \"id\": \"d1588d29-00f3-d56e-4ca7-fb97c20f7b0d\",\n          \"state\": \"ready\",\n          \"updated_at\": \"1953-10-26T05:20:36.779Z\",\n          \"vlan\": 1001\n        },\n        {\n          \"created_at\": \"1990-11-12T06:49:23.017Z\",\n          \"gateway_address\": \"10.1.2.1/27\",\n          \"href\": \"string\",\n          \"id\": \"d484b98c-a0fb-d673-bae1-2d75904e6426\",\n          \"state\": \"active\",\n          \"updated_at\": \"1957-05-01T13:17:07.690Z\",\n          \"vlan\": 1001\n        }\n      ],\n      \"metro\": {\n        \"href\": \"href\"\n      },\n      \"metro_code\": \"string\",\n      \"vxlan\": 1225,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"virtual_networks\": [\n      {\n        \"href\": \"href\"\n      },\n      {\n        \"href\": \"href\"\n      }\n    ]\n  },\n  \"quantity\": 5842,\n  \"state\": \"in_progress\",\n  \"updated_at\": \"1954-08-22T10:04:48.403Z\",\n  \"vlan_assignments\": [\n    {\n      \"id\": \"5a7b48aa-8037-ca31-24e0-c422fe6e020b\",\n      \"native\": false,\n      \"state\": \"<string>\",\n      \"vlan\": 4254\n    },\n    {\n      \"id\": \"5d3bee73-8071-210e-582c-d3e50fb87d91\",\n      \"native\": true,\n      \"state\": \"<string>\",\n      \"vlan\": 3899\n    }\n  ],\n  \"project\": {\n    \"href\": \"href\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a89cadc5-cb90-4e5f-aa86-1ffc5ef5e2ff",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "batch_id",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc06f6c3-a8ff-46cb-bfe3-5895a46fae4c",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "batch_id",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83861595-4c48-4adf-a094-27c10957de89",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ports",
+                    ":id",
+                    "vlan-assignments",
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Port UUID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "batch_id",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.equinix.com/metal/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fcb5a284-cfdc-446b-af37-e67a165d44c2",
+    "name": "Metal Authentication Ports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n\n\nContact Support:\n Name: Equinix Metal API Team\n Email: support@equinixmetal.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication Capacity API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Capacity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "View capacity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/capacity"
+          },
+          "docs": "Returns a list of facilities and plans with their current capacity."
+        },
+        {
+          "info": {
+            "name": "Check capacity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/capacity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates if a deploy can be fulfilled."
+        },
+        {
+          "info": {
+            "name": "View capacity for metros",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/capacity/metros"
+          },
+          "docs": "Returns a list of metros and plans with their current capacity."
+        },
+        {
+          "info": {
+            "name": "Check capacity for a metro",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/capacity/metros",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates if a deploy can be fulfilled in a metro."
+        },
+        {
+          "info": {
+            "name": "View available hardware plans per Facility for given organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/organizations/:id/capacity",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Organization UUID"
+              }
+            ]
+          },
+          "docs": "Returns a list of facilities and plans with their current capacity."
+        },
+        {
+          "info": {
+            "name": "View available hardware plans per Metro for given organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/organizations/:id/capacity/metros",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Organization UUID"
+              }
+            ]
+          },
+          "docs": "Returns a list of metros and plans with their current capacity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

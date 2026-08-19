@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication Console Log Details API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Console Log Details",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "captureScreenshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/devices/:id/diagnostics/screenshot",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Device UUID"
+              }
+            ]
+          },
+          "docs": "Capture a screenshot from the device, if supported, via the BMC."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

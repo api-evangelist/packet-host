@@ -1,0 +1,1807 @@
+{
+  "item": [
+    {
+      "id": "6002d9fa-466d-4691-8bc5-9ce64833e196",
+      "name": "SpotMarket",
+      "description": {
+        "content": "Spot Market Pricing and Requests Management. Check out the product docs to learn more about [Spot Market features](https://metal.equinix.com/developers/docs/deploy/spot-market/).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aa30f9dd-b2ff-411b-a154-14bff98bf543",
+          "name": "Get current spot market prices",
+          "request": {
+            "name": "Get current spot market prices",
+            "description": {
+              "content": "Get Equinix Metal current spot market prices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "spot",
+                "prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "facility",
+                  "value": "<string>",
+                  "description": "Facility to check spot market prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan",
+                  "value": "<string>",
+                  "description": "Plan to check spot market prices"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f0dea84-1b1e-4646-8366-75a4fd4cd8fb",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spot_market_prices\": {\n    \"ord1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"syd1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"ams1\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"fra1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"sin1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"yyz1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"sjc1\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"nrt1\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"dfw1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"iad1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"atl1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"sea1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"lax1\": {\n      \"baremetal_1e\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"ewr1\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c376058-9d16-41b8-9ad9-e55c340a0a30",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac150898-5610-42e1-8c26-155621a7b008",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00fae95d-e76a-43ce-bd44-ed5f0bdcac58",
+          "name": "Get spot market prices for a given period of time",
+          "request": {
+            "name": "Get spot market prices for a given period of time",
+            "description": {
+              "content": "Get spot market prices for a given plan and facility in a fixed period of time\n\n*Note: In the `200` response, the property `datapoints` contains arrays of `[float, integer]`.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "spot",
+                "prices",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "facility",
+                  "value": "<string>",
+                  "description": "(Required) Facility to check spot market prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan",
+                  "value": "<string>",
+                  "description": "(Required) Plan to check spot market prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "metro",
+                  "value": "<string>",
+                  "description": "Metro to check spot market price history"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "(Required) Timestamp from range"
+                },
+                {
+                  "disabled": false,
+                  "key": "until",
+                  "value": "<string>",
+                  "description": "(Required) Timestamp to range"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9dc30ad3-669b-4712-a57a-077047454330",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"prices_history\": {\n    \"datapoints\": [\n      [\n        4489.751805917149,\n        54.667330015943925\n      ],\n      [\n        298.54285727968113,\n        9314.601419138726\n      ]\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9765b165-fb75-46fd-b497-dfea9812753e",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15a7ecae-db50-42a5-85b6-f63c24de2533",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facility",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b577949-79d0-4724-83da-a16262e26852",
+          "name": "Get current spot market prices for metros",
+          "request": {
+            "name": "Get current spot market prices for metros",
+            "description": {
+              "content": "Get Equinix Metal current spot market prices for all metros.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "spot",
+                "prices",
+                "metros"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "metro",
+                  "value": "<string>",
+                  "description": "Metro to filter spot market prices"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan",
+                  "value": "<string>",
+                  "description": "Plan to filter spot market prices"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31b02e77-a678-436c-9e06-769c37bb832b",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "metros"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spot_market_prices\": {\n    \"sv\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"sg\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"ch\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"la\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"ny\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"am\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    },\n    \"da\": {\n      \"c2.medium.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a2\": {\n        \"price\": 0.8008282\n      },\n      \"m2.xlarge.x86\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_1\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_0\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2a\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_3\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_s\": {\n        \"price\": 0.8008282\n      },\n      \"baremetal_2\": {\n        \"price\": 0.8008282\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddca58b5-e0cf-4602-8758-81574baeda87",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "metros"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9f8d9b5-133b-4c04-b0d1-00fbd74ee584",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "spot",
+                    "prices",
+                    "metros"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metro",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "plan",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "085b90db-f598-4f8a-9c61-d1cc78d122bb",
+          "name": "List spot market requests",
+          "request": {
+            "name": "List spot market requests",
+            "description": {
+              "content": "View all spot market requests for a given project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":id",
+                "spot-market-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf9d9dee-1fa6-4cca-a91b-3bc445aa503c",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spot_market_requests\": [\n    {\n      \"created_at\": \"1978-12-18T18:29:18.762Z\",\n      \"devices_max\": 1650,\n      \"devices_min\": 444,\n      \"end_at\": \"2003-11-06T01:03:27.419Z\",\n      \"facilities\": {\n        \"href\": \"href\"\n      },\n      \"href\": \"string\",\n      \"id\": \"c9ca5637-b76d-1be9-4076-57badec775c9\",\n      \"instances\": {\n        \"href\": \"href\"\n      },\n      \"max_bid_price\": 8755.186689821725,\n      \"metro\": {\n        \"country\": \"country\",\n        \"code\": \"code\",\n        \"name\": \"name\"\n      },\n      \"project\": {\n        \"href\": \"href\"\n      }\n    },\n    {\n      \"created_at\": \"1951-07-29T21:39:59.713Z\",\n      \"devices_max\": 8123,\n      \"devices_min\": 1159,\n      \"end_at\": \"1956-06-28T11:55:17.708Z\",\n      \"facilities\": {\n        \"href\": \"href\"\n      },\n      \"href\": \"string\",\n      \"id\": \"ce5a2696-2336-0587-9ccd-ec585a427afc\",\n      \"instances\": {\n        \"href\": \"href\"\n      },\n      \"max_bid_price\": 7832.414196905204,\n      \"metro\": {\n        \"country\": \"country\",\n        \"code\": \"code\",\n        \"name\": \"name\"\n      },\n      \"project\": {\n        \"href\": \"href\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "661a44bd-6b79-4766-9fec-72ca0b2527ad",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c377547-f6b3-4d23-8157-365aef549890",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79e19840-0ace-4cfd-9378-09e74f2eace4",
+          "name": "Create a spot market request",
+          "request": {
+            "name": "Create a spot market request",
+            "description": {
+              "content": "Creates a new spot market request.\n\nType-specific options (such as operating_system for baremetal devices) should be included in the main data structure alongside hostname and plan.\n\nThe features attribute allows you to optionally specify what features your server should have. For example, if you require a server with a TPM chip, you may specify `{ \"features\": { \"tpm\": \"required\" } }` (or `{ \"features\": [\"tpm\"] }` in shorthand).\n\nThe request will fail if there are no available servers matching your criteria. Alternatively, if you do not require a certain feature, but would prefer to be assigned a server with that feature if there are any available, you may specify that feature with a preferred value (see the example request below).\n\nThe request will not fail if we have no servers with that feature in our inventory.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":id",
+                "spot-market-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"devices_max\": \"<integer>\",\n  \"devices_min\": \"<integer>\",\n  \"end_at\": \"<dateTime>\",\n  \"facilities\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"instance_parameters\": {\n    \"always_pxe\": \"<boolean>\",\n    \"billing_cycle\": \"<string>\",\n    \"customdata\": \"<object>\",\n    \"description\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"hostname\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"locked\": \"<boolean>\",\n    \"no_ssh_keys\": \"<boolean>\",\n    \"operating_system\": \"<string>\",\n    \"plan\": \"<string>\",\n    \"private_ipv4_subnet_size\": \"<integer>\",\n    \"project_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"public_ipv4_subnet_size\": \"<integer>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"termination_time\": \"<dateTime>\",\n    \"user_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"userdata\": \"<string>\"\n  },\n  \"max_bid_price\": \"<float>\",\n  \"metro\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35e29508-be88-410a-8993-ec5013659eeb",
+              "name": "created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices_max\": \"<integer>\",\n  \"devices_min\": \"<integer>\",\n  \"end_at\": \"<dateTime>\",\n  \"facilities\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"instance_parameters\": {\n    \"always_pxe\": \"<boolean>\",\n    \"billing_cycle\": \"<string>\",\n    \"customdata\": \"<object>\",\n    \"description\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"hostname\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"locked\": \"<boolean>\",\n    \"no_ssh_keys\": \"<boolean>\",\n    \"operating_system\": \"<string>\",\n    \"plan\": \"<string>\",\n    \"private_ipv4_subnet_size\": \"<integer>\",\n    \"project_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"public_ipv4_subnet_size\": \"<integer>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"termination_time\": \"<dateTime>\",\n    \"user_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"userdata\": \"<string>\"\n  },\n  \"max_bid_price\": \"<float>\",\n  \"metro\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1996-02-10T18:04:04.946Z\",\n  \"devices_max\": 6640,\n  \"devices_min\": 9295,\n  \"end_at\": \"1993-04-23T03:45:33.345Z\",\n  \"facilities\": {\n    \"href\": \"href\"\n  },\n  \"href\": \"string\",\n  \"id\": \"46c4f075-b4eb-3640-e8e9-203b874bcbe5\",\n  \"instances\": {\n    \"href\": \"href\"\n  },\n  \"max_bid_price\": 8667.167989142126,\n  \"metro\": {\n    \"country\": \"country\",\n    \"code\": \"code\",\n    \"name\": \"name\"\n  },\n  \"project\": {\n    \"href\": \"href\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4ea8f12-270d-4ffd-b2bf-aba68519daf1",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices_max\": \"<integer>\",\n  \"devices_min\": \"<integer>\",\n  \"end_at\": \"<dateTime>\",\n  \"facilities\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"instance_parameters\": {\n    \"always_pxe\": \"<boolean>\",\n    \"billing_cycle\": \"<string>\",\n    \"customdata\": \"<object>\",\n    \"description\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"hostname\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"locked\": \"<boolean>\",\n    \"no_ssh_keys\": \"<boolean>\",\n    \"operating_system\": \"<string>\",\n    \"plan\": \"<string>\",\n    \"private_ipv4_subnet_size\": \"<integer>\",\n    \"project_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"public_ipv4_subnet_size\": \"<integer>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"termination_time\": \"<dateTime>\",\n    \"user_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"userdata\": \"<string>\"\n  },\n  \"max_bid_price\": \"<float>\",\n  \"metro\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0794f8d-015b-45fb-a05a-2639665451bd",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices_max\": \"<integer>\",\n  \"devices_min\": \"<integer>\",\n  \"end_at\": \"<dateTime>\",\n  \"facilities\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"instance_parameters\": {\n    \"always_pxe\": \"<boolean>\",\n    \"billing_cycle\": \"<string>\",\n    \"customdata\": \"<object>\",\n    \"description\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"hostname\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"locked\": \"<boolean>\",\n    \"no_ssh_keys\": \"<boolean>\",\n    \"operating_system\": \"<string>\",\n    \"plan\": \"<string>\",\n    \"private_ipv4_subnet_size\": \"<integer>\",\n    \"project_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"public_ipv4_subnet_size\": \"<integer>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"termination_time\": \"<dateTime>\",\n    \"user_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"userdata\": \"<string>\"\n  },\n  \"max_bid_price\": \"<float>\",\n  \"metro\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ded3290-7e89-4230-9f8d-dd69809394a4",
+              "name": "unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "spot-market-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"devices_max\": \"<integer>\",\n  \"devices_min\": \"<integer>\",\n  \"end_at\": \"<dateTime>\",\n  \"facilities\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"instance_parameters\": {\n    \"always_pxe\": \"<boolean>\",\n    \"billing_cycle\": \"<string>\",\n    \"customdata\": \"<object>\",\n    \"description\": \"<string>\",\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"hostname\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"locked\": \"<boolean>\",\n    \"no_ssh_keys\": \"<boolean>\",\n    \"operating_system\": \"<string>\",\n    \"plan\": \"<string>\",\n    \"private_ipv4_subnet_size\": \"<integer>\",\n    \"project_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"public_ipv4_subnet_size\": \"<integer>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"termination_time\": \"<dateTime>\",\n    \"user_ssh_keys\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"userdata\": \"<string>\"\n  },\n  \"max_bid_price\": \"<float>\",\n  \"metro\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31d6a5bd-cb55-4b6b-bd7a-a8befb3a2e29",
+          "name": "Delete the spot market request",
+          "request": {
+            "name": "Delete the spot market request",
+            "description": {
+              "content": "Deletes the spot market request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "spot-market-requests",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force_termination",
+                  "value": "<boolean>",
+                  "description": "Terminate associated spot instances"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) SpotMarketRequest UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69d1dc0f-5c94-4919-8853-7365cb713fcd",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force_termination",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4462318c-b384-4f07-89e3-a9bdf924bd94",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force_termination",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91431234-4c94-4837-adc5-8fcace288692",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force_termination",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81a7ab0b-1909-40a2-8375-beb042cfd669",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force_termination",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "232e9763-bc05-4ad1-80de-02934f382b13",
+          "name": "Retrieve a spot market request",
+          "request": {
+            "name": "Retrieve a spot market request",
+            "description": {
+              "content": "Returns a single spot market request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "spot-market-requests",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) SpotMarketRequest UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86948ad2-7733-4b2b-aaa7-c2b86f83c62e",
+              "name": "ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"1996-02-10T18:04:04.946Z\",\n  \"devices_max\": 6640,\n  \"devices_min\": 9295,\n  \"end_at\": \"1993-04-23T03:45:33.345Z\",\n  \"facilities\": {\n    \"href\": \"href\"\n  },\n  \"href\": \"string\",\n  \"id\": \"46c4f075-b4eb-3640-e8e9-203b874bcbe5\",\n  \"instances\": {\n    \"href\": \"href\"\n  },\n  \"max_bid_price\": 8667.167989142126,\n  \"metro\": {\n    \"country\": \"country\",\n    \"code\": \"code\",\n    \"name\": \"name\"\n  },\n  \"project\": {\n    \"href\": \"href\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79bfe833-e6c5-498d-a299-bcb03df0fa0e",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba61219e-80c1-4edc-979c-bdde4e38af10",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e977c9e2-45f5-416d-8219-cf2a0586a408",
+              "name": "not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "spot-market-requests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) SpotMarketRequest UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.equinix.com/metal/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "36bb559c-b081-453c-9f9c-da5a99a482f6",
+    "name": "Metal Authentication SpotMarket API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n\n\nContact Support:\n Name: Equinix Metal API Team\n Email: support@equinixmetal.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,645 @@
+{
+  "item": [
+    {
+      "id": "1723ba71-7fef-423a-85e3-c2839c656cb1",
+      "name": "Firmware Sets",
+      "description": {
+        "content": "Firmware Sets Management. Notice: Firmware Sets are a test feature currently under active development, and only available to certain users. Please contact Customer Success for more information.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9342738e-44f9-44d5-a86d-8c1595b55a84",
+          "name": "Get Organization's Firmware Sets",
+          "request": {
+            "name": "Get Organization's Firmware Sets",
+            "description": {
+              "content": "Returns all firmware sets associated with the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":id",
+                "firmware-sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "page number to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "items returned per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Organization UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29b64352-05d1-419c-a3c6-9fcab3f156bc",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Organization UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_record_count\": 5,\n  \"records\": [\n    {\n      \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n      \"name\": \"name\",\n      \"created_at\": \"2000-01-23 04:56:07+00:00\",\n      \"attributes\": [\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        },\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        }\n      ],\n      \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n      \"component_firmware\": [\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        },\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        }\n      ]\n    },\n    {\n      \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n      \"name\": \"name\",\n      \"created_at\": \"2000-01-23 04:56:07+00:00\",\n      \"attributes\": [\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        },\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        }\n      ],\n      \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n      \"component_firmware\": [\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        },\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        }\n      ]\n    }\n  ],\n  \"page\": 6,\n  \"total_pages\": 5,\n  \"page_count\": 1,\n  \"page_size\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e716fca0-f160-4dab-8d22-6ba2a4124411",
+              "name": "Error responses are included with 4xx and 5xx HTTP responses from the API service. Either \"error\" or \"errors\" will be set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Organization UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f47b4028-229d-43d3-934a-d3781b3cf60f",
+              "name": "Error responses are included with 4xx and 5xx HTTP responses from the API service. Either \"error\" or \"errors\" will be set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Organization UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "73ee1aca-6b42-4a0e-909e-c6d68509d300",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Organization UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f75b450-834b-44f4-8eb6-b3c32ff31f78",
+          "name": "Get Project's Firmware Sets",
+          "request": {
+            "name": "Get Project's Firmware Sets",
+            "description": {
+              "content": "Returns all firmware sets associated with the project or organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                ":id",
+                "firmware-sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "page number to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>",
+                  "description": "items returned per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Project UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3fddd24-5753-48ae-880e-4844a10042c4",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_record_count\": 5,\n  \"records\": [\n    {\n      \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n      \"name\": \"name\",\n      \"created_at\": \"2000-01-23 04:56:07+00:00\",\n      \"attributes\": [\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        },\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        }\n      ],\n      \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n      \"component_firmware\": [\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        },\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        }\n      ]\n    },\n    {\n      \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n      \"name\": \"name\",\n      \"created_at\": \"2000-01-23 04:56:07+00:00\",\n      \"attributes\": [\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        },\n        {\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"data\": {\n            \"vendor\": \"vendor\",\n            \"model\": \"model\",\n            \"plan\": \"plan\",\n            \"latest\": true\n          },\n          \"namespace\": \"namespace\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\"\n        }\n      ],\n      \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n      \"component_firmware\": [\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        },\n        {\n          \"component\": \"bmc\",\n          \"filename\": \"filename\",\n          \"updated_at\": \"2000-01-23 04:56:07+00:00\",\n          \"vendor\": \"equinix\",\n          \"upstream_url\": \"upstream_url\",\n          \"checksum\": \"checksum\",\n          \"created_at\": \"2000-01-23 04:56:07+00:00\",\n          \"model\": [\n            \"romed8hm3\",\n            \"romed8hm3\"\n          ],\n          \"repository_url\": \"repository_url\",\n          \"uuid\": \"0516463a-47ee-4809-9a66-ece8c740eed9\",\n          \"version\": \"1.5.0\"\n        }\n      ]\n    }\n  ],\n  \"page\": 6,\n  \"total_pages\": 5,\n  \"page_count\": 1,\n  \"page_size\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f27abd8f-0e6f-41bc-bc57-3399b7f3971a",
+              "name": "Error responses are included with 4xx and 5xx HTTP responses from the API service. Either \"error\" or \"errors\" will be set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e4db5152-2066-45a8-82a7-3652f9219d88",
+              "name": "Error responses are included with 4xx and 5xx HTTP responses from the API service. Either \"error\" or \"errors\" will be set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2fe6f0a2-4516-43e9-958d-ba842ccf4c7e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    ":id",
+                    "firmware-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Project UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Auth-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.equinix.com/metal/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Auth-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b73295a8-5950-4017-b2f4-c5afbf2c1d67",
+    "name": "Metal Authentication Firmware Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n\n\nContact Support:\n Name: Equinix Metal API Team\n Email: support@equinixmetal.com",
+      "type": "text/plain"
+    }
+  }
+}

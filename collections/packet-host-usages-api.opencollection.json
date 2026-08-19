@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication Usages API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all usages for device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/devices/:id/usages",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Device UUID"
+              },
+              {
+                "name": "created[after]",
+                "value": "",
+                "type": "query",
+                "description": "Filter usages created after this date"
+              },
+              {
+                "name": "created[before]",
+                "value": "",
+                "type": "query",
+                "description": "Filter usages created before this date"
+              }
+            ]
+          },
+          "docs": "Returns all usages for a device."
+        },
+        {
+          "info": {
+            "name": "Retrieve all usages for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/projects/:id/usages",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              },
+              {
+                "name": "created[after]",
+                "value": "",
+                "type": "query",
+                "description": "Filter usages created after this date"
+              },
+              {
+                "name": "created[before]",
+                "value": "",
+                "type": "query",
+                "description": "Filter usages created before this date"
+              }
+            ]
+          },
+          "docs": "Returns all usages for a project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

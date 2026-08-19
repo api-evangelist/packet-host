@@ -1,0 +1,211 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Metal Authentication SpotMarket API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Auth-Token",
+      "value": "{{X-Auth-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SpotMarket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current spot market prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/market/spot/prices",
+            "params": [
+              {
+                "name": "facility",
+                "value": "",
+                "type": "query",
+                "description": "Facility to check spot market prices"
+              },
+              {
+                "name": "plan",
+                "value": "",
+                "type": "query",
+                "description": "Plan to check spot market prices"
+              }
+            ]
+          },
+          "docs": "Get Equinix Metal current spot market prices."
+        },
+        {
+          "info": {
+            "name": "Get spot market prices for a given period of time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/market/spot/prices/history",
+            "params": [
+              {
+                "name": "facility",
+                "value": "",
+                "type": "query",
+                "description": "Facility to check spot market prices"
+              },
+              {
+                "name": "plan",
+                "value": "",
+                "type": "query",
+                "description": "Plan to check spot market prices"
+              },
+              {
+                "name": "metro",
+                "value": "",
+                "type": "query",
+                "description": "Metro to check spot market price history"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp from range"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp to range"
+              }
+            ]
+          },
+          "docs": "Get spot market prices for a given plan and facility in a fixed period of time\n\n*Note: In the `200` response, the property `datapoints` contains arrays of `[float, integer]`.*"
+        },
+        {
+          "info": {
+            "name": "Get current spot market prices for metros",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/market/spot/prices/metros",
+            "params": [
+              {
+                "name": "metro",
+                "value": "",
+                "type": "query",
+                "description": "Metro to filter spot market prices"
+              },
+              {
+                "name": "plan",
+                "value": "",
+                "type": "query",
+                "description": "Plan to filter spot market prices"
+              }
+            ]
+          },
+          "docs": "Get Equinix Metal current spot market prices for all metros."
+        },
+        {
+          "info": {
+            "name": "List spot market requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/projects/:id/spot-market-requests",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ]
+          },
+          "docs": "View all spot market requests for a given project."
+        },
+        {
+          "info": {
+            "name": "Create a spot market request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.equinix.com/metal/v1/projects/:id/spot-market-requests",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new spot market request.\n\nType-specific options (such as operating_system for baremetal devices) should be included in the main data structure alongside hostname and plan.\n\nThe features attribute allows you to optionally specify what features your server should have. For example, if you require a server with a TPM chip, you may specify `{ \"features\": { \"tpm\": \"required\" } }` (or `{ \"features\": [\"tpm\"] }` in shorthand).\n\nThe request will fail if there are no available servers matching y"
+        },
+        {
+          "info": {
+            "name": "Retrieve a spot market request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.equinix.com/metal/v1/spot-market-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SpotMarketRequest UUID"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Nested attributes to include. Included objects will return their full\nattributes. Attribute names can be dotted (up to 3 levels) to included deeply\nnested objects."
+              }
+            ]
+          },
+          "docs": "Returns a single spot market request"
+        },
+        {
+          "info": {
+            "name": "Delete the spot market request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.equinix.com/metal/v1/spot-market-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SpotMarketRequest UUID"
+              },
+              {
+                "name": "force_termination",
+                "value": "",
+                "type": "query",
+                "description": "Terminate associated spot instances"
+              }
+            ]
+          },
+          "docs": "Deletes the spot market request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
