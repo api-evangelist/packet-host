@@ -42,6 +42,16 @@ tags:
 - Company
 - Bare Metal
 - Cloud Infrastructure
+- Infrastructure-as-a-Service
+- Servers
+- Compute
+- Provisioning
+- Equinix Metal
+- Retired
+tags_raw:
+- Company
+- Bare Metal
+- Cloud Infrastructure
 - Infrastructure as a Service
 - Servers
 - Compute
@@ -181,6 +191,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -287,6 +299,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - IP Addresses
+  tags_raw:
   - IPAddresses
   properties:
   - type: OpenAPI
@@ -352,6 +366,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Operating Systems
+  tags_raw:
   - OperatingSystems
   properties:
   - type: OpenAPI
@@ -365,6 +381,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -402,6 +420,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Payment Methods
+  tags_raw:
   - PaymentMethods
   properties:
   - type: OpenAPI
@@ -441,6 +461,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -479,6 +501,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - SSH Keys
+  tags_raw:
   - SSHKeys
   properties:
   - type: OpenAPI
@@ -540,6 +564,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - User Data
+  tags_raw:
   - Userdata
   properties:
   - type: OpenAPI
@@ -552,6 +578,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
