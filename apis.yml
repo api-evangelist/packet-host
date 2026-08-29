@@ -9,6 +9,18 @@ description: >-
   retired: End-of-Sale was announced 2024-11-07 and the service was sunset
   2026-06-30. This profile captures the Metal API surface (220 operations across
   40 tags) and the Packet-to-Equinix-Metal lineage.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -635,6 +647,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/packet-host-capability-edges.yml
+  name: Packet Host Business Capability Map
 - type: DeveloperPortal
   url: https://deploy.equinix.com/
 - type: Documentation
