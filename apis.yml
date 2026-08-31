@@ -54,7 +54,7 @@ tags:
 - Company
 - Bare Metal
 - Cloud Infrastructure
-- Infrastructure-as-a-Service
+- Infrastructure as a Service
 - Servers
 - Compute
 - Provisioning
@@ -311,7 +311,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - IP Addresses
+  - IPAddresses
   tags_raw:
   - IPAddresses
   properties:
@@ -378,7 +378,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - Operating Systems
+  - OperatingSystems
   tags_raw:
   - OperatingSystems
   properties:
@@ -432,7 +432,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - Payment Methods
+  - PaymentMethods
   tags_raw:
   - PaymentMethods
   properties:
@@ -513,7 +513,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - SSH Keys
+  - SSHKeys
   tags_raw:
   - SSHKeys
   properties:
@@ -576,7 +576,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - User Data
+  - Userdata
   tags_raw:
   - Userdata
   properties:
