@@ -304,22 +304,6 @@ apis:
     url: openapi/packet-host-invoices-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-ipaddresses-api
-  name: Packet Host IPAddresses API
-  description: >-
-    Manage IP addresses. See device and project endpoints to list and create IP assignments for a particular
-    project or device. Check out the product docs to learn more about [the basic networking features](https://metal.equinix.com/developers/docs/networking/standard-ips/).
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - IP Addresses
-  tags_raw:
-  - IPAddresses
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-ipaddresses-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-licenses-api
   name: Packet Host Licenses API
   description: >-
@@ -402,19 +386,6 @@ apis:
     url: openapi/packet-host-organizations-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-otps-api
-  name: Packet Host OTPs API
-  description: >-
-    OTP Management. Check out the product docs to learn more about [OTP](https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/).
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - OTPs
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-otps-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-passwordresettokens-api
   name: Packet Host PasswordResetTokens API
   description: Password Reset Token Management
@@ -425,20 +396,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/packet-host-passwordresettokens-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-paymentmethods-api
-  name: Packet Host PaymentMethods API
-  description: Payment Method Management
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - Payment Methods
-  tags_raw:
-  - PaymentMethods
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-paymentmethods-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-plans-api
@@ -508,20 +465,6 @@ apis:
     url: openapi/packet-host-spotmarket-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-sshkeys-api
-  name: Packet Host SSHKeys API
-  description: Manage SSH keys. See project endpoints to list and create project-level SSH keys.
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - SSH Keys
-  tags_raw:
-  - SSHKeys
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-sshkeys-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-supportrequest-api
   name: Packet Host SupportRequest API
   description: Support request
@@ -546,19 +489,6 @@ apis:
     url: openapi/packet-host-transferrequests-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-twofactorauth-api
-  name: Packet Host TwoFactorAuth API
-  description: >-
-    Two Factor Authentication Management. Check out the product docs to learn more about [2FA](https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/).
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - TwoFactorAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-twofactorauth-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-usages-api
   name: Packet Host Usages API
   description: Usage Management
@@ -569,20 +499,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/packet-host-usages-api-openapi.yml
-  - type: APIReference
-    url: https://docs.equinix.com/api-catalog/metalv1/
-- aid: packet-host:packet-host-userdata-api
-  name: Packet Host Userdata API
-  description: Userdata Management
-  humanURL: https://docs.equinix.com/metal/
-  baseURL: https://api.equinix.com/metal/v1
-  tags:
-  - User Data
-  tags_raw:
-  - Userdata
-  properties:
-  - type: OpenAPI
-    url: openapi/packet-host-userdata-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
 - aid: packet-host:packet-host-users-api
@@ -640,6 +556,82 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/packet-host-vrfs-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-otps-api
+  name: Packet Host OT Ps API
+  description: >-
+    OTP Management. Check out the product docs to learn more about [OTP](https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/).
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - OTPs
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-otps-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-ip-addresses-api
+  name: Packet Host IP Addresses API
+  description: >-
+    Manage IP addresses. See device and project endpoints to list and create IP assignments for a particular
+    project or device. Check out the product docs to learn more about the basic networking features.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - IP Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-ip-addresses-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-payment-methods-api
+  name: Packet Host Payment Methods API
+  description: Payment Method Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Payment Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-payment-methods-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-ssh-keys-api
+  name: Packet Host SSH Keys API
+  description: Manage SSH keys. See project endpoints to list and create project-level SSH keys.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - SSH Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-ssh-keys-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-two-factor-auth-api
+  name: Packet Host Two Factor Auth API
+  description: >-
+    Two Factor Authentication Management. Check out the product docs to learn more about 2FA.
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - Two Factor Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-two-factor-auth-api-openapi.yml
+  - type: APIReference
+    url: https://docs.equinix.com/api-catalog/metalv1/
+- aid: packet-host:packet-host-user-data-api
+  name: Packet Host User Data API
+  description: Userdata Management
+  humanURL: https://docs.equinix.com/metal/
+  baseURL: https://api.equinix.com/metal/v1
+  tags:
+  - User Data
+  properties:
+  - type: OpenAPI
+    url: openapi/packet-host-user-data-api-openapi.yml
   - type: APIReference
     url: https://docs.equinix.com/api-catalog/metalv1/
 maintainers:
