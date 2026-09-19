@@ -192,6 +192,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Email
+  tags_raw:
   - Emails
   properties:
   - type: OpenAPI
@@ -324,6 +326,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - Membership
+  tags_raw:
   - Memberships
   properties:
   - type: OpenAPI
@@ -363,7 +367,7 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
-  - Operating Systems
+  - Operating System
   tags_raw:
   - OperatingSystems
   properties:
@@ -579,6 +583,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - IP Address
+  tags_raw:
   - IP Addresses
   properties:
   - type: OpenAPI
