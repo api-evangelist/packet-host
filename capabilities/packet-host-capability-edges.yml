@@ -74,7 +74,8 @@ edges:
   reason: Virtual routing and forwarding instances, BGP neighbours and route entries are network infrastructure
     configuration in the cloud fabric.
 - tag: IPAddresses
-  spec_file: packet-host-ipaddresses-api-openapi.yml
+  spec_file: packet-host-ip-addresses-api-openapi.yml
+  reanchored_from: packet-host-ipaddresses-api-openapi.yml
   capability_id: BC-600.50
   capability_id_l1: BC-600
   capability_name: IT Infrastructure Management
@@ -94,7 +95,8 @@ edges:
   reason: One-time-password verification and recovery codes are multi-factor authentication mechanics
     — identity and access management.
 - tag: PaymentMethods
-  spec_file: packet-host-paymentmethods-api-openapi.yml
+  spec_file: packet-host-payment-methods-api-openapi.yml
+  reanchored_from: packet-host-paymentmethods-api-openapi.yml
   capability_id: BC-4250.40
   capability_id_l1: BC-4250
   capability_name: Payment Collection & Dunning
@@ -165,7 +167,8 @@ edges:
   reason: Management of user membership (and roles) within organizations of the platform — access administration
     rather than any business membership programme.
 - tag: SSHKeys
-  spec_file: packet-host-sshkeys-api-openapi.yml
+  spec_file: packet-host-ssh-keys-api-openapi.yml
+  reanchored_from: packet-host-sshkeys-api-openapi.yml
   capability_id: BC-620.20
   capability_id_l1: BC-620
   capability_name: Identity & Access Management
