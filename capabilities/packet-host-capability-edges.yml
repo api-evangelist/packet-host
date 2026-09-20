@@ -1,0 +1,186 @@
+slug: packet-host
+provider: Packet Host
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 17
+edges:
+- tag: Devices
+  spec_file: packet-host-devices-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: '"findDeviceById Retrieve a device", "performAction Perform an action", "findInstanceBandwidth
+    Retrieve an instance bandwidth", schemas "Device", "OperatingSystem", "HardwareReservation"'
+  reason: Full lifecycle control of bare-metal server instances (create/update/delete, actions, IP assignments,
+    firmware) — compute/cloud infrastructure management.
+- tag: Interconnections
+  spec_file: packet-host-interconnections-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /organizations/{organization_id}/connections 'Request a new interconnection for the organization';
+    schemas InterconnectionPort, VirtualCircuitList
+  reason: Provisioning of network interconnections, ports and virtual circuits — network infrastructure
+    management.
+- tag: MetalGateways
+  spec_file: packet-host-metalgateways-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /projects/{project_id}/metal-gateways createMetalGateway 'Create a metal gateway'; 'List
+    Metal Gateway Elastic IPs'
+  reason: Creation and management of network gateways and elastic IPs for cloud infrastructure — IT infrastructure/network
+    management.
+- tag: Ports
+  spec_file: packet-host-ports-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /ports/{id}/assign  Assign a port to virtual network; POST /ports/{id}/convert/layer-2  Convert
+    to Layer 2; POST /ports/{id}/native-vlan  Assign a native VLAN
+  reason: Operations configure physical/bonded network ports, VLAN assignments and layer-2/3 modes on
+    provisioned servers — network infrastructure management.
+- tag: VLANs
+  spec_file: packet-host-vlans-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: 'POST /projects/{id}/virtual-networks  createVirtualNetwork  Create a virtual network; schemas:
+    VirtualNetwork, MetalGatewayLite'
+  reason: Provisioning and deletion of layer-2 virtual networks in a bare-metal cloud is network/cloud
+    infrastructure management.
+- tag: VRFs
+  spec_file: packet-host-vrfs-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /projects/{id}/vrfs  createVrf  Create a new VRF in the specified project; POST /metal-gateways/{id}/bgp-dynamic-neighbors  Create
+    a VRF BGP Dynamic Neighbor range
+  reason: Virtual routing and forwarding instances, BGP neighbours and route entries are network infrastructure
+    configuration in the cloud fabric.
+- tag: IPAddresses
+  spec_file: packet-host-ipaddresses-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /projects/{id}/ips requestIPReservation 'Requesting IP reservations'; schemas IPReservation,
+    IPAssignment
+  reason: IP address reservation/assignment for cloud infrastructure — network infrastructure provisioning,
+    mapping to IT Infrastructure Management.
+- tag: OTPs
+  spec_file: packet-host-otps-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /user/otp/verify/{otp} findEnsureOtp 'Verify user by providing an OTP'; 'Retrieve my
+    recovery codes'
+  reason: One-time-password verification and recovery codes are multi-factor authentication mechanics
+    — identity and access management.
+- tag: PaymentMethods
+  spec_file: packet-host-paymentmethods-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.8
+  evidence: 'GET /payment-methods/{id} findPaymentMethodById  Retrieve a payment method; schemas: PaymentMethod,
+    PaymentMethodBillingAddress, PaymentMethodUpdateInput'
+  reason: CRUD over stored customer payment methods (with billing address) for the cloud service account
+    — this is payment-method management within subscription billing, matching 'Payment-method management,
+    payment authorisation'.
+- tag: SupportRequest
+  spec_file: packet-host-supportrequest-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.8
+  evidence: 'POST /support-requests requestSuppert  Create a support ticket; schemas: SupportRequestInput,
+    SupportRequestInput_priority'
+  reason: Single operation raises a prioritised customer support ticket with the provider — inbound customer
+    inquiry/support intake.
+- tag: BGP
+  spec_file: packet-host-bgp-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: '"findProjectBgpSessions Retrieve all BGP sessions for project", "requestBgpConfig Requesting
+    bgp config", "findGlobalBgpRanges"'
+  reason: BGP session and route-announcement configuration for bare-metal networking is network infrastructure
+    configuration, squarely IT Infrastructure Management (compute, storage, network, cloud).
+- tag: Invoices
+  spec_file: packet-host-invoices-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.75
+  evidence: GET /organizations/{id}/invoices findOrganizationInvoices 'Retrieve all invoices for an organization';
+    schemas InvoiceList, Invoice, LineItem
+  reason: Customer-facing invoices for cloud service consumption, with plan/line-item schemas — invoicing
+    and statement management in the recurring/usage billing model.
+- tag: HardwareReservations
+  spec_file: packet-host-hardwarereservations-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"activateHardwareReservation Activate a spare hardware reservation", "moveHardwareReservation
+    Move a hardware reservation", schema "HardwareReservation"'
+  reason: Management of reserved dedicated hardware (activate, move, list per project) — dedicated compute
+    infrastructure allocation, i.e. IT Infrastructure Management rather than any commercial/subscription
+    capability.
+- tag: Invitations
+  spec_file: packet-host-invitations-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: PUT /invitations/{id} acceptInvitation 'Accept an invitation'; schemas Invitation_roles_inner,
+    Membership
+  reason: Invitations grant org membership with roles — user access provisioning to the platform, i.e.
+    identity & access management.
+- tag: Memberships
+  spec_file: packet-host-memberships-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: PUT /memberships/{id} updateMembership 'Update the membership'; schemas Membership, MembershipInput
+  reason: Management of user membership (and roles) within organizations of the platform — access administration
+    rather than any business membership programme.
+- tag: SSHKeys
+  spec_file: packet-host-sshkeys-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /ssh-keys createSSHKey  Create a ssh key for the current user; GET /devices/{id}/ssh-keys  Retrieve
+    a device's ssh keys
+  reason: Lifecycle of SSH public-key credentials granting access to provisioned servers for users and
+    projects — credential/access administration rather than mere authentication transport.
+- tag: Usages
+  spec_file: packet-host-usages-api-openapi.yml
+  capability_id: BC-4250.10
+  capability_id_l1: BC-4250
+  capability_name: Usage Metering
+  confidence: 0.7
+  evidence: 'GET /devices/{id}/usages findDeviceUsages  Retrieve all usages for device; schemas: DeviceUsage,
+    ProjectUsage'
+  reason: Exposes aggregated consumption records per device and per project, the metered-usage data underpinning
+    consumption billing — usage metering.
