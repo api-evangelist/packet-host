@@ -1,26 +1,26 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   contact:
     email: support@equinixmetal.com
     name: Equinix Metal API Team
-  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  description: '# Introduction
+
+    Equinix Metal provides a RESTful HTTP API which can be reached at .'
   license:
     name: Equinix Metal
     url: https://metal.equinix.com/legal/
   termsOfService: https://metal.equinix.com/legal/
-  title: Metal Authentication SSHKeys API
+  title: Metal SSH Keys API
   version: 1.0.0
 servers:
 - url: https://api.equinix.com/metal/v1
 security:
 - x_auth_token: []
 tags:
-- description: 'Manage SSH keys. See project endpoints to list and create project-level SSH keys.
-
-    '
+- description: Manage SSH keys. See project endpoints to list and create project-level SSH keys.
   externalDocs:
     url: https://metal.equinix.com/developers/docs/accounts/ssh-keys/
-  name: SSHKeys
+  name: SSH Keys
 paths:
   /devices/{id}/ssh-keys:
     get:
@@ -67,7 +67,7 @@ paths:
           description: unauthorized
       summary: Retrieve a device's ssh keys
       tags:
-      - SSHKeys
+      - SSH Keys
   /projects/{id}/ssh-keys:
     get:
       description: Returns a collection of the project's ssh keys.
@@ -113,7 +113,7 @@ paths:
           description: unauthorized
       summary: Retrieve a project's ssh keys
       tags:
-      - SSHKeys
+      - SSH Keys
     post:
       description: Creates a ssh key.
       operationId: createProjectSSHKey
@@ -166,7 +166,7 @@ paths:
           description: unprocessable entity
       summary: Create a ssh key for the given project
       tags:
-      - SSHKeys
+      - SSH Keys
   /ssh-keys:
     get:
       description: Returns a collection of the user’s ssh keys.
@@ -205,7 +205,7 @@ paths:
           description: unauthorized
       summary: Retrieve all ssh keys
       tags:
-      - SSHKeys
+      - SSH Keys
     post:
       description: Creates a ssh key.
       operationId: createSSHKey
@@ -246,7 +246,7 @@ paths:
           description: unprocessable entity
       summary: Create a ssh key for the current user
       tags:
-      - SSHKeys
+      - SSH Keys
   /ssh-keys/{id}:
     delete:
       description: Deletes the ssh key.
@@ -282,7 +282,7 @@ paths:
           description: not found
       summary: Delete the ssh key
       tags:
-      - SSHKeys
+      - SSH Keys
     get:
       description: Returns a single ssh key if the user has access
       operationId: findSSHKeyById
@@ -334,7 +334,7 @@ paths:
           description: not found
       summary: Retrieve a ssh key
       tags:
-      - SSHKeys
+      - SSH Keys
     put:
       description: Updates the ssh key.
       operationId: updateSSHKey
@@ -399,17 +399,21 @@ paths:
           description: unprocessable entity
       summary: Update the ssh key
       tags:
-      - SSHKeys
+      - SSH Keys
 components:
   schemas:
-    Href:
-      example:
-        href: href
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
-        href:
+        error:
+          description: A description of the error that caused the request to fail.
           type: string
-      required:
-      - href
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
       type: object
     SSHKeyList:
       example:
@@ -444,6 +448,58 @@ components:
             $ref: '#/components/schemas/SSHKey'
           type: array
       type: object
+    SSHKeyInput:
+      example:
+        label: label
+        key: key
+        tags:
+        - tags
+        - tags
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    SSHKeyCreateInput:
+      example:
+        label: label
+        instances_ids:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        key: key
+        tags:
+        - tags
+        - tags
+      properties:
+        instances_ids:
+          description: "List of instance UUIDs to associate SSH key with, when empty array is sent all instances belonging\n      to entity will be included"
+          items:
+            format: uuid
+            type: string
+          type: array
+        key:
+          type: string
+        label:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
     SSHKey:
       example:
         updated_at: 2000-01-23 04:56:07+00:00
@@ -477,62 +533,6 @@ components:
           type: string
         updated_at:
           format: date-time
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    SSHKeyInput:
-      example:
-        label: label
-        key: key
-        tags:
-        - tags
-        - tags
-      properties:
-        key:
-          type: string
-        label:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    SSHKeyCreateInput:
-      example:
-        label: label
-        instances_ids:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        key: key
-        tags:
-        - tags
-        - tags
-      properties:
-        instances_ids:
-          description: "List of instance UUIDs to associate SSH key with, when empty array is sent all instances belonging\n      to entity will be included"
-          items:
-            format: uuid
-            type: string
-          type: array
-        key:
-          type: string
-        label:
           type: string
         tags:
           items:

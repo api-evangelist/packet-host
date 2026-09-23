@@ -1,26 +1,26 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   contact:
     email: support@equinixmetal.com
     name: Equinix Metal API Team
-  description: "# Introduction\nEquinix Metal provides a RESTful HTTP API which can be reached at <https://api.equinix.com/metal/v1>. This document describes the API and how to use it.\n\nThe API allows you to programmatically interact with all\nof your Equinix Metal resources, including devices, networks, addresses, organizations,\nprojects, and your user account. Every feature of the Equinix Metal web interface is accessible through the API.\n\nThe API docs are generated from the Equinix Metal OpenAPI specification and are officially hosted at <https://metal.equinix.com/developers/api>.\n\n# Common Parameters\n\nThe Equinix Metal API uses a few methods to minimize network traffic and improve throughput. These parameters are not used in all API calls, but are used often enough to warrant their own section. Look for these parameters in the documentation for the API calls that support them.\n\n## Pagination\n\nPagination is used to limit the number of results returned in a single request. The API will return a maximum of 100 results per page. To retrieve additional results, you can use the `page` and `per_page` query parameters.\n\nThe `page` parameter is used to specify the page number. The first page is `1`. The `per_page` parameter is used to specify the number of results per page. The maximum number of results differs by resource type.\n\n## Sorting\n\nWhere offered, the API allows you to sort results by a specific field. To sort results use the `sort_by` query parameter with the root level field name as the value. The `sort_direction` parameter is used to specify the sort direction, either either `asc` (ascending) or `desc` (descending).\n\n## Filtering\n\nFiltering is used to limit the results returned in a single request. The API supports filtering by certain fields in the response. To filter results, you can use the field as a query parameter.\n\nFor example, to filter the IP list to only return public IPv4 addresses, you can filter by the `type` field, as in the following request:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/projects/id/ips?type=public_ipv4\n```\n\nOnly IP addresses with the `type` field set to `public_ipv4` will be returned.\n\n## Searching\n\nSearching is used to find matching resources using multiple field comparissons. The API supports searching in resources that define this behavior. Currently the search parameter is only available on devices, ssh_keys, api_keys and memberships endpoints.\n\nTo search resources you can use the `search` query parameter.\n\n## Include and Exclude\n\nFor resources that contain references to other resources, sucha as a Device that refers to the Project it resides in, the Equinix Metal API will returns `href` values (API links) to the associated resource.\n\n```json\n{\n  ...\n  \"project\": {\n    \"href\": \"/metal/v1/projects/f3f131c8-f302-49ef-8c44-9405022dc6dd\"\n  }\n}\n```\n\nIf you're going need the project details, you can avoid a second API request.  Specify the contained `href` resources and collections that you'd like to have included in the response using the `include` query parameter.\n\nFor example:\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=projects\n```\n\nThe `include` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests where `href` resources are presented.\n\nTo have multiple resources include, use a comma-separated list (e.g. `?include=emails,projects,memberships`).\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=emails,projects,memberships\n```\n\nYou may also include nested associations up to three levels deep using dot notation (`?include=memberships.projects`):\n\n```sh\ncurl -H 'X-Auth-Token: my_authentication_token' \\\n  https://api.equinix.com/metal/v1/user?include=memberships.projects\n```\n\nTo exclude resources, and optimize response delivery, use the `exclude` query parameter. The `exclude` parameter is generally accepted in `GET`, `POST`, `PUT`, and `PATCH` requests for fields with nested object responses. When excluded, these fields will be replaced with an object that contains only an `href` field.\n"
+  description: '# Introduction
+
+    Equinix Metal provides a RESTful HTTP API which can be reached at .'
   license:
     name: Equinix Metal
     url: https://metal.equinix.com/legal/
   termsOfService: https://metal.equinix.com/legal/
-  title: Metal Authentication IPAddresses API
+  title: Metal IP Addresses API
   version: 1.0.0
 servers:
 - url: https://api.equinix.com/metal/v1
 security:
 - x_auth_token: []
 tags:
-- description: 'Manage IP addresses. See device and project endpoints to list and create IP assignments for a particular project or device. Check out the product docs to learn more about [the basic networking features](https://metal.equinix.com/developers/docs/networking/standard-ips/).
-
-    '
+- description: Manage IP addresses. See device and project endpoints to list and create IP assignments for a particular project or device. Check out the product docs to learn more about the basic networking features.
   externalDocs:
     url: https://metal.equinix.com/developers/docs/networking/
-  name: IPAddresses
+  name: IP Addresses
 paths:
   /ips/{id}:
     delete:
@@ -38,9 +38,7 @@ paths:
 
         Delete an IP reservation.
 
-        Use the reservation UUID you get after adding the IP to the project. This will permanently delete the IP block reservation from the project.
-
-        '
+        Use the reservation UUID you get after adding the IP to the project. This will permanently delete the IP block reservation from the project.'
       operationId: deleteIPAddress
       parameters:
       - description: IP Address UUID
@@ -73,7 +71,7 @@ paths:
           description: not found
       summary: Unassign an ip address
       tags:
-      - IPAddresses
+      - IP Addresses
     get:
       description: Returns a single ip address if the user has access.
       operationId: findIPAddressById
@@ -138,7 +136,7 @@ paths:
           description: not found
       summary: Retrieve an ip address
       tags:
-      - IPAddresses
+      - IP Addresses
     patch:
       description: Update details about an ip address
       operationId: updateIPAddress
@@ -208,7 +206,7 @@ paths:
           description: not found
       summary: Update an ip address
       tags:
-      - IPAddresses
+      - IP Addresses
   /ips/{id}/available:
     get:
       description: Provides a list of IP resevations for a single project.
@@ -254,7 +252,7 @@ paths:
           description: not found
       summary: Retrieve all available subnets of a particular reservation
       tags:
-      - IPAddresses
+      - IP Addresses
   /ips/{id}/customdata:
     get:
       description: Provides the custom metadata stored for this IP Reservation or IP Assignment in json format
@@ -290,7 +288,7 @@ paths:
           description: not found
       summary: Retrieve the custom metadata of an IP Reservation or IP Assignment
       tags:
-      - IPAddresses
+      - IP Addresses
   /projects/{id}/ips:
     get:
       description: Provides a paginated list of IP reservations for a single project.
@@ -373,9 +371,9 @@ paths:
           description: not found
       summary: Retrieve all ip reservations
       tags:
-      - IPAddresses
+      - IP Addresses
     post:
-      description: Request more IP space for a project in order to have additional IP addresses to assign to devices.  If the request is within the max quota, an IP reservation will be created. If the project will exceed its IP quota, a request will be submitted for review, and will return an IP Reservation with a `state` of `pending`. You can automatically have the request fail with HTTP status 422 instead of triggering the review process by providing the `fail_on_approval_required` parameter set to `true` in the request.
+      description: Request more IP space for a project in order to have additional IP addresses to assign to devices. If the request is within the max quota, an IP reservation will be created. If the project will exceed its IP quota, a request will be submitted for review, and will return an IP Reservation with a `state` of `pending`. You can automatically have the request fail with HTTP status 422 instead of triggering the review process by providing the `fail_on_approval_required` parameter set to `true` in the request.
       operationId: requestIPReservation
       parameters:
       - description: Project UUID
@@ -451,193 +449,119 @@ paths:
           description: unprocessable entity
       summary: Requesting IP reservations
       tags:
-      - IPAddresses
+      - IP Addresses
 components:
   schemas:
-    IPReservation_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the IP reservation is in. As long as the IP reservation has a metro, it can be used on a metro level. Can be null if requesting an IP reservation in a facility that is not in a metro.
-        type: object
-    Project:
+    User:
       example:
-        devices:
-        - href: href
-        - href: href
-        volumes:
-        - href: href
-        - href: href
+        avatar_thumb_url: avatar_thumb_url
+        last_login_at: 2000-01-23 04:56:07+00:00
+        max_projects: 2
+        timezone: timezone
+        default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         created_at: 2000-01-23 04:56:07+00:00
-        type: null
-        memberships:
+        last_name: last_name
+        short_id: short_id
+        fraud_score: fraud_score
+        emails:
         - href: href
         - href: href
-        bgp_config:
-          href: href
-        tags:
-        - tags
-        - tags
-        max_devices: '{}'
-        ssh_keys:
-        - href: href
-        - href: href
+        default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        full_name: full_name
+        avatar_url: avatar_url
         updated_at: 2000-01-23 04:56:07+00:00
-        invitations:
-        - href: href
-        - href: href
-        members:
-        - href: href
-        - href: href
-        organization:
-          website: website
-          address:
-            country: country
-            address: address
-            address2: address2
-            city: city
-            coordinates:
-              latitude: latitude
-              longitude: longitude
-            state: state
-            zip_code: zip_code
-          projects:
-          - href: href
-          - href: href
-          credit_amount: 1.4658129
-          created_at: 2000-01-23 04:56:07+00:00
-          description: description
-          billing_address:
-            country: country
-            address: address
-            address2: address2
-            city: city
-            coordinates:
-              latitude: latitude
-              longitude: longitude
-            state: state
-            zip_code: zip_code
-          memberships:
-          - href: href
-          - href: href
-          enforce_2fa_at: 2000-01-23 04:56:07+00:00
-          twitter: twitter
-          updated_at: 2000-01-23 04:56:07+00:00
-          terms: 5
-          members:
-          - href: href
-          - href: href
-          name: name
-          logo: logo
-          customdata: '{}'
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        name: name
-        network_status: '{}'
+        phone_number: phone_number
         customdata: '{}'
         href: href
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        payment_method:
-          href: href
+        first_name: first_name
+        max_organizations: 3
+        two_factor_auth: two_factor_auth
+        email: email
       properties:
-        bgp_config:
-          $ref: '#/components/schemas/Href'
+        avatar_thumb_url:
+          type: string
+        avatar_url:
+          type: string
         created_at:
           format: date-time
           type: string
         customdata:
           type: object
-        devices:
+        default_organization_id:
+          format: uuid
+          type: string
+        default_project_id:
+          format: uuid
+          type: string
+        email:
+          type: string
+        emails:
           items:
             $ref: '#/components/schemas/Href'
           type: array
+        first_name:
+          type: string
+        fraud_score:
+          type: string
+        full_name:
+          type: string
         href:
           type: string
         id:
           format: uuid
           type: string
-        invitations:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        max_devices:
-          type: object
-        members:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        memberships:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        name:
-          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
-          maxLength: 80
-          minLength: 1
+        last_login_at:
+          format: date-time
           type: string
-        network_status:
-          type: object
-        organization:
-          $ref: '#/components/schemas/Organization'
-        payment_method:
-          $ref: '#/components/schemas/Href'
-        ssh_keys:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
+        last_name:
+          type: string
+        max_organizations:
+          type: integer
+        max_projects:
+          type: integer
+        phone_number:
+          type: string
+        short_id:
+          type: string
+        timezone:
+          type: string
+        two_factor_auth:
+          type: string
         updated_at:
           format: date-time
           type: string
-        volumes:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        type:
-          $ref: '#/components/schemas/Project_type'
-        tags:
-          items:
-            type: string
-          type: array
       type: object
-    IPAssignment:
-      example:
-        address: address
-        parent_block:
-          netmask: netmask
-          cidr: 2
-          href: href
-          network: network
-        created_at: 2000-01-23 04:56:07+00:00
-        type: null
-        enabled: true
-        manageable: true
-        network: network
-        address_family: 5
-        public: true
-        management: true
-        netmask: netmask
-        metro: null
-        next_hop: next_hop
-        cidr: 5
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
-        global_ip: true
-        gateway: gateway
-        assigned_to:
-          href: href
+    IPReservation:
+      additionalProperties: false
       properties:
+        addon:
+          type: boolean
         address:
           type: string
         address_family:
           type: integer
-        assigned_to:
-          $ref: '#/components/schemas/Href'
+        assignments:
+          items:
+            $ref: '#/components/schemas/IPAssignment'
+          type: array
+        available:
+          type: string
+        bill:
+          type: boolean
         cidr:
           type: integer
         created_at:
           format: date-time
           type: string
+        customdata:
+          type: object
         enabled:
           type: boolean
+        details:
+          type: string
+        facility:
+          $ref: '#/components/schemas/IPReservation_facility'
         gateway:
           type: string
         global_ip:
@@ -651,185 +575,32 @@ components:
           type: boolean
         management:
           type: boolean
+        metal_gateway:
+          $ref: '#/components/schemas/MetalGatewayLite'
         metro:
-          $ref: '#/components/schemas/IPAssignment_metro'
+          $ref: '#/components/schemas/IPReservation_metro'
         netmask:
           type: string
         network:
           type: string
-        parent_block:
-          $ref: '#/components/schemas/ParentBlock'
+        project:
+          $ref: '#/components/schemas/Project'
+        project_lite:
+          $ref: '#/components/schemas/Href'
+        requested_by:
+          $ref: '#/components/schemas/Href'
         public:
           type: boolean
         state:
-          $ref: '#/components/schemas/IPAssignment_state'
-        next_hop:
-          description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
-
-
-            The IP address within the Metal Gateway to which requests to the Elastic IP are forwarded.
-
-            '
-          format: ipv4
-          type: string
-        type:
-          $ref: '#/components/schemas/IPAssignment_type'
-      type: object
-    VrfVirtualCircuit:
-      example:
-        subnet: 12.0.0.0/30
-        customer_ip: 12.0.0.2
-        description: description
-        project:
-          href: href
-        created_at: 2000-01-23 04:56:07+00:00
-        vrf: null
-        type: null
-        metal_ip: 12.0.0.1
-        speed: 9
-        tags:
-        - tags
-        - tags
-        nni_vlan: 2
-        updated_at: 2000-01-23 04:56:07+00:00
-        port:
-          href: href
-        name: name
-        peer_asn: 7
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        md5: md5
-        status: null
-      properties:
-        customer_ip:
-          description: An IP address from the subnet that will be used on the Customer side. This parameter is optional, but if supplied, we will use the other usable IP address in the subnet as the Metal IP. By default, the last usable IP address in the subnet will be used.
-          example: 12.0.0.2
-          type: string
-        description:
-          type: string
-        id:
-          format: uuid
-          type: string
-        md5:
-          description: The MD5 password for the BGP peering in plaintext (not a checksum).
-          type: string
-        metal_ip:
-          description: An IP address from the subnet that will be used on the Metal side. This parameter is optional, but if supplied, we will use the other usable IP address in the subnet as the Customer IP. By default, the first usable IP address in the subnet will be used.
-          example: 12.0.0.1
-          type: string
-        name:
-          type: string
-        port:
-          $ref: '#/components/schemas/Href'
-        nni_vlan:
-          type: integer
-        peer_asn:
-          description: The peer ASN that will be used with the VRF on the Virtual Circuit.
-          type: integer
-        project:
-          $ref: '#/components/schemas/Href'
-        speed:
-          description: integer representing bps speed
-          type: integer
-        status:
-          $ref: '#/components/schemas/VrfVirtualCircuit_status'
-        subnet:
-          description: The /30 or /31 subnet of one of the VRF IP Blocks that will be used with the VRF for the Virtual Circuit. This subnet does not have to be an existing VRF IP reservation, as we will create the VRF IP reservation on creation if it does not exist. The Metal IP and Customer IP must be IPs from this subnet. For /30 subnets, the network and broadcast IPs cannot be used as the Metal or Customer IP.
-          example: 12.0.0.0/30
           type: string
         tags:
           items:
             type: string
           type: array
         type:
-          $ref: '#/components/schemas/VrfIpReservation_type'
-        vrf:
-          $ref: '#/components/schemas/Vrf'
-        created_at:
-          format: date-time
-          type: string
-        updated_at:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/IPReservation_type'
       required:
-      - vrf
-      type: object
-    Address:
-      example:
-        country: country
-        address: address
-        address2: address2
-        city: city
-        coordinates:
-          latitude: latitude
-          longitude: longitude
-        state: state
-        zip_code: zip_code
-      properties:
-        address:
-          type: string
-        address2:
-          type: string
-        city:
-          type: string
-        coordinates:
-          $ref: '#/components/schemas/Coordinates'
-        country:
-          type: string
-        state:
-          type: string
-        zip_code:
-          type: string
-      required:
-      - address
-      - country
-      - zip_code
-      type: object
-    MetalGateway_state:
-      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
-      enum:
-      - ready
-      - active
-      - deleting
-      type: string
-    IPReservation_type:
-      enum:
-      - global_ipv4
-      - public_ipv4
-      - private_ipv4
-      - public_ipv6
-      type: string
-    Meta:
-      example:
-        next:
-          href: href
-        total: 0
-        last:
-          href: href
-        previous:
-          href: href
-        last_page: 1
-        self:
-          href: href
-        first:
-          href: href
-        current_page: 6
-      properties:
-        first:
-          $ref: '#/components/schemas/Href'
-        last:
-          $ref: '#/components/schemas/Href'
-        next:
-          $ref: '#/components/schemas/Href'
-        previous:
-          $ref: '#/components/schemas/Href'
-        self:
-          $ref: '#/components/schemas/Href'
-        total:
-          type: integer
-        current_page:
-          type: integer
-        last_page:
-          type: integer
+      - type
       type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
@@ -844,21 +615,31 @@ components:
             type: string
           type: array
       type: object
-    ParentBlock:
+    IPAssignmentUpdateInput:
       example:
-        netmask: netmask
-        cidr: 2
-        href: href
-        network: network
+        details: details
+        customdata: '{}'
+        tags:
+        - tags
+        - tags
       properties:
-        cidr:
-          type: integer
+        details:
+          type: string
+        customdata:
+          type: object
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
         href:
           type: string
-        netmask:
-          type: string
-        network:
-          type: string
+      required:
+      - href
       type: object
     VrfIpReservation:
       example:
@@ -1278,148 +1059,6 @@ components:
       - type
       - vrf
       type: object
-    IPReservationList:
-      example:
-        ip_addresses:
-        - null
-        - null
-        meta:
-          next:
-            href: href
-          total: 0
-          last:
-            href: href
-          previous:
-            href: href
-          last_page: 1
-          self:
-            href: href
-          first:
-            href: href
-          current_page: 6
-      properties:
-        ip_addresses:
-          items:
-            $ref: '#/components/schemas/IPReservationList_ip_addresses_inner'
-          type: array
-        meta:
-          $ref: '#/components/schemas/Meta'
-      type: object
-    IPReservationRequestInput:
-      properties:
-        comments:
-          type: string
-        customdata:
-          type: object
-        details:
-          type: string
-        facility:
-          type: string
-        fail_on_approval_required:
-          type: boolean
-        metro:
-          description: The code of the metro you are requesting the IP reservation in.
-          example: SV
-          type: string
-        quantity:
-          type: integer
-        tags:
-          items:
-            type: string
-          type: array
-        type:
-          type: string
-      required:
-      - quantity
-      - type
-      type: object
-    Device_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the facility is in
-        type: object
-    IPReservation:
-      additionalProperties: false
-      properties:
-        addon:
-          type: boolean
-        address:
-          type: string
-        address_family:
-          type: integer
-        assignments:
-          items:
-            $ref: '#/components/schemas/IPAssignment'
-          type: array
-        available:
-          type: string
-        bill:
-          type: boolean
-        cidr:
-          type: integer
-        created_at:
-          format: date-time
-          type: string
-        customdata:
-          type: object
-        enabled:
-          type: boolean
-        details:
-          type: string
-        facility:
-          $ref: '#/components/schemas/IPReservation_facility'
-        gateway:
-          type: string
-        global_ip:
-          type: boolean
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        manageable:
-          type: boolean
-        management:
-          type: boolean
-        metal_gateway:
-          $ref: '#/components/schemas/MetalGatewayLite'
-        metro:
-          $ref: '#/components/schemas/IPReservation_metro'
-        netmask:
-          type: string
-        network:
-          type: string
-        project:
-          $ref: '#/components/schemas/Project'
-        project_lite:
-          $ref: '#/components/schemas/Href'
-        requested_by:
-          $ref: '#/components/schemas/Href'
-        public:
-          type: boolean
-        state:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        type:
-          $ref: '#/components/schemas/IPReservation_type'
-      required:
-      - type
-      type: object
-    IPAssignment_state:
-      description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
-
-
-        Describes the current configuration state of this IP on the network.
-
-        '
-      enum:
-      - pending
-      - active
-      - deleting
-      type: string
     Metro:
       example:
         country: country
@@ -1437,10 +1076,234 @@ components:
         name:
           type: string
       type: object
-    IPReservationList_ip_addresses_inner:
-      anyOf:
-      - $ref: '#/components/schemas/IPReservation'
-      - $ref: '#/components/schemas/VrfIpReservation'
+    Project:
+      example:
+        devices:
+        - href: href
+        - href: href
+        volumes:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        memberships:
+        - href: href
+        - href: href
+        bgp_config:
+          href: href
+        tags:
+        - tags
+        - tags
+        max_devices: '{}'
+        ssh_keys:
+        - href: href
+        - href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        invitations:
+        - href: href
+        - href: href
+        members:
+        - href: href
+        - href: href
+        organization:
+          website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        network_status: '{}'
+        customdata: '{}'
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        payment_method:
+          href: href
+      properties:
+        bgp_config:
+          $ref: '#/components/schemas/Href'
+        created_at:
+          format: date-time
+          type: string
+        customdata:
+          type: object
+        devices:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitations:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        max_devices:
+          type: object
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
+          type: string
+        network_status:
+          type: object
+        organization:
+          $ref: '#/components/schemas/Organization'
+        payment_method:
+          $ref: '#/components/schemas/Href'
+        ssh_keys:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        volumes:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        type:
+          $ref: '#/components/schemas/Project_type'
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    IPAssignment:
+      example:
+        address: address
+        parent_block:
+          netmask: netmask
+          cidr: 2
+          href: href
+          network: network
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        enabled: true
+        manageable: true
+        network: network
+        address_family: 5
+        public: true
+        management: true
+        netmask: netmask
+        metro: null
+        next_hop: next_hop
+        cidr: 5
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+        global_ip: true
+        gateway: gateway
+        assigned_to:
+          href: href
+      properties:
+        address:
+          type: string
+        address_family:
+          type: integer
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        cidr:
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        enabled:
+          type: boolean
+        gateway:
+          type: string
+        global_ip:
+          type: boolean
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        manageable:
+          type: boolean
+        management:
+          type: boolean
+        metro:
+          $ref: '#/components/schemas/IPAssignment_metro'
+        netmask:
+          type: string
+        network:
+          type: string
+        parent_block:
+          $ref: '#/components/schemas/ParentBlock'
+        public:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/IPAssignment_state'
+        next_hop:
+          description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+            The IP address within the Metal Gateway to which requests to the Elastic IP are forwarded.
+
+            '
+          format: ipv4
+          type: string
+        type:
+          $ref: '#/components/schemas/IPAssignment_type'
+      type: object
+    IPAssignment_state:
+      description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+        Describes the current configuration state of this IP on the network.
+
+        '
+      enum:
+      - pending
+      - active
+      - deleting
+      type: string
     VrfVirtualCircuit_status:
       description: The status changes of a VRF virtual circuit are generally the same as Virtual Circuits that aren't in a VRF. However, for VRF Virtual Circuits on Fabric VCs, the status will change to 'waiting_on_peering_details' once the Fabric service token associated with the virtual circuit has been redeemed on Fabric, and Metal has found the associated Fabric connection. At this point, users can update the subnet, MD5 password, customer IP and/or metal IP accordingly. For VRF Virtual Circuits on Dedicated Ports, we require all peering details to be set on creation of a VRF Virtual Circuit. The status will change to `changing_peering_details` whenever an active VRF Virtual Circuit has any of its peering details updated.
       enum:
@@ -1457,22 +1320,10 @@ components:
       - deactivation_failed
       - delete_failed
       type: string
-    Project_type:
-      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
-      enum:
-      - default
-      - vmce
-      type: string
-    Coordinates:
-      example:
-        latitude: latitude
-        longitude: longitude
-      properties:
-        latitude:
-          type: string
-        longitude:
-          type: string
-      type: object
+    requestIPReservation_201_response:
+      oneOf:
+      - $ref: '#/components/schemas/IPReservation'
+      - $ref: '#/components/schemas/VrfIpReservation'
     findIPAvailabilities_cidr_parameter:
       enum:
       - '20'
@@ -1590,11 +1441,35 @@ components:
       - $ref: '#/components/schemas/Facility'
       - description: The facility the IP reservation is in. If the facility the IP reservation was requested in is in a metro, a metro value will also be set, and the subsequent IP reservation can be used on a metro level. Can be null if requesting an IP reservation in a metro.
         type: object
-    findIPAddressById_200_response:
+    ParentBlock:
+      example:
+        netmask: netmask
+        cidr: 2
+        href: href
+        network: network
+      properties:
+        cidr:
+          type: integer
+        href:
+          type: string
+        netmask:
+          type: string
+        network:
+          type: string
+      type: object
+    IPAssignment_type:
+      enum:
+      - IPAssignment
+      type: string
+    requestIPReservation_request:
       oneOf:
-      - $ref: '#/components/schemas/IPAssignment'
-      - $ref: '#/components/schemas/IPReservation'
-      - $ref: '#/components/schemas/VrfIpReservation'
+      - $ref: '#/components/schemas/IPReservationRequestInput'
+      - $ref: '#/components/schemas/VrfIpReservationCreateInput'
+    Device_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the facility is in
+        type: object
     Facility:
       example:
         features:
@@ -1647,107 +1522,19 @@ components:
         name:
           type: string
       type: object
-    requestIPReservation_request:
-      oneOf:
-      - $ref: '#/components/schemas/IPReservationRequestInput'
-      - $ref: '#/components/schemas/VrfIpReservationCreateInput'
-    IPAssignment_type:
+    findIPReservations_types_parameter_inner:
       enum:
-      - IPAssignment
+      - global_ipv4
+      - private_ipv4
+      - public_ipv4
+      - public_ipv6
+      - vrf
       type: string
-    User:
-      example:
-        avatar_thumb_url: avatar_thumb_url
-        last_login_at: 2000-01-23 04:56:07+00:00
-        max_projects: 2
-        timezone: timezone
-        default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        created_at: 2000-01-23 04:56:07+00:00
-        last_name: last_name
-        short_id: short_id
-        fraud_score: fraud_score
-        emails:
-        - href: href
-        - href: href
-        default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        full_name: full_name
-        avatar_url: avatar_url
-        updated_at: 2000-01-23 04:56:07+00:00
-        phone_number: phone_number
-        customdata: '{}'
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        first_name: first_name
-        max_organizations: 3
-        two_factor_auth: two_factor_auth
-        email: email
-      properties:
-        avatar_thumb_url:
-          type: string
-        avatar_url:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        customdata:
-          type: object
-        default_organization_id:
-          format: uuid
-          type: string
-        default_project_id:
-          format: uuid
-          type: string
-        email:
-          type: string
-        emails:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        first_name:
-          type: string
-        fraud_score:
-          type: string
-        full_name:
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        last_login_at:
-          format: date-time
-          type: string
-        last_name:
-          type: string
-        max_organizations:
-          type: integer
-        max_projects:
-          type: integer
-        phone_number:
-          type: string
-        short_id:
-          type: string
-        timezone:
-          type: string
-        two_factor_auth:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-      type: object
-    requestIPReservation_201_response:
+    findIPAddressById_200_response:
       oneOf:
+      - $ref: '#/components/schemas/IPAssignment'
       - $ref: '#/components/schemas/IPReservation'
       - $ref: '#/components/schemas/VrfIpReservation'
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
     Vrf:
       example:
         bgp_dynamic_neighbors_export_route_map: true
@@ -1974,6 +1761,317 @@ components:
             type: string
           type: array
       type: object
+    IPReservation_type:
+      enum:
+      - global_ipv4
+      - public_ipv4
+      - private_ipv4
+      - public_ipv6
+      type: string
+    VrfIpReservation_type:
+      enum:
+      - vrf
+      type: string
+    IPAssignment_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the IP address is in
+        type: object
+    MetalGatewayLite:
+      example:
+        gateway_address: 10.1.2.1/27
+        updated_at: 2000-01-23 04:56:07+00:00
+        vlan: 1001
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        gateway_address:
+          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
+          example: 10.1.2.1/27
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        state:
+          $ref: '#/components/schemas/MetalGateway_state'
+        updated_at:
+          format: date-time
+          type: string
+        vlan:
+          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
+          example: 1001
+          type: integer
+      type: object
+    VrfVirtualCircuit:
+      example:
+        subnet: 12.0.0.0/30
+        customer_ip: 12.0.0.2
+        description: description
+        project:
+          href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        vrf: null
+        type: null
+        metal_ip: 12.0.0.1
+        speed: 9
+        tags:
+        - tags
+        - tags
+        nni_vlan: 2
+        updated_at: 2000-01-23 04:56:07+00:00
+        port:
+          href: href
+        name: name
+        peer_asn: 7
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        md5: md5
+        status: null
+      properties:
+        customer_ip:
+          description: An IP address from the subnet that will be used on the Customer side. This parameter is optional, but if supplied, we will use the other usable IP address in the subnet as the Metal IP. By default, the last usable IP address in the subnet will be used.
+          example: 12.0.0.2
+          type: string
+        description:
+          type: string
+        id:
+          format: uuid
+          type: string
+        md5:
+          description: The MD5 password for the BGP peering in plaintext (not a checksum).
+          type: string
+        metal_ip:
+          description: An IP address from the subnet that will be used on the Metal side. This parameter is optional, but if supplied, we will use the other usable IP address in the subnet as the Customer IP. By default, the first usable IP address in the subnet will be used.
+          example: 12.0.0.1
+          type: string
+        name:
+          type: string
+        port:
+          $ref: '#/components/schemas/Href'
+        nni_vlan:
+          type: integer
+        peer_asn:
+          description: The peer ASN that will be used with the VRF on the Virtual Circuit.
+          type: integer
+        project:
+          $ref: '#/components/schemas/Href'
+        speed:
+          description: integer representing bps speed
+          type: integer
+        status:
+          $ref: '#/components/schemas/VrfVirtualCircuit_status'
+        subnet:
+          description: The /30 or /31 subnet of one of the VRF IP Blocks that will be used with the VRF for the Virtual Circuit. This subnet does not have to be an existing VRF IP reservation, as we will create the VRF IP reservation on creation if it does not exist. The Metal IP and Customer IP must be IPs from this subnet. For /30 subnets, the network and broadcast IPs cannot be used as the Metal or Customer IP.
+          example: 12.0.0.0/30
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          $ref: '#/components/schemas/VrfIpReservation_type'
+        vrf:
+          $ref: '#/components/schemas/Vrf'
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - vrf
+      type: object
+    IPReservation_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the IP reservation is in. As long as the IP reservation has a metro, it can be used on a metro level. Can be null if requesting an IP reservation in a facility that is not in a metro.
+        type: object
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    MetalGateway_state:
+      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
+      enum:
+      - ready
+      - active
+      - deleting
+      type: string
+    VrfIpReservationCreateInput:
+      properties:
+        cidr:
+          description: The size of the VRF IP Reservation's subnet
+          example: 16
+          type: integer
+        customdata:
+          type: object
+        details:
+          type: string
+        network:
+          description: The starting address for this VRF IP Reservation's subnet
+          example: 10.1.2.0
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: Must be set to 'vrf'
+          example: vrf
+          type: string
+        vrf_id:
+          description: The ID of the VRF in which this VRF IP Reservation is created. The VRF must have an existing IP Range that contains the requested subnet. This field may be aliased as just 'vrf'.
+          format: uuid
+          type: string
+      required:
+      - cidr
+      - network
+      - type
+      - vrf_id
+      type: object
+    IPReservationList_ip_addresses_inner:
+      anyOf:
+      - $ref: '#/components/schemas/IPReservation'
+      - $ref: '#/components/schemas/VrfIpReservation'
+    IPReservationList:
+      example:
+        ip_addresses:
+        - null
+        - null
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+      properties:
+        ip_addresses:
+          items:
+            $ref: '#/components/schemas/IPReservationList_ip_addresses_inner'
+          type: array
+        meta:
+          $ref: '#/components/schemas/Meta'
+      type: object
+    Facility_features_inner:
+      enum:
+      - baremetal
+      - backend_transfer
+      - layer_2
+      - global_ipv4
+      - ibx
+      type: string
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
+      type: object
+    IPReservationRequestInput:
+      properties:
+        comments:
+          type: string
+        customdata:
+          type: object
+        details:
+          type: string
+        facility:
+          type: string
+        fail_on_approval_required:
+          type: boolean
+        metro:
+          description: The code of the metro you are requesting the IP reservation in.
+          example: SV
+          type: string
+        quantity:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          type: string
+      required:
+      - quantity
+      - type
+      type: object
+    Meta:
+      example:
+        next:
+          href: href
+        total: 0
+        last:
+          href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
+      properties:
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
     Organization:
       example:
         website: website
@@ -2076,112 +2174,12 @@ components:
             type: string
           type: array
       type: object
-    Facility_features_inner:
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
       enum:
-      - baremetal
-      - backend_transfer
-      - layer_2
-      - global_ipv4
-      - ibx
+      - default
+      - vmce
       type: string
-    IPAssignment_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the IP address is in
-        type: object
-    IPAssignmentUpdateInput:
-      example:
-        details: details
-        customdata: '{}'
-        tags:
-        - tags
-        - tags
-      properties:
-        details:
-          type: string
-        customdata:
-          type: object
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    VrfIpReservationCreateInput:
-      properties:
-        cidr:
-          description: The size of the VRF IP Reservation's subnet
-          example: 16
-          type: integer
-        customdata:
-          type: object
-        details:
-          type: string
-        network:
-          description: The starting address for this VRF IP Reservation's subnet
-          example: 10.1.2.0
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        type:
-          description: Must be set to 'vrf'
-          example: vrf
-          type: string
-        vrf_id:
-          description: The ID of the VRF in which this VRF IP Reservation is created. The VRF must have an existing IP Range that contains the requested subnet. This field may be aliased as just 'vrf'.
-          format: uuid
-          type: string
-      required:
-      - cidr
-      - network
-      - type
-      - vrf_id
-      type: object
-    VrfIpReservation_type:
-      enum:
-      - vrf
-      type: string
-    findIPReservations_types_parameter_inner:
-      enum:
-      - global_ipv4
-      - private_ipv4
-      - public_ipv4
-      - public_ipv6
-      - vrf
-      type: string
-    MetalGatewayLite:
-      example:
-        gateway_address: 10.1.2.1/27
-        updated_at: 2000-01-23 04:56:07+00:00
-        vlan: 1001
-        created_at: 2000-01-23 04:56:07+00:00
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        gateway_address:
-          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
-          example: 10.1.2.1/27
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        state:
-          $ref: '#/components/schemas/MetalGateway_state'
-        updated_at:
-          format: date-time
-          type: string
-        vlan:
-          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
-          example: 1001
-          type: integer
-      type: object
   securitySchemes:
     x_auth_token:
       description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.

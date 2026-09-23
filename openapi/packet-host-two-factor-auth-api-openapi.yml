@@ -10,29 +10,22 @@ info:
     name: Equinix Metal
     url: https://metal.equinix.com/legal/
   termsOfService: https://metal.equinix.com/legal/
-  title: Metal Support Request API
+  title: Metal Two Factor Auth API
   version: 1.0.0
 servers:
 - url: https://api.equinix.com/metal/v1
 security:
 - x_auth_token: []
 tags:
-- description: Support request
+- description: Two Factor Authentication Management. Check out the product docs to learn more about 2FA.
   externalDocs:
-    url: https://metal.equinix.com/developers/docs/accounts/support/
-  name: SupportRequest
+    url: https://metal.equinix.com/developers/docs/accounts/two-factor-authentication/
+  name: Two Factor Auth
 paths:
-  /support-requests:
-    post:
-      description: Support Ticket.
-      operationId: requestSuppert
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SupportRequestInput'
-        description: Support Request to create
-        required: true
+  /user/otp/app:
+    delete:
+      description: Disables two factor authentication.
+      operationId: disableTfaApp
       responses:
         '204':
           description: no content
@@ -42,36 +35,69 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unauthorized
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: forbidden
         '404':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
           description: not found
-        '422':
+      summary: Disable two factor authentication
+      tags:
+      - Two Factor Auth
+    post:
+      description: Enables two factor authentication using authenticator app.
+      operationId: enableTfaApp
+      responses:
+        '200':
+          description: ok
+        '401':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: unprocessable entity
-      summary: Create a support ticket
+          description: unauthorized
+      summary: Enable two factor auth using app
       tags:
-      - SupportRequest
+      - Two Factor Auth
+  /user/otp/sms:
+    delete:
+      description: Disables two factor authentication.
+      operationId: disableTfaSms
+      responses:
+        '204':
+          description: no content
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: not found
+      summary: Disable two factor authentication
+      tags:
+      - Two Factor Auth
+    post:
+      description: Enables two factor authentication with sms.
+      operationId: enableTfaSms
+      responses:
+        '200':
+          description: ok
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unauthorized
+      summary: Enable two factor auth using sms
+      tags:
+      - Two Factor Auth
 components:
   schemas:
-    SupportRequestInput_priority:
-      enum:
-      - urgent
-      - high
-      - medium
-      - low
-      type: string
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -84,28 +110,6 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
-      type: object
-    SupportRequestInput:
-      example:
-        device_id: device_id
-        project_id: project_id
-        subject: subject
-        message: message
-        priority: null
-      properties:
-        device_id:
-          type: string
-        message:
-          type: string
-        priority:
-          $ref: '#/components/schemas/SupportRequestInput_priority'
-        project_id:
-          type: string
-        subject:
-          type: string
-      required:
-      - message
-      - subject
       type: object
   securitySchemes:
     x_auth_token:
