@@ -46,7 +46,7 @@
     "packet-host-vrfs-api-openapi.yml"
   ],
   "archived": [
-    "deleted 6 superseded output(s) from the previous generation"
+    "deleted 5 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -54,8 +54,8 @@
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "packet-host-metal-openapi-original.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "packet-host-metal-openapi-original.yml: declared missing tag: Invoices",
-    "superseded outputs removed: packet-host-ip-addresses-api-openapi.yml, packet-host-ot-ps-api-openapi.yml, packet-host-payment-methods-api-openapi.yml, packet-host-ssh-keys-api-openapi.yml, packet-host-two-factor-auth-api-openapi.yml \u2026",
-    "apis.yml register: written (+6 apis, 40 total)"
+    "superseded outputs removed: packet-host-ip-addresses-api-openapi.yml, packet-host-payment-methods-api-openapi.yml, packet-host-ssh-keys-api-openapi.yml, packet-host-two-factor-auth-api-openapi.yml, packet-host-user-data-api-openapi.yml",
+    "apis.yml register: written (+5 apis, 40 total)"
   ],
   "skipped": [
     "packet-host-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -80,7 +80,7 @@
     "packet-host-metros-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "packet-host-operatingsystems-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "packet-host-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "packet-host-ot-ps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "packet-host-otps-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "packet-host-passwordresettokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "packet-host-payment-methods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "packet-host-plans-api-openapi.yml: previously refined output, superseded by openapi/_original/",

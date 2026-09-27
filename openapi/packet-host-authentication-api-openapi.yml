@@ -287,48 +287,6 @@ paths:
       - Authentication
 components:
   schemas:
-    AuthToken:
-      example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        read_only: true
-        created_at: 2000-01-23 04:56:07+00:00
-        description: description
-        project: null
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        user: null
-        token: token
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        description:
-          description: Available only for API keys
-          type: string
-        id:
-          format: uuid
-          type: string
-        project:
-          $ref: '#/components/schemas/AuthToken_project'
-        read_only:
-          type: boolean
-        token:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        user:
-          $ref: '#/components/schemas/AuthToken_user'
-      type: object
-    Coordinates:
-      example:
-        latitude: latitude
-        longitude: longitude
-      properties:
-        latitude:
-          type: string
-        longitude:
-          type: string
-      type: object
     User:
       example:
         avatar_thumb_url: avatar_thumb_url
@@ -409,25 +367,6 @@ components:
           format: date-time
           type: string
       type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Project_type:
-      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
-      enum:
-      - default
-      - vmce
-      type: string
     AuthTokenInput:
       example:
         read_only: true
@@ -438,37 +377,6 @@ components:
         read_only:
           type: boolean
       type: object
-    Address:
-      example:
-        country: country
-        address: address
-        address2: address2
-        city: city
-        coordinates:
-          latitude: latitude
-          longitude: longitude
-        state: state
-        zip_code: zip_code
-      properties:
-        address:
-          type: string
-        address2:
-          type: string
-        city:
-          type: string
-        coordinates:
-          $ref: '#/components/schemas/Coordinates'
-        country:
-          type: string
-        state:
-          type: string
-        zip_code:
-          type: string
-      required:
-      - address
-      - country
-      - zip_code
-      type: object
     Href:
       example:
         href: href
@@ -478,127 +386,11 @@ components:
       required:
       - href
       type: object
-    AuthTokenList:
-      example:
-        api_keys:
-        - updated_at: 2000-01-23 04:56:07+00:00
-          read_only: true
-          created_at: 2000-01-23 04:56:07+00:00
-          description: description
-          project: null
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user: null
-          token: token
-        - updated_at: 2000-01-23 04:56:07+00:00
-          read_only: true
-          created_at: 2000-01-23 04:56:07+00:00
-          description: description
-          project: null
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user: null
-          token: token
-      properties:
-        api_keys:
-          items:
-            $ref: '#/components/schemas/AuthToken'
-          type: array
-      type: object
     AuthToken_user:
       allOf:
       - $ref: '#/components/schemas/User'
       - description: Available only for user tokens
         type: object
-    Organization:
-      example:
-        website: website
-        address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        projects:
-        - href: href
-        - href: href
-        credit_amount: 1.4658129
-        created_at: 2000-01-23 04:56:07+00:00
-        description: description
-        billing_address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        memberships:
-        - href: href
-        - href: href
-        enforce_2fa_at: 2000-01-23 04:56:07+00:00
-        twitter: twitter
-        updated_at: 2000-01-23 04:56:07+00:00
-        terms: 5
-        members:
-        - href: href
-        - href: href
-        name: name
-        logo: logo
-        customdata: '{}'
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        created_at:
-          format: date-time
-          type: string
-        credit_amount:
-          format: float
-          type: number
-        customdata:
-          type: object
-        description:
-          type: string
-        enforce_2fa_at:
-          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        logo:
-          type: string
-        members:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        memberships:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        name:
-          type: string
-        projects:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        terms:
-          type: integer
-        twitter:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        website:
-          type: string
-      type: object
     Project:
       example:
         devices:
@@ -737,11 +529,219 @@ components:
             type: string
           type: array
       type: object
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    Organization:
+      example:
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        projects:
+        - href: href
+        - href: href
+        credit_amount: 1.4658129
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        memberships:
+        - href: href
+        - href: href
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        twitter: twitter
+        updated_at: 2000-01-23 04:56:07+00:00
+        terms: 5
+        members:
+        - href: href
+        - href: href
+        name: name
+        logo: logo
+        customdata: '{}'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        logo:
+          type: string
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        terms:
+          type: integer
+        twitter:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        website:
+          type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
+      type: object
     AuthToken_project:
       allOf:
       - $ref: '#/components/schemas/Project'
       - description: Available only for project tokens
         type: object
+    AuthToken:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        read_only: true
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        project: null
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user: null
+        token: token
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        description:
+          description: Available only for API keys
+          type: string
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/AuthToken_project'
+        read_only:
+          type: boolean
+        token:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/AuthToken_user'
+      type: object
+    AuthTokenList:
+      example:
+        api_keys:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          read_only: true
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          project: null
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user: null
+          token: token
+        - updated_at: 2000-01-23 04:56:07+00:00
+          read_only: true
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          project: null
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user: null
+          token: token
+      properties:
+        api_keys:
+          items:
+            $ref: '#/components/schemas/AuthToken'
+          type: array
+      type: object
   securitySchemes:
     x_auth_token:
       description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.

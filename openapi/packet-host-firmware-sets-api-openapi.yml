@@ -106,6 +106,92 @@ paths:
       - Firmware Sets
 components:
   schemas:
+    FirmwareSet:
+      description: Represents a Firmware Set
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        name: name
+        created_at: 2000-01-23 04:56:07+00:00
+        attributes:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          data:
+            vendor: vendor
+            model: model
+            plan: plan
+            latest: true
+          namespace: namespace
+          created_at: 2000-01-23 04:56:07+00:00
+        - updated_at: 2000-01-23 04:56:07+00:00
+          data:
+            vendor: vendor
+            model: model
+            plan: plan
+            latest: true
+          namespace: namespace
+          created_at: 2000-01-23 04:56:07+00:00
+        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+        component_firmware:
+        - component: bmc
+          filename: filename
+          updated_at: 2000-01-23 04:56:07+00:00
+          vendor: equinix
+          upstream_url: upstream_url
+          checksum: checksum
+          created_at: 2000-01-23 04:56:07+00:00
+          model:
+          - romed8hm3
+          - romed8hm3
+          repository_url: repository_url
+          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+          version: 1.5.0
+        - component: bmc
+          filename: filename
+          updated_at: 2000-01-23 04:56:07+00:00
+          vendor: equinix
+          upstream_url: upstream_url
+          checksum: checksum
+          created_at: 2000-01-23 04:56:07+00:00
+          model:
+          - romed8hm3
+          - romed8hm3
+          repository_url: repository_url
+          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+          version: 1.5.0
+      properties:
+        uuid:
+          description: Firmware Set UUID
+          example: 0516463a-47ee-4809-9a66-ece8c740eed9
+          format: uuid
+          readOnly: true
+          type: string
+        name:
+          description: Firmware Set Name
+          readOnly: true
+          type: string
+        created_at:
+          description: Datetime when the block was created.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Datetime when the block was updated.
+          format: date-time
+          readOnly: true
+          type: string
+        attributes:
+          description: Represents a list of attributes
+          items:
+            $ref: '#/components/schemas/Attribute'
+          type: array
+        component_firmware:
+          description: List of components versions
+          items:
+            $ref: '#/components/schemas/Component'
+          type: array
+      required:
+      - name
+      - uuid
+      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -118,6 +204,77 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
+      type: object
+    Component:
+      example:
+        component: bmc
+        filename: filename
+        updated_at: 2000-01-23 04:56:07+00:00
+        vendor: equinix
+        upstream_url: upstream_url
+        checksum: checksum
+        created_at: 2000-01-23 04:56:07+00:00
+        model:
+        - romed8hm3
+        - romed8hm3
+        repository_url: repository_url
+        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
+        version: 1.5.0
+      properties:
+        uuid:
+          description: Component UUID
+          example: 0516463a-47ee-4809-9a66-ece8c740eed9
+          format: uuid
+          readOnly: true
+          type: string
+        vendor:
+          description: Component vendor
+          example: equinix
+          readOnly: true
+          type: string
+        model:
+          description: List of models where this component version can be applied
+          items:
+            example: romed8hm3
+            type: string
+          readOnly: true
+          type: array
+        filename:
+          description: name of the file
+          readOnly: true
+          type: string
+        version:
+          description: Version of the component
+          example: 1.5.0
+          readOnly: true
+          type: string
+        component:
+          description: Component type
+          example: bmc
+          readOnly: true
+          type: string
+        checksum:
+          description: File checksum
+          readOnly: true
+          type: string
+        upstream_url:
+          description: Location of the file
+          readOnly: true
+          type: string
+        repository_url:
+          description: Location of the file in the repository
+          readOnly: true
+          type: string
+        created_at:
+          description: Datetime when the block was created.
+          format: date-time
+          readOnly: true
+          type: string
+        updated_at:
+          description: Datetime when the block was updated.
+          format: date-time
+          readOnly: true
+          type: string
       type: object
     AttributeData:
       example:
@@ -270,92 +427,6 @@ components:
             $ref: '#/components/schemas/FirmwareSet'
           type: array
       type: object
-    FirmwareSet:
-      description: Represents a Firmware Set
-      example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        name: name
-        created_at: 2000-01-23 04:56:07+00:00
-        attributes:
-        - updated_at: 2000-01-23 04:56:07+00:00
-          data:
-            vendor: vendor
-            model: model
-            plan: plan
-            latest: true
-          namespace: namespace
-          created_at: 2000-01-23 04:56:07+00:00
-        - updated_at: 2000-01-23 04:56:07+00:00
-          data:
-            vendor: vendor
-            model: model
-            plan: plan
-            latest: true
-          namespace: namespace
-          created_at: 2000-01-23 04:56:07+00:00
-        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
-        component_firmware:
-        - component: bmc
-          filename: filename
-          updated_at: 2000-01-23 04:56:07+00:00
-          vendor: equinix
-          upstream_url: upstream_url
-          checksum: checksum
-          created_at: 2000-01-23 04:56:07+00:00
-          model:
-          - romed8hm3
-          - romed8hm3
-          repository_url: repository_url
-          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
-          version: 1.5.0
-        - component: bmc
-          filename: filename
-          updated_at: 2000-01-23 04:56:07+00:00
-          vendor: equinix
-          upstream_url: upstream_url
-          checksum: checksum
-          created_at: 2000-01-23 04:56:07+00:00
-          model:
-          - romed8hm3
-          - romed8hm3
-          repository_url: repository_url
-          uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
-          version: 1.5.0
-      properties:
-        uuid:
-          description: Firmware Set UUID
-          example: 0516463a-47ee-4809-9a66-ece8c740eed9
-          format: uuid
-          readOnly: true
-          type: string
-        name:
-          description: Firmware Set Name
-          readOnly: true
-          type: string
-        created_at:
-          description: Datetime when the block was created.
-          format: date-time
-          readOnly: true
-          type: string
-        updated_at:
-          description: Datetime when the block was updated.
-          format: date-time
-          readOnly: true
-          type: string
-        attributes:
-          description: Represents a list of attributes
-          items:
-            $ref: '#/components/schemas/Attribute'
-          type: array
-        component_firmware:
-          description: List of components versions
-          items:
-            $ref: '#/components/schemas/Component'
-          type: array
-      required:
-      - name
-      - uuid
-      type: object
     Attribute:
       example:
         updated_at: 2000-01-23 04:56:07+00:00
@@ -383,77 +454,6 @@ components:
           type: string
         data:
           $ref: '#/components/schemas/AttributeData'
-      type: object
-    Component:
-      example:
-        component: bmc
-        filename: filename
-        updated_at: 2000-01-23 04:56:07+00:00
-        vendor: equinix
-        upstream_url: upstream_url
-        checksum: checksum
-        created_at: 2000-01-23 04:56:07+00:00
-        model:
-        - romed8hm3
-        - romed8hm3
-        repository_url: repository_url
-        uuid: 0516463a-47ee-4809-9a66-ece8c740eed9
-        version: 1.5.0
-      properties:
-        uuid:
-          description: Component UUID
-          example: 0516463a-47ee-4809-9a66-ece8c740eed9
-          format: uuid
-          readOnly: true
-          type: string
-        vendor:
-          description: Component vendor
-          example: equinix
-          readOnly: true
-          type: string
-        model:
-          description: List of models where this component version can be applied
-          items:
-            example: romed8hm3
-            type: string
-          readOnly: true
-          type: array
-        filename:
-          description: name of the file
-          readOnly: true
-          type: string
-        version:
-          description: Version of the component
-          example: 1.5.0
-          readOnly: true
-          type: string
-        component:
-          description: Component type
-          example: bmc
-          readOnly: true
-          type: string
-        checksum:
-          description: File checksum
-          readOnly: true
-          type: string
-        upstream_url:
-          description: Location of the file
-          readOnly: true
-          type: string
-        repository_url:
-          description: Location of the file in the repository
-          readOnly: true
-          type: string
-        created_at:
-          description: Datetime when the block was created.
-          format: date-time
-          readOnly: true
-          type: string
-        updated_at:
-          description: Datetime when the block was updated.
-          format: date-time
-          readOnly: true
-          type: string
       type: object
   securitySchemes:
     x_auth_token:

@@ -939,59 +939,68 @@ paths:
       - Organizations
 components:
   schemas:
-    OrganizationInput:
+    ProjectCreateInput:
       example:
-        twitter: twitter
-        website: website
-        address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
+        payment_method_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         name: name
-        description: description
-        logo: logo
-        billing_address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
         customdata: '{}'
-        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        type: null
+        tags:
+        - tags
+        - tags
       properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
         customdata:
           type: object
-        description:
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
           type: string
-        enforce_2fa_at:
-          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+        payment_method_id:
+          format: uuid
+          type: string
+        type:
+          $ref: '#/components/schemas/ProjectCreateFromRootInput_type'
+        tags:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      type: object
+    TransferRequest:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        target_organization:
+          href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        created_at:
           format: date-time
           type: string
-        logo:
-          description: The logo for the organization; must be base64-encoded image data
-          format: byte
+        href:
           type: string
-        name:
+        id:
+          format: uuid
           type: string
-        twitter:
-          type: string
-        website:
+        project:
+          $ref: '#/components/schemas/Href'
+        target_organization:
+          $ref: '#/components/schemas/Href'
+        updated_at:
+          format: date-time
           type: string
       type: object
+    findOrganizations_personal_parameter:
+      enum:
+      - include
+      - exclude
+      - only
+      type: string
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -1005,101 +1014,255 @@ components:
             type: string
           type: array
       type: object
-    InvitationList:
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    Meta:
       example:
-        invitations:
-        - updated_at: 2000-01-23 04:56:07+00:00
-          roles:
-          - roles
-          - roles
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
+        next:
           href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user:
-            href: href
-        - updated_at: 2000-01-23 04:56:07+00:00
-          roles:
-          - roles
-          - roles
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
+        total: 0
+        last:
           href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user:
-            href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
       properties:
-        invitations:
-          items:
-            $ref: '#/components/schemas/Membership'
-          type: array
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
       type: object
-    PaymentMethodList:
-      example:
-        payment_methods:
-        - projects:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          billing_address:
-            street_address: street_address
-            country_code_alpha2: country_code_alpha2
-            postal_code: postal_code
-          card_type: card_type
-          cardholder_name: cardholder_name
-          type: type
-          created_by_user:
-            href: href
-          expiration_year: expiration_year
-          default: true
-          updated_at: 2000-01-23 04:56:07+00:00
-          organization:
-            href: href
-          expiration_month: expiration_month
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          email: email
-        - projects:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          billing_address:
-            street_address: street_address
-            country_code_alpha2: country_code_alpha2
-            postal_code: postal_code
-          card_type: card_type
-          cardholder_name: cardholder_name
-          type: type
-          created_by_user:
-            href: href
-          expiration_year: expiration_year
-          default: true
-          updated_at: 2000-01-23 04:56:07+00:00
-          organization:
-            href: href
-          expiration_month: expiration_month
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          email: email
-      properties:
-        payment_methods:
-          items:
-            $ref: '#/components/schemas/PaymentMethod'
-          type: array
-      type: object
-    Plan_available_in_metros_inner:
+    Plan_available_in_inner:
       example:
         price:
           hour: 1.23
         href: href
       properties:
         href:
-          description: href to the Metro
+          description: href to the Facility
           type: string
         price:
           $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    PaymentMethodCreateInput:
+      example:
+        default: true
+        name: name
+        nonce: nonce
+      properties:
+        default:
+          type: boolean
+        name:
+          type: string
+        nonce:
+          type: string
+      required:
+      - name
+      - nonce
+      type: object
+    Plan_specs_memory:
+      example:
+        total: total
+      properties:
+        total:
+          type: string
+      type: object
+    Plan_specs_cpus_inner:
+      example:
+        count: 6
+        type: type
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+      type: object
+    PlanList:
+      example:
+        plans:
+        - legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+        - legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+      properties:
+        plans:
+          items:
+            $ref: '#/components/schemas/Plan'
+          type: array
+      type: object
+    OperatingSystem:
+      example:
+        default_operating_system: true
+        distro: distro
+        preinstallable: true
+        licensed: true
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        provisionable_on:
+        - provisionable_on
+        - provisionable_on
+        version: version
+        pricing: '{}'
+        slug: slug
+        distro_label: distro_label
+      properties:
+        distro:
+          type: string
+        distro_label:
+          type: string
+        id:
+          format: uuid
+          type: string
+        licensed:
+          description: Licenced OS is priced according to pricing property
+          type: boolean
+        name:
+          type: string
+        preinstallable:
+          description: Servers can be already preinstalled with OS in order to shorten provision time.
+          type: boolean
+        pricing:
+          description: This object contains price per time unit and optional multiplier value if licence price depends on hardware plan or components (e.g. number of cores)
+          type: object
+        provisionable_on:
+          items:
+            type: string
+          type: array
+        slug:
+          type: string
+        version:
+          type: string
+        default_operating_system:
+          description: Default operating system for the distro.
+          readOnly: true
+          type: boolean
       type: object
     PaymentMethod:
       example:
@@ -1161,192 +1324,6 @@ components:
         updated_at:
           format: date-time
           type: string
-      type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
-    Invitation_roles_inner:
-      enum:
-      - admin
-      - billing
-      - collaborator
-      - limited_collaborator
-      type: string
-    InvitationInput:
-      example:
-        projects_ids:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        roles:
-        - null
-        - null
-        message: message
-        invitee: invitee
-      properties:
-        invitee:
-          format: email
-          type: string
-        message:
-          type: string
-        organization_id:
-          format: uuid
-          type: string
-        projects_ids:
-          items:
-            format: uuid
-            type: string
-          type: array
-        roles:
-          items:
-            $ref: '#/components/schemas/Invitation_roles_inner'
-          type: array
-      required:
-      - invitee
-      type: object
-    Project:
-      example:
-        devices:
-        - href: href
-        - href: href
-        volumes:
-        - href: href
-        - href: href
-        created_at: 2000-01-23 04:56:07+00:00
-        type: null
-        memberships:
-        - href: href
-        - href: href
-        bgp_config:
-          href: href
-        tags:
-        - tags
-        - tags
-        max_devices: '{}'
-        ssh_keys:
-        - href: href
-        - href: href
-        updated_at: 2000-01-23 04:56:07+00:00
-        invitations:
-        - href: href
-        - href: href
-        members:
-        - href: href
-        - href: href
-        organization:
-          website: website
-          address:
-            country: country
-            address: address
-            address2: address2
-            city: city
-            coordinates:
-              latitude: latitude
-              longitude: longitude
-            state: state
-            zip_code: zip_code
-          projects:
-          - href: href
-          - href: href
-          credit_amount: 1.4658129
-          created_at: 2000-01-23 04:56:07+00:00
-          description: description
-          billing_address:
-            country: country
-            address: address
-            address2: address2
-            city: city
-            coordinates:
-              latitude: latitude
-              longitude: longitude
-            state: state
-            zip_code: zip_code
-          memberships:
-          - href: href
-          - href: href
-          enforce_2fa_at: 2000-01-23 04:56:07+00:00
-          twitter: twitter
-          updated_at: 2000-01-23 04:56:07+00:00
-          terms: 5
-          members:
-          - href: href
-          - href: href
-          name: name
-          logo: logo
-          customdata: '{}'
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        name: name
-        network_status: '{}'
-        customdata: '{}'
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        payment_method:
-          href: href
-      properties:
-        bgp_config:
-          $ref: '#/components/schemas/Href'
-        created_at:
-          format: date-time
-          type: string
-        customdata:
-          type: object
-        devices:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        invitations:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        max_devices:
-          type: object
-        members:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        memberships:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        name:
-          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
-          maxLength: 80
-          minLength: 1
-          type: string
-        network_status:
-          type: object
-        organization:
-          $ref: '#/components/schemas/Organization'
-        payment_method:
-          $ref: '#/components/schemas/Href'
-        ssh_keys:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        updated_at:
-          format: date-time
-          type: string
-        volumes:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        type:
-          $ref: '#/components/schemas/Project_type'
-        tags:
-          items:
-            type: string
-          type: array
       type: object
     ProjectList:
       example:
@@ -1525,222 +1502,132 @@ components:
             $ref: '#/components/schemas/Project'
           type: array
       type: object
-    Plan_specs:
+    PaymentMethodList:
       example:
-        features:
-          txt: true
-          uefi: true
-          raid: true
-        memory:
-          total: total
-        cpus:
-        - count: 6
+        payment_methods:
+        - projects:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          billing_address:
+            street_address: street_address
+            country_code_alpha2: country_code_alpha2
+            postal_code: postal_code
+          card_type: card_type
+          cardholder_name: cardholder_name
           type: type
-        - count: 6
+          created_by_user:
+            href: href
+          expiration_year: expiration_year
+          default: true
+          updated_at: 2000-01-23 04:56:07+00:00
+          organization:
+            href: href
+          expiration_month: expiration_month
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+        - projects:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          billing_address:
+            street_address: street_address
+            country_code_alpha2: country_code_alpha2
+            postal_code: postal_code
+          card_type: card_type
+          cardholder_name: cardholder_name
           type: type
-        drives:
-        - size: 3.84TB
-          count: 1
-          type: type
-          category: null
-        - size: 3.84TB
-          count: 1
-          type: type
-          category: null
-        nics:
-        - count: 2
-          type: type
-        - count: 2
-          type: type
+          created_by_user:
+            href: href
+          expiration_year: expiration_year
+          default: true
+          updated_at: 2000-01-23 04:56:07+00:00
+          organization:
+            href: href
+          expiration_month: expiration_month
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
       properties:
-        cpus:
+        payment_methods:
           items:
-            $ref: '#/components/schemas/Plan_specs_cpus_inner'
+            $ref: '#/components/schemas/PaymentMethod'
           type: array
-        memory:
-          $ref: '#/components/schemas/Plan_specs_memory'
-        drives:
-          items:
-            $ref: '#/components/schemas/Plan_specs_drives_inner'
-          type: array
-        nics:
-          items:
-            $ref: '#/components/schemas/Plan_specs_nics_inner'
-          type: array
-        features:
-          $ref: '#/components/schemas/Plan_specs_features'
       type: object
-    ProjectCreateFromRootInput_type:
-      description: The type of the project. If no type is specified the project type will automatically be `default` Projects of type 'vmce' are part of an in development feature and not available to all customers.
-      enum:
-      - default
-      - vmce
-      type: string
-    OperatingSystem:
+    InvitationInput:
       example:
-        default_operating_system: true
-        distro: distro
-        preinstallable: true
-        licensed: true
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        provisionable_on:
-        - provisionable_on
-        - provisionable_on
-        version: version
-        pricing: '{}'
-        slug: slug
-        distro_label: distro_label
+        projects_ids:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        roles:
+        - null
+        - null
+        message: message
+        invitee: invitee
       properties:
-        distro:
+        invitee:
+          format: email
           type: string
-        distro_label:
+        message:
           type: string
-        id:
+        organization_id:
           format: uuid
           type: string
-        licensed:
-          description: Licenced OS is priced according to pricing property
-          type: boolean
-        name:
-          type: string
-        preinstallable:
-          description: Servers can be already preinstalled with OS in order to shorten provision time.
-          type: boolean
-        pricing:
-          description: This object contains price per time unit and optional multiplier value if licence price depends on hardware plan or components (e.g. number of cores)
-          type: object
-        provisionable_on:
+        projects_ids:
           items:
+            format: uuid
             type: string
           type: array
-        slug:
-          type: string
-        version:
-          type: string
-        default_operating_system:
-          description: Default operating system for the distro.
-          readOnly: true
-          type: boolean
-      type: object
-    PlanList:
-      example:
-        plans:
-        - legacy: true
-          line: line
-          available_in_metros:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          description: description
-          available_in:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          type: null
-          specs:
-            features:
-              txt: true
-              uefi: true
-              raid: true
-            memory:
-              total: total
-            cpus:
-            - count: 6
-              type: type
-            - count: 6
-              type: type
-            drives:
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            nics:
-            - count: 2
-              type: type
-            - count: 2
-              type: type
-          deployment_types:
-          - null
-          - null
-          name: name
-          categories:
-          - categories
-          - categories
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          class: m3.large.x86
-          pricing: '{}'
-          slug: m3.large.x86
-        - legacy: true
-          line: line
-          available_in_metros:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          description: description
-          available_in:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          type: null
-          specs:
-            features:
-              txt: true
-              uefi: true
-              raid: true
-            memory:
-              total: total
-            cpus:
-            - count: 6
-              type: type
-            - count: 6
-              type: type
-            drives:
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            nics:
-            - count: 2
-              type: type
-            - count: 2
-              type: type
-          deployment_types:
-          - null
-          - null
-          name: name
-          categories:
-          - categories
-          - categories
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          class: m3.large.x86
-          pricing: '{}'
-          slug: m3.large.x86
-      properties:
-        plans:
+        roles:
           items:
-            $ref: '#/components/schemas/Plan'
+            $ref: '#/components/schemas/Invitation_roles_inner'
           type: array
+      required:
+      - invitee
+      type: object
+    Plan_specs_drives_inner_category:
+      enum:
+      - boot
+      - cache
+      - storage
+      type: string
+    Plan_deployment_types_inner:
+      enum:
+      - on_demand
+      - spot_market
+      type: string
+    Address:
+      example:
+        country: country
+        address: address
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
+        state: state
+        zip_code: zip_code
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+      required:
+      - address
+      - country
+      - zip_code
       type: object
     OrganizationList:
       example:
@@ -1849,27 +1736,316 @@ components:
             $ref: '#/components/schemas/Organization'
           type: array
       type: object
-    Plan_specs_features:
+    Plan_specs_drives_inner:
       example:
-        txt: true
-        uefi: true
-        raid: true
-      properties:
-        raid:
-          type: boolean
-        txt:
-          type: boolean
-        uefi:
-          type: boolean
-      type: object
-    Plan_specs_cpus_inner:
-      example:
-        count: 6
+        size: 3.84TB
+        count: 1
         type: type
+        category: null
       properties:
         count:
           type: integer
         type:
+          type: string
+        size:
+          example: 3.84TB
+          type: string
+        category:
+          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
+      type: object
+    PaymentMethodBillingAddress:
+      example:
+        street_address: street_address
+        country_code_alpha2: country_code_alpha2
+        postal_code: postal_code
+      properties:
+        country_code_alpha2:
+          type: string
+        postal_code:
+          type: string
+        street_address:
+          type: string
+      type: object
+    Project:
+      example:
+        devices:
+        - href: href
+        - href: href
+        volumes:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        memberships:
+        - href: href
+        - href: href
+        bgp_config:
+          href: href
+        tags:
+        - tags
+        - tags
+        max_devices: '{}'
+        ssh_keys:
+        - href: href
+        - href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        invitations:
+        - href: href
+        - href: href
+        members:
+        - href: href
+        - href: href
+        organization:
+          website: website
+          address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          projects:
+          - href: href
+          - href: href
+          credit_amount: 1.4658129
+          created_at: 2000-01-23 04:56:07+00:00
+          description: description
+          billing_address:
+            country: country
+            address: address
+            address2: address2
+            city: city
+            coordinates:
+              latitude: latitude
+              longitude: longitude
+            state: state
+            zip_code: zip_code
+          memberships:
+          - href: href
+          - href: href
+          enforce_2fa_at: 2000-01-23 04:56:07+00:00
+          twitter: twitter
+          updated_at: 2000-01-23 04:56:07+00:00
+          terms: 5
+          members:
+          - href: href
+          - href: href
+          name: name
+          logo: logo
+          customdata: '{}'
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: name
+        network_status: '{}'
+        customdata: '{}'
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        payment_method:
+          href: href
+      properties:
+        bgp_config:
+          $ref: '#/components/schemas/Href'
+        created_at:
+          format: date-time
+          type: string
+        customdata:
+          type: object
+        devices:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitations:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        max_devices:
+          type: object
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
+          maxLength: 80
+          minLength: 1
+          type: string
+        network_status:
+          type: object
+        organization:
+          $ref: '#/components/schemas/Organization'
+        payment_method:
+          $ref: '#/components/schemas/Href'
+        ssh_keys:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        volumes:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        type:
+          $ref: '#/components/schemas/Project_type'
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    OrganizationInput:
+      example:
+        twitter: twitter
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        name: name
+        description: description
+        logo: logo
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        customdata: '{}'
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        logo:
+          description: The logo for the organization; must be base64-encoded image data
+          format: byte
+          type: string
+        name:
+          type: string
+        twitter:
+          type: string
+        website:
+          type: string
+      type: object
+    Organization:
+      example:
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        projects:
+        - href: href
+        - href: href
+        credit_amount: 1.4658129
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        memberships:
+        - href: href
+        - href: href
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        twitter: twitter
+        updated_at: 2000-01-23 04:56:07+00:00
+        terms: 5
+        members:
+        - href: href
+        - href: href
+        name: name
+        logo: logo
+        customdata: '{}'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        logo:
+          type: string
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        terms:
+          type: integer
+        twitter:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        website:
           type: string
       type: object
     TransferRequestList:
@@ -1897,6 +2073,49 @@ components:
             $ref: '#/components/schemas/TransferRequest'
           type: array
       type: object
+    InvitationList:
+      example:
+        invitations:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+      properties:
+        invitations:
+          items:
+            $ref: '#/components/schemas/Membership'
+          type: array
+      type: object
+    Plan_available_in_metros_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Metro
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
     Plan_available_in_inner_price:
       example:
         hour: 1.23
@@ -1906,56 +2125,81 @@ components:
           format: double
           type: number
       type: object
-    Plan_specs_drives_inner:
+    Plan_specs:
       example:
-        size: 3.84TB
-        count: 1
+        features:
+          txt: true
+          uefi: true
+          raid: true
+        memory:
+          total: total
+        cpus:
+        - count: 6
+          type: type
+        - count: 6
+          type: type
+        drives:
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        nics:
+        - count: 2
+          type: type
+        - count: 2
+          type: type
+      properties:
+        cpus:
+          items:
+            $ref: '#/components/schemas/Plan_specs_cpus_inner'
+          type: array
+        memory:
+          $ref: '#/components/schemas/Plan_specs_memory'
+        drives:
+          items:
+            $ref: '#/components/schemas/Plan_specs_drives_inner'
+          type: array
+        nics:
+          items:
+            $ref: '#/components/schemas/Plan_specs_nics_inner'
+          type: array
+        features:
+          $ref: '#/components/schemas/Plan_specs_features'
+      type: object
+    Plan_specs_nics_inner:
+      example:
+        count: 2
         type: type
-        category: null
       properties:
         count:
+          example: 2
           type: integer
         type:
           type: string
-        size:
-          example: 3.84TB
-          type: string
-        category:
-          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
       type: object
-    Membership:
+    Plan_type:
+      description: The plan type
+      enum:
+      - standard
+      - workload_optimized
+      - custom
+      type: string
+    Plan_specs_features:
       example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        roles:
-        - roles
-        - roles
-        created_at: 2000-01-23 04:56:07+00:00
-        project:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        user:
-          href: href
+        txt: true
+        uefi: true
+        raid: true
       properties:
-        created_at:
-          format: date-time
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        project:
-          $ref: '#/components/schemas/Href'
-        roles:
-          items:
-            type: string
-          type: array
-        updated_at:
-          format: date-time
-          type: string
-        user:
-          $ref: '#/components/schemas/Href'
+        raid:
+          type: boolean
+        txt:
+          type: boolean
+        uefi:
+          type: boolean
       type: object
     Invitation:
       example:
@@ -2009,34 +2253,19 @@ components:
           format: date-time
           type: string
       type: object
-    Plan_type:
-      description: The plan type
-      enum:
-      - standard
-      - workload_optimized
-      - custom
-      type: string
-    Plan_specs_nics_inner:
-      example:
-        count: 2
-        type: type
-      properties:
-        count:
-          example: 2
-          type: integer
-        type:
-          type: string
-      type: object
-    TransferRequest:
+    Membership:
       example:
         updated_at: 2000-01-23 04:56:07+00:00
-        target_organization:
-          href: href
+        roles:
+        - roles
+        - roles
         created_at: 2000-01-23 04:56:07+00:00
         project:
           href: href
         href: href
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user:
+          href: href
       properties:
         created_at:
           format: date-time
@@ -2048,23 +2277,41 @@ components:
           type: string
         project:
           $ref: '#/components/schemas/Href'
-        target_organization:
-          $ref: '#/components/schemas/Href'
+        roles:
+          items:
+            type: string
+          type: array
         updated_at:
           format: date-time
           type: string
+        user:
+          $ref: '#/components/schemas/Href'
       type: object
-    Plan_available_in_inner:
+    Href:
       example:
-        price:
-          hour: 1.23
         href: href
       properties:
         href:
-          description: href to the Facility
           type: string
-        price:
-          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      required:
+      - href
+      type: object
+    Invitation_roles_inner:
+      enum:
+      - admin
+      - billing
+      - collaborator
+      - limited_collaborator
+      type: string
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
       type: object
     Plan:
       example:
@@ -2171,224 +2418,6 @@ components:
         type:
           $ref: '#/components/schemas/Plan_type'
       type: object
-    Coordinates:
-      example:
-        latitude: latitude
-        longitude: longitude
-      properties:
-        latitude:
-          type: string
-        longitude:
-          type: string
-      type: object
-    Plan_specs_drives_inner_category:
-      enum:
-      - boot
-      - cache
-      - storage
-      type: string
-    Plan_specs_memory:
-      example:
-        total: total
-      properties:
-        total:
-          type: string
-      type: object
-    findOrganizations_personal_parameter:
-      enum:
-      - include
-      - exclude
-      - only
-      type: string
-    PaymentMethodBillingAddress:
-      example:
-        street_address: street_address
-        country_code_alpha2: country_code_alpha2
-        postal_code: postal_code
-      properties:
-        country_code_alpha2:
-          type: string
-        postal_code:
-          type: string
-        street_address:
-          type: string
-      type: object
-    Address:
-      example:
-        country: country
-        address: address
-        address2: address2
-        city: city
-        coordinates:
-          latitude: latitude
-          longitude: longitude
-        state: state
-        zip_code: zip_code
-      properties:
-        address:
-          type: string
-        address2:
-          type: string
-        city:
-          type: string
-        coordinates:
-          $ref: '#/components/schemas/Coordinates'
-        country:
-          type: string
-        state:
-          type: string
-        zip_code:
-          type: string
-      required:
-      - address
-      - country
-      - zip_code
-      type: object
-    Plan_deployment_types_inner:
-      enum:
-      - on_demand
-      - spot_market
-      type: string
-    Meta:
-      example:
-        next:
-          href: href
-        total: 0
-        last:
-          href: href
-        previous:
-          href: href
-        last_page: 1
-        self:
-          href: href
-        first:
-          href: href
-        current_page: 6
-      properties:
-        first:
-          $ref: '#/components/schemas/Href'
-        last:
-          $ref: '#/components/schemas/Href'
-        next:
-          $ref: '#/components/schemas/Href'
-        previous:
-          $ref: '#/components/schemas/Href'
-        self:
-          $ref: '#/components/schemas/Href'
-        total:
-          type: integer
-        current_page:
-          type: integer
-        last_page:
-          type: integer
-      type: object
-    Organization:
-      example:
-        website: website
-        address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        projects:
-        - href: href
-        - href: href
-        credit_amount: 1.4658129
-        created_at: 2000-01-23 04:56:07+00:00
-        description: description
-        billing_address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        memberships:
-        - href: href
-        - href: href
-        enforce_2fa_at: 2000-01-23 04:56:07+00:00
-        twitter: twitter
-        updated_at: 2000-01-23 04:56:07+00:00
-        terms: 5
-        members:
-        - href: href
-        - href: href
-        name: name
-        logo: logo
-        customdata: '{}'
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        created_at:
-          format: date-time
-          type: string
-        credit_amount:
-          format: float
-          type: number
-        customdata:
-          type: object
-        description:
-          type: string
-        enforce_2fa_at:
-          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        logo:
-          type: string
-        members:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        memberships:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        name:
-          type: string
-        projects:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        terms:
-          type: integer
-        twitter:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        website:
-          type: string
-      type: object
-    PaymentMethodCreateInput:
-      example:
-        default: true
-        name: name
-        nonce: nonce
-      properties:
-        default:
-          type: boolean
-        name:
-          type: string
-        nonce:
-          type: string
-      required:
-      - name
-      - nonce
-      type: object
     OperatingSystemList:
       example:
         operating_systems:
@@ -2424,37 +2453,8 @@ components:
             $ref: '#/components/schemas/OperatingSystem'
           type: array
       type: object
-    ProjectCreateInput:
-      example:
-        payment_method_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        name: name
-        customdata: '{}'
-        type: null
-        tags:
-        - tags
-        - tags
-      properties:
-        customdata:
-          type: object
-        name:
-          description: The name of the project. Cannot contain characters encoded in greater than 3 bytes such as emojis.
-          maxLength: 80
-          minLength: 1
-          type: string
-        payment_method_id:
-          format: uuid
-          type: string
-        type:
-          $ref: '#/components/schemas/ProjectCreateFromRootInput_type'
-        tags:
-          items:
-            type: string
-          type: array
-      required:
-      - name
-      type: object
-    Project_type:
-      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+    ProjectCreateFromRootInput_type:
+      description: The type of the project. If no type is specified the project type will automatically be `default` Projects of type 'vmce' are part of an in development feature and not available to all customers.
       enum:
       - default
       - vmce

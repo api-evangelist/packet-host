@@ -72,6 +72,23 @@ paths:
       - Metros
 components:
   schemas:
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
     MetroList:
       example:
         metros:
@@ -101,23 +118,6 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
-      type: object
-    Metro:
-      example:
-        country: country
-        code: code
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        code:
-          type: string
-        country:
-          type: string
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
       type: object
   securitySchemes:
     x_auth_token:

@@ -10,7 +10,7 @@ info:
     name: Equinix Metal
     url: https://metal.equinix.com/legal/
   termsOfService: https://metal.equinix.com/legal/
-  title: Metal VLA Ns API
+  title: Metal VLANs API
   version: 1.0.0
 servers:
 - url: https://api.equinix.com/metal/v1
@@ -322,102 +322,6 @@ paths:
       - VLANs
 components:
   schemas:
-    MetalGateway_state:
-      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
-      enum:
-      - ready
-      - active
-      - deleting
-      type: string
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    VirtualNetwork:
-      example:
-        vxlan: 4
-        instances:
-        - href: href
-        - href: href
-        description: description
-        created_at: 2000-01-23 04:56:07+00:00
-        assigned_to_virtual_circuit: true
-        tags:
-        - tags
-        - tags
-        metal_gateways:
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        metro_code: metro_code
-        metro:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        facility:
-          href: href
-        assigned_to:
-          href: href
-      properties:
-        assigned_to:
-          $ref: '#/components/schemas/Href'
-        assigned_to_virtual_circuit:
-          description: True if the virtual network is attached to a virtual circuit. False if not.
-          type: boolean
-        description:
-          type: string
-        facility:
-          $ref: '#/components/schemas/Href'
-        href:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        instances:
-          description: A list of instances with ports currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        metal_gateways:
-          description: A list of metal gateways currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/MetalGatewayLite'
-          type: array
-        metro:
-          $ref: '#/components/schemas/Href'
-        metro_code:
-          description: The Metro code of the metro in which this Virtual Network is defined.
-          type: string
-        vxlan:
-          type: integer
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
     VirtualNetworkList:
       example:
         virtual_networks:
@@ -504,6 +408,13 @@ components:
       required:
       - href
       type: object
+    MetalGateway_state:
+      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
+      enum:
+      - ready
+      - active
+      - deleting
+      type: string
     VirtualNetworkCreateInput:
       example:
         vxlan: 1099
@@ -529,6 +440,19 @@ components:
           type: integer
         tags:
           items:
+            type: string
+          type: array
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
             type: string
           type: array
       type: object
@@ -563,6 +487,82 @@ components:
           description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
           example: 1001
           type: integer
+      type: object
+    VirtualNetwork:
+      example:
+        vxlan: 4
+        instances:
+        - href: href
+        - href: href
+        description: description
+        created_at: 2000-01-23 04:56:07+00:00
+        assigned_to_virtual_circuit: true
+        tags:
+        - tags
+        - tags
+        metal_gateways:
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        metro_code: metro_code
+        metro:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        facility:
+          href: href
+        assigned_to:
+          href: href
+      properties:
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        assigned_to_virtual_circuit:
+          description: True if the virtual network is attached to a virtual circuit. False if not.
+          type: boolean
+        description:
+          type: string
+        facility:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        instances:
+          description: A list of instances with ports currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        metal_gateways:
+          description: A list of metal gateways currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/MetalGatewayLite'
+          type: array
+        metro:
+          $ref: '#/components/schemas/Href'
+        metro_code:
+          description: The Metro code of the metro in which this Virtual Network is defined.
+          type: string
+        vxlan:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
       type: object
   securitySchemes:
     x_auth_token:

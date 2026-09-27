@@ -212,56 +212,59 @@ paths:
       - Batches
 components:
   schemas:
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    IPAddress:
-      properties:
-        address_family:
-          $ref: '#/components/schemas/IPAddress_address_family'
-        cidr:
-          description: Cidr Size for the IP Block created. Valid values depends on the operating system being provisioned. (28..32 for IPv4 addresses, 124..127 for IPv6 addresses)
-          example: 28
-          format: int32
-          type: integer
-        ip_reservations:
-          description: UUIDs of any IP reservations to use when assigning IPs
-          items:
-            type: string
-          type: array
-        public:
-          default: true
-          description: Address Type for IP Address
-          example: false
-          type: boolean
-      type: object
-    Href:
+    Filesystem:
       example:
-        href: href
+        mount:
+          format: format
+          options:
+          - options
+          - options
+          device: device
+          point: point
       properties:
-        href:
-          type: string
-      required:
-      - href
+        mount:
+          $ref: '#/components/schemas/Mount'
       type: object
-    DeviceCreateInMetroInput:
-      allOf:
-      - $ref: '#/components/schemas/MetroInput'
-      - $ref: '#/components/schemas/DeviceCreateInput'
-    DeviceCreateInFacilityInput:
-      allOf:
-      - $ref: '#/components/schemas/FacilityInput'
-      - $ref: '#/components/schemas/DeviceCreateInput'
+    Batch:
+      example:
+        quantity: 0
+        updated_at: 2000-01-23 04:56:07+00:00
+        devices:
+        - href: href
+        - href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        error_messages:
+        - error_messages
+        - error_messages
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        devices:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        error_messages:
+          items:
+            type: string
+          type: array
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/Href'
+        quantity:
+          type: integer
+        state:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
     Storage:
       example:
         disks:
@@ -323,46 +326,78 @@ components:
             $ref: '#/components/schemas/Filesystem'
           type: array
       type: object
-    Batch:
-      example:
-        quantity: 0
-        updated_at: 2000-01-23 04:56:07+00:00
-        devices:
-        - href: href
-        - href: href
-        created_at: 2000-01-23 04:56:07+00:00
-        project:
-          href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: state
-        error_messages:
-        - error_messages
-        - error_messages
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
-        created_at:
-          format: date-time
+        error:
+          description: A description of the error that caused the request to fail.
           type: string
-        devices:
+        errors:
+          description: A list of errors that contributed to the request failing.
           items:
-            $ref: '#/components/schemas/Href'
+            description: An error message that contributed to the request failing.
+            type: string
           type: array
-        error_messages:
+      type: object
+    Mount:
+      example:
+        format: format
+        options:
+        - options
+        - options
+        device: device
+        point: point
+      properties:
+        device:
+          type: string
+        format:
+          type: string
+        point:
+          type: string
+        options:
           items:
             type: string
           type: array
-        id:
-          format: uuid
-          type: string
-        project:
-          $ref: '#/components/schemas/Href'
-        quantity:
-          type: integer
-        state:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
       type: object
+    DeviceCreateInFacilityInput:
+      allOf:
+      - $ref: '#/components/schemas/FacilityInput'
+      - $ref: '#/components/schemas/DeviceCreateInput'
+    MetroInput:
+      properties:
+        metro:
+          description: 'Metro code or ID of where the instance should be provisioned in.
+
+            Either metro or facility must be provided.'
+          example: sv
+          type: string
+      required:
+      - metro
+      type: object
+    IPAddress:
+      properties:
+        address_family:
+          $ref: '#/components/schemas/IPAddress_address_family'
+        cidr:
+          description: Cidr Size for the IP Block created. Valid values depends on the operating system being provisioned. (28..32 for IPv4 addresses, 124..127 for IPv6 addresses)
+          example: 28
+          format: int32
+          type: integer
+        ip_reservations:
+          description: UUIDs of any IP reservations to use when assigning IPs
+          items:
+            type: string
+          type: array
+        public:
+          default: true
+          description: Address Type for IP Address
+          example: false
+          type: boolean
+      type: object
+    DeviceCreateInMetroInput:
+      allOf:
+      - $ref: '#/components/schemas/MetroInput'
+      - $ref: '#/components/schemas/DeviceCreateInput'
     IPAddress_address_family:
       description: Address Family for IP Address
       enum:
@@ -371,6 +406,59 @@ components:
       example: 4
       format: int32
       type: integer
+    Partition:
+      example:
+        number: 3
+        size: size
+        label: label
+      properties:
+        label:
+          type: string
+        number:
+          format: int32
+          type: integer
+        size:
+          type: string
+      type: object
+    FacilityInput:
+      properties:
+        facility:
+          deprecated: true
+          description: 'The datacenter where the device should be created.
+
+
+            Either metro or facility must be provided.
+
+
+            The API will accept either a single facility `{ "facility": "f1" }`, or it can be instructed to create the device in the best available datacenter `{ "facility": "any" }`.
+
+
+            Additionally it is possible to set a prioritized location selection. For example `{ "facility": ["f3", "f2", "any"] }` can be used to prioritize `f3` and then `f2` before accepting `any` facility. If none of the facilities provided have availability for the requested device the request will fail.'
+          example:
+          - sv15
+          items:
+            type: string
+          type: array
+      required:
+      - facility
+      type: object
+    Raid:
+      example:
+        devices:
+        - devices
+        - devices
+        level: level
+        name: name
+      properties:
+        devices:
+          items:
+            type: string
+          type: array
+        level:
+          type: string
+        name:
+          type: string
+      type: object
     SSHKeyInput:
       example:
         label: label
@@ -387,44 +475,6 @@ components:
           items:
             type: string
           type: array
-      type: object
-    InstancesBatchCreateInput_batches_inner:
-      allOf:
-      - properties:
-          hostnames:
-            items:
-              type: string
-            type: array
-          quantity:
-            description: The number of devices to create in this batch. The hostname may contain an `{{index}}` placeholder, which will be replaced with the index of the device in the batch. For example, if the hostname is `device-{{index}}`, the first device in the batch will have the hostname `device-01`, the second device will have the hostname `device-02`, and so on.
-            type: integer
-        type: object
-      - oneOf:
-        - $ref: '#/components/schemas/DeviceCreateInMetroInput'
-        - $ref: '#/components/schemas/DeviceCreateInFacilityInput'
-    MetroInput:
-      properties:
-        metro:
-          description: 'Metro code or ID of where the instance should be provisioned in.
-
-            Either metro or facility must be provided.'
-          example: sv
-          type: string
-      required:
-      - metro
-      type: object
-    Filesystem:
-      example:
-        mount:
-          format: format
-          options:
-          - options
-          - options
-          device: device
-          point: point
-      properties:
-        mount:
-          $ref: '#/components/schemas/Mount'
       type: object
     DeviceCreateInput:
       properties:
@@ -656,62 +706,6 @@ components:
       - operating_system
       - plan
       type: object
-    InstancesBatchCreateInput:
-      example:
-        batches:
-        - null
-        - null
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/InstancesBatchCreateInput_batches_inner'
-          type: array
-      type: object
-    Raid:
-      example:
-        devices:
-        - devices
-        - devices
-        level: level
-        name: name
-      properties:
-        devices:
-          items:
-            type: string
-          type: array
-        level:
-          type: string
-        name:
-          type: string
-      type: object
-    DeviceCreateInput_billing_cycle:
-      description: The billing cycle of the device.
-      enum:
-      - hourly
-      - daily
-      - monthly
-      - yearly
-      type: string
-    Mount:
-      example:
-        format: format
-        options:
-        - options
-        - options
-        device: device
-        point: point
-      properties:
-        device:
-          type: string
-        format:
-          type: string
-        point:
-          type: string
-        options:
-          items:
-            type: string
-          type: array
-      type: object
     BatchesList:
       example:
         batches:
@@ -747,42 +741,29 @@ components:
             $ref: '#/components/schemas/Batch'
           type: array
       type: object
-    Partition:
+    Href:
       example:
-        number: 3
-        size: size
-        label: label
+        href: href
       properties:
-        label:
+        href:
           type: string
-        number:
-          format: int32
-          type: integer
-        size:
-          type: string
-      type: object
-    FacilityInput:
-      properties:
-        facility:
-          deprecated: true
-          description: 'The datacenter where the device should be created.
-
-
-            Either metro or facility must be provided.
-
-
-            The API will accept either a single facility `{ "facility": "f1" }`, or it can be instructed to create the device in the best available datacenter `{ "facility": "any" }`.
-
-
-            Additionally it is possible to set a prioritized location selection. For example `{ "facility": ["f3", "f2", "any"] }` can be used to prioritize `f3` and then `f2` before accepting `any` facility. If none of the facilities provided have availability for the requested device the request will fail.'
-          example:
-          - sv15
-          items:
-            type: string
-          type: array
       required:
-      - facility
+      - href
       type: object
+    InstancesBatchCreateInput_batches_inner:
+      allOf:
+      - properties:
+          hostnames:
+            items:
+              type: string
+            type: array
+          quantity:
+            description: The number of devices to create in this batch. The hostname may contain an `{{index}}` placeholder, which will be replaced with the index of the device in the batch. For example, if the hostname is `device-{{index}}`, the first device in the batch will have the hostname `device-01`, the second device will have the hostname `device-02`, and so on.
+            type: integer
+        type: object
+      - oneOf:
+        - $ref: '#/components/schemas/DeviceCreateInMetroInput'
+        - $ref: '#/components/schemas/DeviceCreateInFacilityInput'
     Disk:
       example:
         partitions:
@@ -802,6 +783,25 @@ components:
         partitions:
           items:
             $ref: '#/components/schemas/Partition'
+          type: array
+      type: object
+    DeviceCreateInput_billing_cycle:
+      description: The billing cycle of the device.
+      enum:
+      - hourly
+      - daily
+      - monthly
+      - yearly
+      type: string
+    InstancesBatchCreateInput:
+      example:
+        batches:
+        - null
+        - null
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/InstancesBatchCreateInput_batches_inner'
           type: array
       type: object
   securitySchemes:

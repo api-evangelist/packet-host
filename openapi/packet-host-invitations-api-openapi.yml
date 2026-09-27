@@ -162,62 +162,6 @@ paths:
       - Invitations
 components:
   schemas:
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Membership:
-      example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        roles:
-        - roles
-        - roles
-        created_at: 2000-01-23 04:56:07+00:00
-        project:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        user:
-          href: href
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        project:
-          $ref: '#/components/schemas/Href'
-        roles:
-          items:
-            type: string
-          type: array
-        updated_at:
-          format: date-time
-          type: string
-        user:
-          $ref: '#/components/schemas/Href'
-      type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
     Invitation:
       example:
         projects:
@@ -270,6 +214,49 @@ components:
           format: date-time
           type: string
       type: object
+    Membership:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        roles:
+        - roles
+        - roles
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user:
+          href: href
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/Href'
+        roles:
+          items:
+            type: string
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/Href'
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
     Invitation_roles_inner:
       enum:
       - admin
@@ -277,6 +264,19 @@ components:
       - collaborator
       - limited_collaborator
       type: string
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
   securitySchemes:
     x_auth_token:
       description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.

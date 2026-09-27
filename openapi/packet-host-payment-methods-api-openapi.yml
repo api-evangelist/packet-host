@@ -159,18 +159,14 @@ paths:
       - Payment Methods
 components:
   schemas:
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+    Href:
+      example:
+        href: href
       properties:
-        error:
-          description: A description of the error that caused the request to fail.
+        href:
           type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
+      required:
+      - href
       type: object
     PaymentMethodBillingAddress:
       example:
@@ -246,15 +242,6 @@ components:
           format: date-time
           type: string
       type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
     PaymentMethodUpdateInput:
       example:
         expiration_year: 0
@@ -276,6 +263,19 @@ components:
           type: integer
         name:
           type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
       type: object
   securitySchemes:
     x_auth_token:

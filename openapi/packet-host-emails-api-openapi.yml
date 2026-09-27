@@ -182,6 +182,13 @@ paths:
       - Emails
 components:
   schemas:
+    UpdateEmailInput:
+      example:
+        default: true
+      properties:
+        default:
+          type: boolean
+      type: object
     Email:
       example:
         default: true
@@ -202,6 +209,15 @@ components:
         verified:
           type: boolean
       type: object
+    CreateEmailInput:
+      example:
+        address: address
+      properties:
+        address:
+          type: string
+      required:
+      - address
+      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -214,22 +230,6 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
-      type: object
-    UpdateEmailInput:
-      example:
-        default: true
-      properties:
-        default:
-          type: boolean
-      type: object
-    CreateEmailInput:
-      example:
-        address: address
-      properties:
-        address:
-          type: string
-      required:
-      - address
       type: object
   securitySchemes:
     x_auth_token:

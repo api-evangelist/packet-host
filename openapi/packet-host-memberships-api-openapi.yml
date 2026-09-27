@@ -177,25 +177,14 @@ paths:
       - Memberships
 components:
   schemas:
-    Href:
+    MembershipInput:
       example:
-        href: href
+        role:
+        - role
+        - role
       properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
+        role:
           items:
-            description: An error message that contributed to the request failing.
             type: string
           type: array
       type: object
@@ -233,14 +222,25 @@ components:
         user:
           $ref: '#/components/schemas/Href'
       type: object
-    MembershipInput:
+    Href:
       example:
-        role:
-        - role
-        - role
+        href: href
       properties:
-        role:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
           items:
+            description: An error message that contributed to the request failing.
             type: string
           type: array
       type: object

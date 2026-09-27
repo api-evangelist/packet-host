@@ -10,7 +10,7 @@ info:
     name: Equinix Metal
     url: https://metal.equinix.com/legal/
   termsOfService: https://metal.equinix.com/legal/
-  title: Metal OT Ps API
+  title: Metal OTPs API
   version: 1.0.0
 servers:
 - url: https://api.equinix.com/metal/v1
@@ -150,17 +150,6 @@ paths:
       - OTPs
 components:
   schemas:
-    RecoveryCodeList:
-      example:
-        recovery_codes:
-        - recovery_codes
-        - recovery_codes
-      properties:
-        recovery_codes:
-          items:
-            type: string
-          type: array
-      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -171,6 +160,17 @@ components:
           description: A list of errors that contributed to the request failing.
           items:
             description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    RecoveryCodeList:
+      example:
+        recovery_codes:
+        - recovery_codes
+        - recovery_codes
+      properties:
+        recovery_codes:
+          items:
             type: string
           type: array
       type: object

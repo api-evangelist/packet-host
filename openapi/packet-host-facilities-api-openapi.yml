@@ -196,6 +196,11 @@ paths:
       - Facilities
 components:
   schemas:
+    findFacilities_include_parameter_inner:
+      enum:
+      - address
+      - labels
+      type: string
     FacilityList:
       example:
         facilities:
@@ -247,34 +252,6 @@ components:
             $ref: '#/components/schemas/Facility'
           type: array
       type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Coordinates:
-      example:
-        latitude: latitude
-        longitude: longitude
-      properties:
-        latitude:
-          type: string
-        longitude:
-          type: string
-      type: object
-    Device_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the facility is in
-        type: object
     Facility:
       example:
         features:
@@ -327,6 +304,28 @@ components:
         name:
           type: string
       type: object
+    Device_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the facility is in
+        type: object
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
     Facility_features_inner:
       enum:
       - baremetal
@@ -335,6 +334,29 @@ components:
       - global_ipv4
       - ibx
       type: string
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
     Address:
       example:
         country: country
@@ -365,28 +387,6 @@ components:
       - address
       - country
       - zip_code
-      type: object
-    findFacilities_include_parameter_inner:
-      enum:
-      - address
-      - labels
-      type: string
-    Metro:
-      example:
-        country: country
-        code: code
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        code:
-          type: string
-        country:
-          type: string
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
       type: object
   securitySchemes:
     x_auth_token:

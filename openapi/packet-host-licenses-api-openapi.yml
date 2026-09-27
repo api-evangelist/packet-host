@@ -365,18 +365,14 @@ paths:
       - Licenses
 components:
   schemas:
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+    Href:
+      example:
+        href: href
       properties:
-        error:
-          description: A description of the error that caused the request to fail.
+        href:
           type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
+      required:
+      - href
       type: object
     LicenseUpdateInput:
       example:
@@ -387,6 +383,31 @@ components:
           type: string
         size:
           type: number
+      type: object
+    LicenseList:
+      example:
+        licenses:
+        - licensee_product:
+            href: href
+          size: 0.8008281904610115
+          description: description
+          project:
+            href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          license_key: license_key
+        - licensee_product:
+            href: href
+          size: 0.8008281904610115
+          description: description
+          project:
+            href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          license_key: license_key
+      properties:
+        licenses:
+          items:
+            $ref: '#/components/schemas/License'
+          type: array
       type: object
     License:
       example:
@@ -413,38 +434,17 @@ components:
         size:
           type: number
       type: object
-    Href:
-      example:
-        href: href
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
-        href:
+        error:
+          description: A description of the error that caused the request to fail.
           type: string
-      required:
-      - href
-      type: object
-    LicenseList:
-      example:
-        licenses:
-        - licensee_product:
-            href: href
-          size: 0.8008281904610115
-          description: description
-          project:
-            href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          license_key: license_key
-        - licensee_product:
-            href: href
-          size: 0.8008281904610115
-          description: description
-          project:
-            href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          license_key: license_key
-      properties:
-        licenses:
+        errors:
+          description: A list of errors that contributed to the request failing.
           items:
-            $ref: '#/components/schemas/License'
+            description: An error message that contributed to the request failing.
+            type: string
           type: array
       type: object
     LicenseCreateInput:
