@@ -272,36 +272,6 @@ components:
         level:
           type: string
       type: object
-    CapacityList:
-      example:
-        capacity:
-          key:
-            key:
-              level: level
-      properties:
-        capacity:
-          additionalProperties:
-            additionalProperties:
-              $ref: '#/components/schemas/CapacityLevelPerBaremetal'
-            type: object
-          type: object
-      type: object
-    CapacityCheckPerFacilityInfo:
-      example:
-        quantity: quantity
-        available: true
-        facility: facility
-        plan: plan
-      properties:
-        available:
-          type: boolean
-        facility:
-          type: string
-        plan:
-          type: string
-        quantity:
-          type: string
-      type: object
     CapacityInput:
       example:
         servers:
@@ -319,24 +289,20 @@ components:
             $ref: '#/components/schemas/ServerInfo'
           type: array
       type: object
-    CapacityCheckPerMetroInfo:
+    CapacityCheckPerFacilityInfo:
       example:
         quantity: quantity
-        metro: metro
         available: true
+        facility: facility
         plan: plan
       properties:
         available:
-          description: Returns true if there is enough capacity in the metro to fulfill the quantity set. Returns false if there is not enough.
           type: boolean
-        metro:
-          description: The metro ID or code sent to check capacity.
+        facility:
           type: string
         plan:
-          description: The plan ID or slug sent to check capacity.
           type: string
         quantity:
-          description: The number of servers sent to check capacity.
           type: string
       type: object
     CapacityCheckPerMetroList:
@@ -355,6 +321,20 @@ components:
           items:
             $ref: '#/components/schemas/CapacityCheckPerMetroInfo'
           type: array
+      type: object
+    CapacityList:
+      example:
+        capacity:
+          key:
+            key:
+              level: level
+      properties:
+        capacity:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/CapacityLevelPerBaremetal'
+            type: object
+          type: object
       type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
@@ -404,6 +384,26 @@ components:
           type: string
         quantity:
           description: The number of servers to check the capacity of.
+          type: string
+      type: object
+    CapacityCheckPerMetroInfo:
+      example:
+        quantity: quantity
+        metro: metro
+        available: true
+        plan: plan
+      properties:
+        available:
+          description: Returns true if there is enough capacity in the metro to fulfill the quantity set. Returns false if there is not enough.
+          type: boolean
+        metro:
+          description: The metro ID or code sent to check capacity.
+          type: string
+        plan:
+          description: The plan ID or slug sent to check capacity.
+          type: string
+        quantity:
+          description: The number of servers sent to check capacity.
           type: string
       type: object
   securitySchemes:

@@ -64,6 +64,41 @@ paths:
       - OperatingSystems
 components:
   schemas:
+    OperatingSystemList:
+      example:
+        operating_systems:
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+      properties:
+        operating_systems:
+          items:
+            $ref: '#/components/schemas/OperatingSystem'
+          type: array
+      type: object
     OperatingSystem:
       example:
         default_operating_system: true
@@ -122,41 +157,6 @@ components:
           items:
             description: An error message that contributed to the request failing.
             type: string
-          type: array
-      type: object
-    OperatingSystemList:
-      example:
-        operating_systems:
-        - default_operating_system: true
-          distro: distro
-          preinstallable: true
-          licensed: true
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          provisionable_on:
-          - provisionable_on
-          - provisionable_on
-          version: version
-          pricing: '{}'
-          slug: slug
-          distro_label: distro_label
-        - default_operating_system: true
-          distro: distro
-          preinstallable: true
-          licensed: true
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          provisionable_on:
-          - provisionable_on
-          - provisionable_on
-          version: version
-          pricing: '{}'
-          slug: slug
-          distro_label: distro_label
-      properties:
-        operating_systems:
-          items:
-            $ref: '#/components/schemas/OperatingSystem'
           type: array
       type: object
   securitySchemes:

@@ -287,24 +287,6 @@ components:
           format: date
           type: string
       type: object
-    Plan_specs_features:
-      example:
-        txt: true
-        uefi: true
-        raid: true
-      properties:
-        raid:
-          type: boolean
-        txt:
-          type: boolean
-        uefi:
-          type: boolean
-      type: object
-    Plan_deployment_types_inner:
-      enum:
-      - on_demand
-      - spot_market
-      type: string
     Plan_specs_drives_inner:
       example:
         size: 3.84TB
@@ -322,15 +304,183 @@ components:
         category:
           $ref: '#/components/schemas/Plan_specs_drives_inner_category'
       type: object
-    Plan_specs_cpus_inner:
+    Plan_specs_features:
       example:
-        count: 6
-        type: type
+        txt: true
+        uefi: true
+        raid: true
       properties:
-        count:
-          type: integer
-        type:
+        raid:
+          type: boolean
+        txt:
+          type: boolean
+        uefi:
+          type: boolean
+      type: object
+    Plan_specs:
+      example:
+        features:
+          txt: true
+          uefi: true
+          raid: true
+        memory:
+          total: total
+        cpus:
+        - count: 6
+          type: type
+        - count: 6
+          type: type
+        drives:
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        - size: 3.84TB
+          count: 1
+          type: type
+          category: null
+        nics:
+        - count: 2
+          type: type
+        - count: 2
+          type: type
+      properties:
+        cpus:
+          items:
+            $ref: '#/components/schemas/Plan_specs_cpus_inner'
+          type: array
+        memory:
+          $ref: '#/components/schemas/Plan_specs_memory'
+        drives:
+          items:
+            $ref: '#/components/schemas/Plan_specs_drives_inner'
+          type: array
+        nics:
+          items:
+            $ref: '#/components/schemas/Plan_specs_nics_inner'
+          type: array
+        features:
+          $ref: '#/components/schemas/Plan_specs_features'
+      type: object
+    Plan:
+      example:
+        legacy: true
+        line: line
+        available_in_metros:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        description: description
+        available_in:
+        - price:
+            hour: 1.23
+          href: href
+        - price:
+            hour: 1.23
+          href: href
+        type: null
+        specs:
+          features:
+            txt: true
+            uefi: true
+            raid: true
+          memory:
+            total: total
+          cpus:
+          - count: 6
+            type: type
+          - count: 6
+            type: type
+          drives:
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          - size: 3.84TB
+            count: 1
+            type: type
+            category: null
+          nics:
+          - count: 2
+            type: type
+          - count: 2
+            type: type
+        deployment_types:
+        - null
+        - null
+        name: name
+        categories:
+        - categories
+        - categories
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        class: m3.large.x86
+        pricing: '{}'
+        slug: m3.large.x86
+      properties:
+        available_in:
+          description: Shows which facilities the plan is available in, and the facility-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_inner'
+          type: array
+        available_in_metros:
+          description: Shows which metros the plan is available in, and the metro-based price if it is different from the default price.
+          items:
+            $ref: '#/components/schemas/Plan_available_in_metros_inner'
+          type: array
+        categories:
+          description: Categories of the plan, like compute or storage. A Plan can belong to multiple categories.
+          items:
+            type: string
+          type: array
+        class:
+          example: m3.large.x86
           type: string
+        description:
+          type: string
+        deployment_types:
+          items:
+            $ref: '#/components/schemas/Plan_deployment_types_inner'
+          minItems: 0
+          type: array
+          uniqueItems: true
+        id:
+          format: uuid
+          type: string
+        legacy:
+          description: Deprecated. Always return false
+          type: boolean
+          x-deprecated: true
+        line:
+          type: string
+        name:
+          type: string
+        pricing:
+          type: object
+        slug:
+          example: m3.large.x86
+          type: string
+        specs:
+          $ref: '#/components/schemas/Plan_specs'
+        type:
+          $ref: '#/components/schemas/Plan_type'
+      type: object
+    Plan_specs_drives_inner_category:
+      enum:
+      - boot
+      - cache
+      - storage
+      type: string
+    Plan_available_in_inner_price:
+      example:
+        hour: 1.23
+      properties:
+        hour:
+          example: 1.23
+          format: double
+          type: number
       type: object
     ProjectIdName:
       example:
@@ -341,6 +491,160 @@ components:
           format: uuid
           type: string
         name:
+          type: string
+      type: object
+    Plan_specs_cpus_inner:
+      example:
+        count: 6
+        type: type
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+      type: object
+    Plan_type:
+      description: The plan type
+      enum:
+      - standard
+      - workload_optimized
+      - custom
+      type: string
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    LineItem:
+      example:
+        amount: 5.637377
+        unit: unit
+        description: description
+        currency: currency
+        details: details
+        unit_price: 2.302136
+        plan:
+          legacy: true
+          line: line
+          available_in_metros:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          description: description
+          available_in:
+          - price:
+              hour: 1.23
+            href: href
+          - price:
+              hour: 1.23
+            href: href
+          type: null
+          specs:
+            features:
+              txt: true
+              uefi: true
+              raid: true
+            memory:
+              total: total
+            cpus:
+            - count: 6
+              type: type
+            - count: 6
+              type: type
+            drives:
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            - size: 3.84TB
+              count: 1
+              type: type
+              category: null
+            nics:
+            - count: 2
+              type: type
+            - count: 2
+              type: type
+          deployment_types:
+          - null
+          - null
+          name: name
+          categories:
+          - categories
+          - categories
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class: m3.large.x86
+          pricing: '{}'
+          slug: m3.large.x86
+      properties:
+        amount:
+          format: float
+          type: number
+        currency:
+          type: string
+        description:
+          type: string
+        details:
+          type: string
+        plan:
+          $ref: '#/components/schemas/Plan'
+        unit:
+          type: string
+        unit_price:
+          format: float
+          type: number
+      type: object
+    Plan_available_in_metros_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Metro
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    Plan_specs_nics_inner:
+      example:
+        count: 2
+        type: type
+      properties:
+        count:
+          example: 2
+          type: integer
+        type:
+          type: string
+      type: object
+    Plan_available_in_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Facility
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
+    Plan_specs_memory:
+      example:
+        total: total
+      properties:
+        total:
           type: string
       type: object
     InvoiceList:
@@ -632,314 +936,10 @@ components:
             $ref: '#/components/schemas/Invoice'
           type: array
       type: object
-    LineItem:
-      example:
-        amount: 5.637377
-        unit: unit
-        description: description
-        currency: currency
-        details: details
-        unit_price: 2.302136
-        plan:
-          legacy: true
-          line: line
-          available_in_metros:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          description: description
-          available_in:
-          - price:
-              hour: 1.23
-            href: href
-          - price:
-              hour: 1.23
-            href: href
-          type: null
-          specs:
-            features:
-              txt: true
-              uefi: true
-              raid: true
-            memory:
-              total: total
-            cpus:
-            - count: 6
-              type: type
-            - count: 6
-              type: type
-            drives:
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            - size: 3.84TB
-              count: 1
-              type: type
-              category: null
-            nics:
-            - count: 2
-              type: type
-            - count: 2
-              type: type
-          deployment_types:
-          - null
-          - null
-          name: name
-          categories:
-          - categories
-          - categories
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          class: m3.large.x86
-          pricing: '{}'
-          slug: m3.large.x86
-      properties:
-        amount:
-          format: float
-          type: number
-        currency:
-          type: string
-        description:
-          type: string
-        details:
-          type: string
-        plan:
-          $ref: '#/components/schemas/Plan'
-        unit:
-          type: string
-        unit_price:
-          format: float
-          type: number
-      type: object
-    Plan_specs_nics_inner:
-      example:
-        count: 2
-        type: type
-      properties:
-        count:
-          example: 2
-          type: integer
-        type:
-          type: string
-      type: object
-    Plan_available_in_inner_price:
-      example:
-        hour: 1.23
-      properties:
-        hour:
-          example: 1.23
-          format: double
-          type: number
-      type: object
-    Plan:
-      example:
-        legacy: true
-        line: line
-        available_in_metros:
-        - price:
-            hour: 1.23
-          href: href
-        - price:
-            hour: 1.23
-          href: href
-        description: description
-        available_in:
-        - price:
-            hour: 1.23
-          href: href
-        - price:
-            hour: 1.23
-          href: href
-        type: null
-        specs:
-          features:
-            txt: true
-            uefi: true
-            raid: true
-          memory:
-            total: total
-          cpus:
-          - count: 6
-            type: type
-          - count: 6
-            type: type
-          drives:
-          - size: 3.84TB
-            count: 1
-            type: type
-            category: null
-          - size: 3.84TB
-            count: 1
-            type: type
-            category: null
-          nics:
-          - count: 2
-            type: type
-          - count: 2
-            type: type
-        deployment_types:
-        - null
-        - null
-        name: name
-        categories:
-        - categories
-        - categories
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        class: m3.large.x86
-        pricing: '{}'
-        slug: m3.large.x86
-      properties:
-        available_in:
-          description: Shows which facilities the plan is available in, and the facility-based price if it is different from the default price.
-          items:
-            $ref: '#/components/schemas/Plan_available_in_inner'
-          type: array
-        available_in_metros:
-          description: Shows which metros the plan is available in, and the metro-based price if it is different from the default price.
-          items:
-            $ref: '#/components/schemas/Plan_available_in_metros_inner'
-          type: array
-        categories:
-          description: Categories of the plan, like compute or storage. A Plan can belong to multiple categories.
-          items:
-            type: string
-          type: array
-        class:
-          example: m3.large.x86
-          type: string
-        description:
-          type: string
-        deployment_types:
-          items:
-            $ref: '#/components/schemas/Plan_deployment_types_inner'
-          minItems: 0
-          type: array
-          uniqueItems: true
-        id:
-          format: uuid
-          type: string
-        legacy:
-          description: Deprecated. Always return false
-          type: boolean
-          x-deprecated: true
-        line:
-          type: string
-        name:
-          type: string
-        pricing:
-          type: object
-        slug:
-          example: m3.large.x86
-          type: string
-        specs:
-          $ref: '#/components/schemas/Plan_specs'
-        type:
-          $ref: '#/components/schemas/Plan_type'
-      type: object
-    Plan_specs_drives_inner_category:
+    Plan_deployment_types_inner:
       enum:
-      - boot
-      - cache
-      - storage
-      type: string
-    Plan_available_in_metros_inner:
-      example:
-        price:
-          hour: 1.23
-        href: href
-      properties:
-        href:
-          description: href to the Metro
-          type: string
-        price:
-          $ref: '#/components/schemas/Plan_available_in_inner_price'
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Plan_available_in_inner:
-      example:
-        price:
-          hour: 1.23
-        href: href
-      properties:
-        href:
-          description: href to the Facility
-          type: string
-        price:
-          $ref: '#/components/schemas/Plan_available_in_inner_price'
-      type: object
-    Plan_specs:
-      example:
-        features:
-          txt: true
-          uefi: true
-          raid: true
-        memory:
-          total: total
-        cpus:
-        - count: 6
-          type: type
-        - count: 6
-          type: type
-        drives:
-        - size: 3.84TB
-          count: 1
-          type: type
-          category: null
-        - size: 3.84TB
-          count: 1
-          type: type
-          category: null
-        nics:
-        - count: 2
-          type: type
-        - count: 2
-          type: type
-      properties:
-        cpus:
-          items:
-            $ref: '#/components/schemas/Plan_specs_cpus_inner'
-          type: array
-        memory:
-          $ref: '#/components/schemas/Plan_specs_memory'
-        drives:
-          items:
-            $ref: '#/components/schemas/Plan_specs_drives_inner'
-          type: array
-        nics:
-          items:
-            $ref: '#/components/schemas/Plan_specs_nics_inner'
-          type: array
-        features:
-          $ref: '#/components/schemas/Plan_specs_features'
-      type: object
-    Plan_specs_memory:
-      example:
-        total: total
-      properties:
-        total:
-          type: string
-      type: object
-    Plan_type:
-      description: The plan type
-      enum:
-      - standard
-      - workload_optimized
-      - custom
+      - on_demand
+      - spot_market
       type: string
   securitySchemes:
     x_auth_token:

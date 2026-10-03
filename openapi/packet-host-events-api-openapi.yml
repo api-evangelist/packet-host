@@ -753,15 +753,6 @@ paths:
       - Events
 components:
   schemas:
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -774,6 +765,64 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    EventList:
+      example:
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+        events:
+        - interpolated: interpolated
+          relationships:
+          - href: href
+          - href: href
+          ip: ip
+          modified_by: '{}'
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          body: body
+          type: type
+        - interpolated: interpolated
+          relationships:
+          - href: href
+          - href: href
+          ip: ip
+          modified_by: '{}'
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          body: body
+          type: type
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/Event'
+          type: array
+        meta:
+          $ref: '#/components/schemas/Meta'
       type: object
     Meta:
       example:
@@ -847,55 +896,6 @@ components:
           type: object
         ip:
           type: string
-      type: object
-    EventList:
-      example:
-        meta:
-          next:
-            href: href
-          total: 0
-          last:
-            href: href
-          previous:
-            href: href
-          last_page: 1
-          self:
-            href: href
-          first:
-            href: href
-          current_page: 6
-        events:
-        - interpolated: interpolated
-          relationships:
-          - href: href
-          - href: href
-          ip: ip
-          modified_by: '{}'
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
-          body: body
-          type: type
-        - interpolated: interpolated
-          relationships:
-          - href: href
-          - href: href
-          ip: ip
-          modified_by: '{}'
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
-          body: body
-          type: type
-      properties:
-        events:
-          items:
-            $ref: '#/components/schemas/Event'
-          type: array
-        meta:
-          $ref: '#/components/schemas/Meta'
       type: object
   securitySchemes:
     x_auth_token:

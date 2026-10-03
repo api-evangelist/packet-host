@@ -832,122 +832,18 @@ paths:
       - Ports
 components:
   schemas:
-    PortData:
+    BondPortData:
       example:
-        bonded: true
-        mac: mac
-      properties:
-        mac:
-          description: MAC address is set for NetworkPort ports
-          type: string
-        bonded:
-          description: Bonded is true for NetworkPort ports in a bond and NetworkBondPort ports that are active
-          type: boolean
-      type: object
-    PortVlanAssignment_state:
-      enum:
-      - assigned
-      - unassigning
-      type: string
-    MetalGateway_state:
-      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
-      enum:
-      - ready
-      - active
-      - deleting
-      type: string
-    PortVlanAssignmentBatchCreateInput:
-      example:
-        vlan_assignments:
-        - vlan: vlan
-          native: true
-          state: null
-        - vlan: vlan
-          native: true
-          state: null
-      properties:
-        vlan_assignments:
-          items:
-            $ref: '#/components/schemas/PortVlanAssignmentBatchCreateInput_vlan_assignments_inner'
-          type: array
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Port_type:
-      description: Type is either "NetworkBondPort" for bond ports or "NetworkPort" for bondable ethernet ports
-      enum:
-      - NetworkPort
-      - NetworkBondPort
-      type: string
-    MetalGatewayLite:
-      example:
-        gateway_address: 10.1.2.1/27
-        updated_at: 2000-01-23 04:56:07+00:00
-        vlan: 1001
-        created_at: 2000-01-23 04:56:07+00:00
-        href: href
+        name: name
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        gateway_address:
-          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
-          example: 10.1.2.1/27
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        state:
-          $ref: '#/components/schemas/MetalGateway_state'
-        updated_at:
-          format: date-time
-          type: string
-        vlan:
-          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
-          example: 1001
-          type: integer
-      type: object
-    PortVlanAssignmentBatch_vlan_assignments_inner:
-      example:
-        vlan: 6
-        native: true
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
       properties:
         id:
+          description: ID of the bonding port
           format: uuid
           type: string
-        native:
-          type: boolean
-        state:
-          $ref: '#/components/schemas/PortVlanAssignmentBatch_vlan_assignments_inner_state'
-        vlan:
-          type: integer
-      type: object
-    PortConvertLayer3Input_request_ips_inner:
-      example:
-        address_family: 0
-        public: true
-      properties:
-        address_family:
-          type: integer
-        public:
-          type: boolean
+        name:
+          description: Name of the port interface for the bond ("bond0")
+          type: string
       type: object
     PortConvertLayer3Input:
       example:
@@ -975,6 +871,81 @@ components:
         vlan:
           type: string
       type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    PortVlanAssignmentList:
+      example:
+        vlan_assignments:
+        - virtual_network:
+            href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 0
+          native: true
+          port:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        - virtual_network:
+            href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 0
+          native: true
+          port:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+      properties:
+        vlan_assignments:
+          items:
+            $ref: '#/components/schemas/PortVlanAssignment'
+          type: array
+      type: object
+    PortVlanAssignment:
+      example:
+        virtual_network:
+          href: href
+        updated_at: 2000-01-23 04:56:07+00:00
+        vlan: 0
+        native: true
+        port:
+          href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        native:
+          type: boolean
+        port:
+          $ref: '#/components/schemas/Href'
+        state:
+          $ref: '#/components/schemas/PortVlanAssignment_state'
+        updated_at:
+          format: date-time
+          type: string
+        virtual_network:
+          $ref: '#/components/schemas/Href'
+        vlan:
+          type: integer
+      type: object
     Port_network_type:
       description: Composite network type of the bond
       enum:
@@ -984,91 +955,119 @@ components:
       - hybrid
       - hybrid-bonded
       type: string
+    PortVlanAssignment_state:
+      enum:
+      - assigned
+      - unassigning
+      type: string
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    PortAssignInput:
+      example:
+        vnid: '1001'
+      properties:
+        vnid:
+          description: 'Virtual Network ID. May be the UUID of the Virtual Network record, or the VLAN value itself.
+
+            '
+          example: '1001'
+          type: string
+      type: object
+    VirtualNetwork:
+      example:
+        vxlan: 4
+        instances:
+        - href: href
+        - href: href
+        description: description
+        created_at: 2000-01-23 04:56:07+00:00
+        assigned_to_virtual_circuit: true
+        tags:
+        - tags
+        - tags
+        metal_gateways:
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        metro_code: metro_code
+        metro:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        facility:
+          href: href
+        assigned_to:
+          href: href
+      properties:
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        assigned_to_virtual_circuit:
+          description: True if the virtual network is attached to a virtual circuit. False if not.
+          type: boolean
+        description:
+          type: string
+        facility:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        instances:
+          description: A list of instances with ports currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        metal_gateways:
+          description: A list of metal gateways currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/MetalGatewayLite'
+          type: array
+        metro:
+          $ref: '#/components/schemas/Href'
+        metro_code:
+          description: The Metro code of the metro in which this Virtual Network is defined.
+          type: string
+        vxlan:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    MetalGateway_state:
+      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
+      enum:
+      - ready
+      - active
+      - deleting
+      type: string
     PortVlanAssignmentBatch_vlan_assignments_inner_state:
       enum:
       - assigned
       - unassigned
       type: string
-    Port:
-      description: Port is a hardware port associated with a reserved or instantiated hardware device.
-      example:
-        native_virtual_network:
-          vxlan: 4
-          instances:
-          - href: href
-          - href: href
-          description: description
-          created_at: 2000-01-23 04:56:07+00:00
-          assigned_to_virtual_circuit: true
-          tags:
-          - tags
-          - tags
-          metal_gateways:
-          - gateway_address: 10.1.2.1/27
-            updated_at: 2000-01-23 04:56:07+00:00
-            vlan: 1001
-            created_at: 2000-01-23 04:56:07+00:00
-            href: href
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            state: null
-          - gateway_address: 10.1.2.1/27
-            updated_at: 2000-01-23 04:56:07+00:00
-            vlan: 1001
-            created_at: 2000-01-23 04:56:07+00:00
-            href: href
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            state: null
-          metro_code: metro_code
-          metro:
-            href: href
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          facility:
-            href: href
-          assigned_to:
-            href: href
-        disbond_operation_supported: true
-        data:
-          bonded: true
-          mac: mac
-        name: bond0
-        virtual_networks:
-        - href: href
-        - href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        type: null
-        network_type: null
-        bond:
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        bond:
-          $ref: '#/components/schemas/BondPortData'
-        data:
-          $ref: '#/components/schemas/PortData'
-        disbond_operation_supported:
-          description: Indicates whether or not the bond can be broken on the port (when applicable).
-          type: boolean
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        name:
-          example: bond0
-          type: string
-        type:
-          $ref: '#/components/schemas/Port_type'
-        network_type:
-          $ref: '#/components/schemas/Port_network_type'
-        native_virtual_network:
-          $ref: '#/components/schemas/VirtualNetwork'
-        virtual_networks:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-      type: object
     PortVlanAssignmentBatch:
       example:
         quantity: 0
@@ -1168,58 +1167,132 @@ components:
         project:
           $ref: '#/components/schemas/Href'
       type: object
-    PortAssignInput:
+    PortVlanAssignmentBatchCreateInput:
       example:
-        vnid: '1001'
+        vlan_assignments:
+        - vlan: vlan
+          native: true
+          state: null
+        - vlan: vlan
+          native: true
+          state: null
       properties:
-        vnid:
-          description: 'Virtual Network ID. May be the UUID of the Virtual Network record, or the VLAN value itself.
-
-            '
-          example: '1001'
-          type: string
+        vlan_assignments:
+          items:
+            $ref: '#/components/schemas/PortVlanAssignmentBatchCreateInput_vlan_assignments_inner'
+          type: array
       type: object
-    PortVlanAssignment:
+    Port:
+      description: Port is a hardware port associated with a reserved or instantiated hardware device.
       example:
-        virtual_network:
+        native_virtual_network:
+          vxlan: 4
+          instances:
+          - href: href
+          - href: href
+          description: description
+          created_at: 2000-01-23 04:56:07+00:00
+          assigned_to_virtual_circuit: true
+          tags:
+          - tags
+          - tags
+          metal_gateways:
+          - gateway_address: 10.1.2.1/27
+            updated_at: 2000-01-23 04:56:07+00:00
+            vlan: 1001
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+          - gateway_address: 10.1.2.1/27
+            updated_at: 2000-01-23 04:56:07+00:00
+            vlan: 1001
+            created_at: 2000-01-23 04:56:07+00:00
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: null
+          metro_code: metro_code
+          metro:
+            href: href
           href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          facility:
+            href: href
+          assigned_to:
+            href: href
+        disbond_operation_supported: true
+        data:
+          bonded: true
+          mac: mac
+        name: bond0
+        virtual_networks:
+        - href: href
+        - href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        type: null
+        network_type: null
+        bond:
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        bond:
+          $ref: '#/components/schemas/BondPortData'
+        data:
+          $ref: '#/components/schemas/PortData'
+        disbond_operation_supported:
+          description: Indicates whether or not the bond can be broken on the port (when applicable).
+          type: boolean
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          example: bond0
+          type: string
+        type:
+          $ref: '#/components/schemas/Port_type'
+        network_type:
+          $ref: '#/components/schemas/Port_network_type'
+        native_virtual_network:
+          $ref: '#/components/schemas/VirtualNetwork'
+        virtual_networks:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+      type: object
+    MetalGatewayLite:
+      example:
+        gateway_address: 10.1.2.1/27
         updated_at: 2000-01-23 04:56:07+00:00
-        vlan: 0
-        native: true
-        port:
-          href: href
+        vlan: 1001
         created_at: 2000-01-23 04:56:07+00:00
+        href: href
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         state: null
       properties:
         created_at:
           format: date-time
           type: string
+        gateway_address:
+          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
+          example: 10.1.2.1/27
+          type: string
+        href:
+          type: string
         id:
           format: uuid
           type: string
-        native:
-          type: boolean
-        port:
-          $ref: '#/components/schemas/Href'
         state:
-          $ref: '#/components/schemas/PortVlanAssignment_state'
+          $ref: '#/components/schemas/MetalGateway_state'
         updated_at:
           format: date-time
           type: string
-        virtual_network:
-          $ref: '#/components/schemas/Href'
         vlan:
+          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
+          example: 1001
           type: integer
-      type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
       type: object
     PortVlanAssignmentBatchList:
       example:
@@ -1370,6 +1443,29 @@ components:
             $ref: '#/components/schemas/PortVlanAssignmentBatch'
           type: array
       type: object
+    PortVlanAssignmentBatch_vlan_assignments_inner:
+      example:
+        vlan: 6
+        native: true
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+      properties:
+        id:
+          format: uuid
+          type: string
+        native:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/PortVlanAssignmentBatch_vlan_assignments_inner_state'
+        vlan:
+          type: integer
+      type: object
+    Port_type:
+      description: Type is either "NetworkBondPort" for bond ports or "NetworkPort" for bondable ethernet ports
+      enum:
+      - NetworkPort
+      - NetworkBondPort
+      type: string
     PortVlanAssignmentBatch_state:
       enum:
       - queued
@@ -1377,123 +1473,27 @@ components:
       - completed
       - failed
       type: string
-    PortVlanAssignmentList:
+    PortConvertLayer3Input_request_ips_inner:
       example:
-        vlan_assignments:
-        - virtual_network:
-            href: href
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 0
-          native: true
-          port:
-            href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        - virtual_network:
-            href: href
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 0
-          native: true
-          port:
-            href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
+        address_family: 0
+        public: true
       properties:
-        vlan_assignments:
-          items:
-            $ref: '#/components/schemas/PortVlanAssignment'
-          type: array
-      type: object
-    VirtualNetwork:
-      example:
-        vxlan: 4
-        instances:
-        - href: href
-        - href: href
-        description: description
-        created_at: 2000-01-23 04:56:07+00:00
-        assigned_to_virtual_circuit: true
-        tags:
-        - tags
-        - tags
-        metal_gateways:
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        metro_code: metro_code
-        metro:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        facility:
-          href: href
-        assigned_to:
-          href: href
-      properties:
-        assigned_to:
-          $ref: '#/components/schemas/Href'
-        assigned_to_virtual_circuit:
-          description: True if the virtual network is attached to a virtual circuit. False if not.
-          type: boolean
-        description:
-          type: string
-        facility:
-          $ref: '#/components/schemas/Href'
-        href:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        instances:
-          description: A list of instances with ports currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        metal_gateways:
-          description: A list of metal gateways currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/MetalGatewayLite'
-          type: array
-        metro:
-          $ref: '#/components/schemas/Href'
-        metro_code:
-          description: The Metro code of the metro in which this Virtual Network is defined.
-          type: string
-        vxlan:
+        address_family:
           type: integer
-        tags:
-          items:
-            type: string
-          type: array
+        public:
+          type: boolean
       type: object
-    BondPortData:
+    PortData:
       example:
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        bonded: true
+        mac: mac
       properties:
-        id:
-          description: ID of the bonding port
-          format: uuid
+        mac:
+          description: MAC address is set for NetworkPort ports
           type: string
-        name:
-          description: Name of the port interface for the bond ("bond0")
-          type: string
+        bonded:
+          description: Bonded is true for NetworkPort ports in a bond and NetworkBondPort ports that are active
+          type: boolean
       type: object
   requestBodies:
     PortAssignInput:

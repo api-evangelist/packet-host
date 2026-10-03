@@ -182,12 +182,14 @@ paths:
       - Emails
 components:
   schemas:
-    UpdateEmailInput:
+    CreateEmailInput:
       example:
-        default: true
+        address: address
       properties:
-        default:
-          type: boolean
+        address:
+          type: string
+      required:
+      - address
       type: object
     Email:
       example:
@@ -209,14 +211,12 @@ components:
         verified:
           type: boolean
       type: object
-    CreateEmailInput:
+    UpdateEmailInput:
       example:
-        address: address
+        default: true
       properties:
-        address:
-          type: string
-      required:
-      - address
+        default:
+          type: boolean
       type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.

@@ -365,25 +365,6 @@ paths:
       - Licenses
 components:
   schemas:
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
-    LicenseUpdateInput:
-      example:
-        size: 0.8008281904610115
-        description: description
-      properties:
-        description:
-          type: string
-        size:
-          type: number
-      type: object
     LicenseList:
       example:
         licenses:
@@ -409,6 +390,51 @@ components:
             $ref: '#/components/schemas/License'
           type: array
       type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    LicenseCreateInput:
+      example:
+        size: 0.8008281904610115
+        licensee_product_id: licensee_product_id
+        description: description
+      properties:
+        description:
+          type: string
+        licensee_product_id:
+          type: string
+        size:
+          type: number
+      type: object
+    LicenseUpdateInput:
+      example:
+        size: 0.8008281904610115
+        description: description
+      properties:
+        description:
+          type: string
+        size:
+          type: number
+      type: object
     License:
       example:
         licensee_product:
@@ -431,32 +457,6 @@ components:
           $ref: '#/components/schemas/Href'
         project:
           $ref: '#/components/schemas/Href'
-        size:
-          type: number
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    LicenseCreateInput:
-      example:
-        size: 0.8008281904610115
-        licensee_product_id: licensee_product_id
-        description: description
-      properties:
-        description:
-          type: string
-        licensee_product_id:
-          type: string
         size:
           type: number
       type: object

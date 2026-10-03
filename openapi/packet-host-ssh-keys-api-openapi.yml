@@ -402,6 +402,45 @@ paths:
       - SSH Keys
 components:
   schemas:
+    SSHKeyInput:
+      example:
+        label: label
+        key: key
+        tags:
+        - tags
+        - tags
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
     SSHKeyList:
       example:
         ssh_keys:
@@ -435,14 +474,31 @@ components:
             $ref: '#/components/schemas/SSHKey'
           type: array
       type: object
-    Href:
+    SSHKeyCreateInput:
       example:
-        href: href
+        label: label
+        instances_ids:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        key: key
+        tags:
+        - tags
+        - tags
       properties:
-        href:
+        instances_ids:
+          description: "List of instance UUIDs to associate SSH key with, when empty array is sent all instances belonging\n      to entity will be included"
+          items:
+            format: uuid
+            type: string
+          type: array
+        key:
           type: string
-      required:
-      - href
+        label:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
       type: object
     SSHKey:
       example:
@@ -480,62 +536,6 @@ components:
           type: string
         tags:
           items:
-            type: string
-          type: array
-      type: object
-    SSHKeyCreateInput:
-      example:
-        label: label
-        instances_ids:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        key: key
-        tags:
-        - tags
-        - tags
-      properties:
-        instances_ids:
-          description: "List of instance UUIDs to associate SSH key with, when empty array is sent all instances belonging\n      to entity will be included"
-          items:
-            format: uuid
-            type: string
-          type: array
-        key:
-          type: string
-        label:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    SSHKeyInput:
-      example:
-        label: label
-        key: key
-        tags:
-        - tags
-        - tags
-      properties:
-        key:
-          type: string
-        label:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
             type: string
           type: array
       type: object
