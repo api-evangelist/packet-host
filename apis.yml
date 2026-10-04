@@ -583,6 +583,8 @@ apis:
   humanURL: https://docs.equinix.com/metal/
   baseURL: https://api.equinix.com/metal/v1
   tags:
+  - IP Address
+  tags_raw:
   - IP Addresses
   properties:
   - type: OpenAPI
