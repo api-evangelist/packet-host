@@ -424,6 +424,112 @@ paths:
       - Users
 components:
   schemas:
+    Meta:
+      example:
+        next:
+          href: href
+        total: 0
+        last:
+          href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
+      properties:
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    UserList:
+      example:
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+        users:
+        - avatar_thumb_url: avatar_thumb_url
+          last_login_at: 2000-01-23 04:56:07+00:00
+          max_projects: 2
+          timezone: timezone
+          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23 04:56:07+00:00
+          last_name: last_name
+          short_id: short_id
+          fraud_score: fraud_score
+          emails:
+          - href: href
+          - href: href
+          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          full_name: full_name
+          avatar_url: avatar_url
+          updated_at: 2000-01-23 04:56:07+00:00
+          phone_number: phone_number
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          first_name: first_name
+          max_organizations: 3
+          two_factor_auth: two_factor_auth
+          email: email
+        - avatar_thumb_url: avatar_thumb_url
+          last_login_at: 2000-01-23 04:56:07+00:00
+          max_projects: 2
+          timezone: timezone
+          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23 04:56:07+00:00
+          last_name: last_name
+          short_id: short_id
+          fraud_score: fraud_score
+          emails:
+          - href: href
+          - href: href
+          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          full_name: full_name
+          avatar_url: avatar_url
+          updated_at: 2000-01-23 04:56:07+00:00
+          phone_number: phone_number
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          first_name: first_name
+          max_organizations: 3
+          two_factor_auth: two_factor_auth
+          email: email
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        users:
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+      type: object
     UserUpdateInput:
       example:
         password: password
@@ -446,17 +552,39 @@ components:
         timezone:
           type: string
       type: object
-    EmailInput:
+    Membership:
       example:
-        default: true
-        address: address
+        updated_at: 2000-01-23 04:56:07+00:00
+        roles:
+        - roles
+        - roles
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        user:
+          href: href
       properties:
-        address:
+        created_at:
+          format: date-time
           type: string
-        default:
-          type: boolean
-      required:
-      - address
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        project:
+          $ref: '#/components/schemas/Href'
+        roles:
+          items:
+            type: string
+          type: array
+        updated_at:
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/Href'
       type: object
     UserCreateInput:
       example:
@@ -535,6 +663,18 @@ components:
       required:
       - href
       type: object
+    EmailInput:
+      example:
+        default: true
+        address: address
+      properties:
+        address:
+          type: string
+        default:
+          type: boolean
+      required:
+      - address
+      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -547,177 +687,6 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
-      type: object
-    Membership:
-      example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        roles:
-        - roles
-        - roles
-        created_at: 2000-01-23 04:56:07+00:00
-        project:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        user:
-          href: href
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        project:
-          $ref: '#/components/schemas/Href'
-        roles:
-          items:
-            type: string
-          type: array
-        updated_at:
-          format: date-time
-          type: string
-        user:
-          $ref: '#/components/schemas/Href'
-      type: object
-    InvitationList:
-      example:
-        invitations:
-        - updated_at: 2000-01-23 04:56:07+00:00
-          roles:
-          - roles
-          - roles
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user:
-            href: href
-        - updated_at: 2000-01-23 04:56:07+00:00
-          roles:
-          - roles
-          - roles
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          user:
-            href: href
-      properties:
-        invitations:
-          items:
-            $ref: '#/components/schemas/Membership'
-          type: array
-      type: object
-    UserList:
-      example:
-        meta:
-          next:
-            href: href
-          total: 0
-          last:
-            href: href
-          previous:
-            href: href
-          last_page: 1
-          self:
-            href: href
-          first:
-            href: href
-          current_page: 6
-        users:
-        - avatar_thumb_url: avatar_thumb_url
-          last_login_at: 2000-01-23 04:56:07+00:00
-          max_projects: 2
-          timezone: timezone
-          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          created_at: 2000-01-23 04:56:07+00:00
-          last_name: last_name
-          short_id: short_id
-          fraud_score: fraud_score
-          emails:
-          - href: href
-          - href: href
-          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          full_name: full_name
-          avatar_url: avatar_url
-          updated_at: 2000-01-23 04:56:07+00:00
-          phone_number: phone_number
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          first_name: first_name
-          max_organizations: 3
-          two_factor_auth: two_factor_auth
-          email: email
-        - avatar_thumb_url: avatar_thumb_url
-          last_login_at: 2000-01-23 04:56:07+00:00
-          max_projects: 2
-          timezone: timezone
-          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          created_at: 2000-01-23 04:56:07+00:00
-          last_name: last_name
-          short_id: short_id
-          fraud_score: fraud_score
-          emails:
-          - href: href
-          - href: href
-          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          full_name: full_name
-          avatar_url: avatar_url
-          updated_at: 2000-01-23 04:56:07+00:00
-          phone_number: phone_number
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          first_name: first_name
-          max_organizations: 3
-          two_factor_auth: two_factor_auth
-          email: email
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        users:
-          items:
-            $ref: '#/components/schemas/User'
-          type: array
-      type: object
-    Meta:
-      example:
-        next:
-          href: href
-        total: 0
-        last:
-          href: href
-        previous:
-          href: href
-        last_page: 1
-        self:
-          href: href
-        first:
-          href: href
-        current_page: 6
-      properties:
-        first:
-          $ref: '#/components/schemas/Href'
-        last:
-          $ref: '#/components/schemas/Href'
-        next:
-          $ref: '#/components/schemas/Href'
-        previous:
-          $ref: '#/components/schemas/Href'
-        self:
-          $ref: '#/components/schemas/Href'
-        total:
-          type: integer
-        current_page:
-          type: integer
-        last_page:
-          type: integer
       type: object
     User:
       example:
@@ -798,6 +767,37 @@ components:
         updated_at:
           format: date-time
           type: string
+      type: object
+    InvitationList:
+      example:
+        invitations:
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+        - updated_at: 2000-01-23 04:56:07+00:00
+          roles:
+          - roles
+          - roles
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          user:
+            href: href
+      properties:
+        invitations:
+          items:
+            $ref: '#/components/schemas/Membership'
+          type: array
       type: object
   securitySchemes:
     x_auth_token:

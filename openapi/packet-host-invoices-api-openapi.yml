@@ -104,206 +104,6 @@ paths:
       - Invoices
 components:
   schemas:
-    Invoice:
-      example:
-        amount: 0.8008282
-        target_date: 2000-01-23
-        credit_amount: 1.4658129
-        project:
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        reference_number: reference_number
-        due_on: 2000-01-23
-        number: number
-        balance: 6.0274563
-        created_on: 2000-01-23
-        credits_applied: 5.962134
-        currency: USD
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        items:
-        - amount: 5.637377
-          unit: unit
-          description: description
-          currency: currency
-          details: details
-          unit_price: 2.302136
-          plan:
-            legacy: true
-            line: line
-            available_in_metros:
-            - price:
-                hour: 1.23
-              href: href
-            - price:
-                hour: 1.23
-              href: href
-            description: description
-            available_in:
-            - price:
-                hour: 1.23
-              href: href
-            - price:
-                hour: 1.23
-              href: href
-            type: null
-            specs:
-              features:
-                txt: true
-                uefi: true
-                raid: true
-              memory:
-                total: total
-              cpus:
-              - count: 6
-                type: type
-              - count: 6
-                type: type
-              drives:
-              - size: 3.84TB
-                count: 1
-                type: type
-                category: null
-              - size: 3.84TB
-                count: 1
-                type: type
-                category: null
-              nics:
-              - count: 2
-                type: type
-              - count: 2
-                type: type
-            deployment_types:
-            - null
-            - null
-            name: name
-            categories:
-            - categories
-            - categories
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            class: m3.large.x86
-            pricing: '{}'
-            slug: m3.large.x86
-        - amount: 5.637377
-          unit: unit
-          description: description
-          currency: currency
-          details: details
-          unit_price: 2.302136
-          plan:
-            legacy: true
-            line: line
-            available_in_metros:
-            - price:
-                hour: 1.23
-              href: href
-            - price:
-                hour: 1.23
-              href: href
-            description: description
-            available_in:
-            - price:
-                hour: 1.23
-              href: href
-            - price:
-                hour: 1.23
-              href: href
-            type: null
-            specs:
-              features:
-                txt: true
-                uefi: true
-                raid: true
-              memory:
-                total: total
-              cpus:
-              - count: 6
-                type: type
-              - count: 6
-                type: type
-              drives:
-              - size: 3.84TB
-                count: 1
-                type: type
-                category: null
-              - size: 3.84TB
-                count: 1
-                type: type
-                category: null
-              nics:
-              - count: 2
-                type: type
-              - count: 2
-                type: type
-            deployment_types:
-            - null
-            - null
-            name: name
-            categories:
-            - categories
-            - categories
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            class: m3.large.x86
-            pricing: '{}'
-            slug: m3.large.x86
-        status: status
-      properties:
-        amount:
-          format: float
-          type: number
-        balance:
-          format: float
-          type: number
-        created_on:
-          format: date
-          type: string
-        credit_amount:
-          format: float
-          type: number
-        credits_applied:
-          format: float
-          type: number
-        currency:
-          example: USD
-          type: string
-        due_on:
-          format: date
-          type: string
-        id:
-          format: uuid
-          type: string
-        items:
-          items:
-            $ref: '#/components/schemas/LineItem'
-          type: array
-        number:
-          type: string
-        project:
-          $ref: '#/components/schemas/ProjectIdName'
-        reference_number:
-          type: string
-        status:
-          type: string
-        target_date:
-          format: date
-          type: string
-      type: object
-    Plan_specs_drives_inner:
-      example:
-        size: 3.84TB
-        count: 1
-        type: type
-        category: null
-      properties:
-        count:
-          type: integer
-        type:
-          type: string
-        size:
-          example: 3.84TB
-          type: string
-        category:
-          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
-      type: object
     Plan_specs_features:
       example:
         txt: true
@@ -316,6 +116,13 @@ components:
           type: boolean
         uefi:
           type: boolean
+      type: object
+    Plan_specs_memory:
+      example:
+        total: total
+      properties:
+        total:
+          type: string
       type: object
     Plan_specs:
       example:
@@ -361,6 +168,26 @@ components:
           type: array
         features:
           $ref: '#/components/schemas/Plan_specs_features'
+      type: object
+    ProjectIdName:
+      example:
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
+    Plan_available_in_inner_price:
+      example:
+        hour: 1.23
+      properties:
+        hour:
+          example: 1.23
+          format: double
+          type: number
       type: object
     Plan:
       example:
@@ -467,32 +294,34 @@ components:
         type:
           $ref: '#/components/schemas/Plan_type'
       type: object
+    Plan_specs_drives_inner:
+      example:
+        size: 3.84TB
+        count: 1
+        type: type
+        category: null
+      properties:
+        count:
+          type: integer
+        type:
+          type: string
+        size:
+          example: 3.84TB
+          type: string
+        category:
+          $ref: '#/components/schemas/Plan_specs_drives_inner_category'
+      type: object
     Plan_specs_drives_inner_category:
       enum:
       - boot
       - cache
       - storage
       type: string
-    Plan_available_in_inner_price:
-      example:
-        hour: 1.23
-      properties:
-        hour:
-          example: 1.23
-          format: double
-          type: number
-      type: object
-    ProjectIdName:
-      example:
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
-      type: object
+    Plan_deployment_types_inner:
+      enum:
+      - on_demand
+      - spot_market
+      type: string
     Plan_specs_cpus_inner:
       example:
         count: 6
@@ -503,6 +332,18 @@ components:
         type:
           type: string
       type: object
+    Plan_available_in_inner:
+      example:
+        price:
+          hour: 1.23
+        href: href
+      properties:
+        href:
+          description: href to the Facility
+          type: string
+        price:
+          $ref: '#/components/schemas/Plan_available_in_inner_price'
+      type: object
     Plan_type:
       description: The plan type
       enum:
@@ -510,19 +351,6 @@ components:
       - workload_optimized
       - custom
       type: string
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
     LineItem:
       example:
         amount: 5.637377
@@ -626,25 +454,6 @@ components:
           example: 2
           type: integer
         type:
-          type: string
-      type: object
-    Plan_available_in_inner:
-      example:
-        price:
-          hour: 1.23
-        href: href
-      properties:
-        href:
-          description: href to the Facility
-          type: string
-        price:
-          $ref: '#/components/schemas/Plan_available_in_inner_price'
-      type: object
-    Plan_specs_memory:
-      example:
-        total: total
-      properties:
-        total:
           type: string
       type: object
     InvoiceList:
@@ -936,11 +745,202 @@ components:
             $ref: '#/components/schemas/Invoice'
           type: array
       type: object
-    Plan_deployment_types_inner:
-      enum:
-      - on_demand
-      - spot_market
-      type: string
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    Invoice:
+      example:
+        amount: 0.8008282
+        target_date: 2000-01-23
+        credit_amount: 1.4658129
+        project:
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        reference_number: reference_number
+        due_on: 2000-01-23
+        number: number
+        balance: 6.0274563
+        created_on: 2000-01-23
+        credits_applied: 5.962134
+        currency: USD
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        items:
+        - amount: 5.637377
+          unit: unit
+          description: description
+          currency: currency
+          details: details
+          unit_price: 2.302136
+          plan:
+            legacy: true
+            line: line
+            available_in_metros:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            description: description
+            available_in:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            type: null
+            specs:
+              features:
+                txt: true
+                uefi: true
+                raid: true
+              memory:
+                total: total
+              cpus:
+              - count: 6
+                type: type
+              - count: 6
+                type: type
+              drives:
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              nics:
+              - count: 2
+                type: type
+              - count: 2
+                type: type
+            deployment_types:
+            - null
+            - null
+            name: name
+            categories:
+            - categories
+            - categories
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class: m3.large.x86
+            pricing: '{}'
+            slug: m3.large.x86
+        - amount: 5.637377
+          unit: unit
+          description: description
+          currency: currency
+          details: details
+          unit_price: 2.302136
+          plan:
+            legacy: true
+            line: line
+            available_in_metros:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            description: description
+            available_in:
+            - price:
+                hour: 1.23
+              href: href
+            - price:
+                hour: 1.23
+              href: href
+            type: null
+            specs:
+              features:
+                txt: true
+                uefi: true
+                raid: true
+              memory:
+                total: total
+              cpus:
+              - count: 6
+                type: type
+              - count: 6
+                type: type
+              drives:
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              - size: 3.84TB
+                count: 1
+                type: type
+                category: null
+              nics:
+              - count: 2
+                type: type
+              - count: 2
+                type: type
+            deployment_types:
+            - null
+            - null
+            name: name
+            categories:
+            - categories
+            - categories
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class: m3.large.x86
+            pricing: '{}'
+            slug: m3.large.x86
+        status: status
+      properties:
+        amount:
+          format: float
+          type: number
+        balance:
+          format: float
+          type: number
+        created_on:
+          format: date
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        credits_applied:
+          format: float
+          type: number
+        currency:
+          example: USD
+          type: string
+        due_on:
+          format: date
+          type: string
+        id:
+          format: uuid
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+        number:
+          type: string
+        project:
+          $ref: '#/components/schemas/ProjectIdName'
+        reference_number:
+          type: string
+        status:
+          type: string
+        target_date:
+          format: date
+          type: string
+      type: object
   securitySchemes:
     x_auth_token:
       description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.

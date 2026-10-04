@@ -108,17 +108,6 @@ paths:
       - UserVerificationTokens
 components:
   schemas:
-    VerifyEmail:
-      example:
-        user_token: user_token
-      properties:
-        user_token:
-          description: User verification token
-          type: string
-          writeOnly: true
-      required:
-      - user_token
-      type: object
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -131,6 +120,17 @@ components:
             description: An error message that contributed to the request failing.
             type: string
           type: array
+      type: object
+    VerifyEmail:
+      example:
+        user_token: user_token
+      properties:
+        user_token:
+          description: User verification token
+          type: string
+          writeOnly: true
+      required:
+      - user_token
       type: object
   securitySchemes:
     x_auth_token:

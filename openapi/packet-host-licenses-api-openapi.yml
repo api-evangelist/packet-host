@@ -365,6 +365,53 @@ paths:
       - Licenses
 components:
   schemas:
+    LicenseCreateInput:
+      example:
+        size: 0.8008281904610115
+        licensee_product_id: licensee_product_id
+        description: description
+      properties:
+        description:
+          type: string
+        licensee_product_id:
+          type: string
+        size:
+          type: number
+      type: object
+    License:
+      example:
+        licensee_product:
+          href: href
+        size: 0.8008281904610115
+        description: description
+        project:
+          href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        license_key: license_key
+      properties:
+        description:
+          type: string
+        id:
+          format: uuid
+          type: string
+        license_key:
+          type: string
+        licensee_product:
+          $ref: '#/components/schemas/Href'
+        project:
+          $ref: '#/components/schemas/Href'
+        size:
+          type: number
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
     LicenseList:
       example:
         licenses:
@@ -403,28 +450,6 @@ components:
             type: string
           type: array
       type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
-      type: object
-    LicenseCreateInput:
-      example:
-        size: 0.8008281904610115
-        licensee_product_id: licensee_product_id
-        description: description
-      properties:
-        description:
-          type: string
-        licensee_product_id:
-          type: string
-        size:
-          type: number
-      type: object
     LicenseUpdateInput:
       example:
         size: 0.8008281904610115
@@ -432,31 +457,6 @@ components:
       properties:
         description:
           type: string
-        size:
-          type: number
-      type: object
-    License:
-      example:
-        licensee_product:
-          href: href
-        size: 0.8008281904610115
-        description: description
-        project:
-          href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        license_key: license_key
-      properties:
-        description:
-          type: string
-        id:
-          format: uuid
-          type: string
-        license_key:
-          type: string
-        licensee_product:
-          $ref: '#/components/schemas/Href'
-        project:
-          $ref: '#/components/schemas/Href'
         size:
           type: number
       type: object

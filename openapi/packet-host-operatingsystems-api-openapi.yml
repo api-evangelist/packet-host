@@ -64,39 +64,17 @@ paths:
       - OperatingSystems
 components:
   schemas:
-    OperatingSystemList:
-      example:
-        operating_systems:
-        - default_operating_system: true
-          distro: distro
-          preinstallable: true
-          licensed: true
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          provisionable_on:
-          - provisionable_on
-          - provisionable_on
-          version: version
-          pricing: '{}'
-          slug: slug
-          distro_label: distro_label
-        - default_operating_system: true
-          distro: distro
-          preinstallable: true
-          licensed: true
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          provisionable_on:
-          - provisionable_on
-          - provisionable_on
-          version: version
-          pricing: '{}'
-          slug: slug
-          distro_label: distro_label
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
-        operating_systems:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
           items:
-            $ref: '#/components/schemas/OperatingSystem'
+            description: An error message that contributed to the request failing.
+            type: string
           type: array
       type: object
     OperatingSystem:
@@ -146,17 +124,39 @@ components:
           readOnly: true
           type: boolean
       type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+    OperatingSystemList:
+      example:
+        operating_systems:
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
+        - default_operating_system: true
+          distro: distro
+          preinstallable: true
+          licensed: true
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          provisionable_on:
+          - provisionable_on
+          - provisionable_on
+          version: version
+          pricing: '{}'
+          slug: slug
+          distro_label: distro_label
       properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
+        operating_systems:
           items:
-            description: An error message that contributed to the request failing.
-            type: string
+            $ref: '#/components/schemas/OperatingSystem'
           type: array
       type: object
   securitySchemes:

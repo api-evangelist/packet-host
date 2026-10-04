@@ -265,90 +265,6 @@ paths:
       - Capacity
 components:
   schemas:
-    CapacityLevelPerBaremetal:
-      example:
-        level: level
-      properties:
-        level:
-          type: string
-      type: object
-    CapacityInput:
-      example:
-        servers:
-        - quantity: quantity
-          metro: metro
-          facility: facility
-          plan: plan
-        - quantity: quantity
-          metro: metro
-          facility: facility
-          plan: plan
-      properties:
-        servers:
-          items:
-            $ref: '#/components/schemas/ServerInfo'
-          type: array
-      type: object
-    CapacityCheckPerFacilityInfo:
-      example:
-        quantity: quantity
-        available: true
-        facility: facility
-        plan: plan
-      properties:
-        available:
-          type: boolean
-        facility:
-          type: string
-        plan:
-          type: string
-        quantity:
-          type: string
-      type: object
-    CapacityCheckPerMetroList:
-      example:
-        servers:
-        - quantity: quantity
-          metro: metro
-          available: true
-          plan: plan
-        - quantity: quantity
-          metro: metro
-          available: true
-          plan: plan
-      properties:
-        servers:
-          items:
-            $ref: '#/components/schemas/CapacityCheckPerMetroInfo'
-          type: array
-      type: object
-    CapacityList:
-      example:
-        capacity:
-          key:
-            key:
-              level: level
-      properties:
-        capacity:
-          additionalProperties:
-            additionalProperties:
-              $ref: '#/components/schemas/CapacityLevelPerBaremetal'
-            type: object
-          type: object
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
     CapacityCheckPerFacilityList:
       example:
         servers:
@@ -366,24 +282,27 @@ components:
             $ref: '#/components/schemas/CapacityCheckPerFacilityInfo'
           type: array
       type: object
-    ServerInfo:
+    CapacityLevelPerBaremetal:
+      example:
+        level: level
+      properties:
+        level:
+          type: string
+      type: object
+    CapacityCheckPerFacilityInfo:
       example:
         quantity: quantity
-        metro: metro
+        available: true
         facility: facility
         plan: plan
       properties:
+        available:
+          type: boolean
         facility:
-          deprecated: true
-          type: string
-        metro:
-          description: The metro ID or code to check the capacity in.
           type: string
         plan:
-          description: The plan ID or slug to check the capacity of.
           type: string
         quantity:
-          description: The number of servers to check the capacity of.
           type: string
       type: object
     CapacityCheckPerMetroInfo:
@@ -405,6 +324,87 @@ components:
         quantity:
           description: The number of servers sent to check capacity.
           type: string
+      type: object
+    ServerInfo:
+      example:
+        quantity: quantity
+        metro: metro
+        facility: facility
+        plan: plan
+      properties:
+        facility:
+          deprecated: true
+          type: string
+        metro:
+          description: The metro ID or code to check the capacity in.
+          type: string
+        plan:
+          description: The plan ID or slug to check the capacity of.
+          type: string
+        quantity:
+          description: The number of servers to check the capacity of.
+          type: string
+      type: object
+    CapacityList:
+      example:
+        capacity:
+          key:
+            key:
+              level: level
+      properties:
+        capacity:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/CapacityLevelPerBaremetal'
+            type: object
+          type: object
+      type: object
+    CapacityCheckPerMetroList:
+      example:
+        servers:
+        - quantity: quantity
+          metro: metro
+          available: true
+          plan: plan
+        - quantity: quantity
+          metro: metro
+          available: true
+          plan: plan
+      properties:
+        servers:
+          items:
+            $ref: '#/components/schemas/CapacityCheckPerMetroInfo'
+          type: array
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    CapacityInput:
+      example:
+        servers:
+        - quantity: quantity
+          metro: metro
+          facility: facility
+          plan: plan
+        - quantity: quantity
+          metro: metro
+          facility: facility
+          plan: plan
+      properties:
+        servers:
+          items:
+            $ref: '#/components/schemas/ServerInfo'
+          type: array
       type: object
   securitySchemes:
     x_auth_token:

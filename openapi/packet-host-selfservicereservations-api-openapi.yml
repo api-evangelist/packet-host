@@ -180,16 +180,6 @@ components:
         term:
           type: string
       type: object
-    CreateSelfServiceReservationRequest_period:
-      example:
-        unit: null
-        count: null
-      properties:
-        count:
-          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period_count'
-        unit:
-          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period_unit'
-      type: object
     SelfServiceReservationList:
       example:
         reservations:
@@ -277,27 +267,15 @@ components:
             $ref: '#/components/schemas/SelfServiceReservationResponse'
           type: array
       type: object
-    findOrganizationDevices_categories_parameter_inner:
-      enum:
-      - compute
-      - storage
-      - vmce
-      - legacy_gen
-      - current_gen
-      example: compute
-      type: string
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+    CreateSelfServiceReservationRequest_period:
+      example:
+        unit: null
+        count: null
       properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
+        count:
+          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period_count'
+        unit:
+          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period_unit'
       type: object
     SelfServiceReservationResponse:
       example:
@@ -370,46 +348,6 @@ components:
         total_cost:
           type: integer
       type: object
-    CreateSelfServiceReservationRequest_period_count:
-      enum:
-      - 12
-      - 36
-      type: integer
-    CreateSelfServiceReservationRequest_period_unit:
-      enum:
-      - monthly
-      type: string
-    CreateSelfServiceReservationRequest:
-      example:
-        item:
-        - amount: 0.8008282
-          metro_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          quantity: 6
-          term: term
-          plan_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - amount: 0.8008282
-          metro_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          quantity: 6
-          term: term
-          plan_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        period:
-          unit: null
-          count: null
-        notes: notes
-        start_date: 2000-01-23 04:56:07+00:00
-      properties:
-        item:
-          items:
-            $ref: '#/components/schemas/SelfServiceReservationItemRequest'
-          type: array
-        notes:
-          type: string
-        period:
-          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period'
-        start_date:
-          format: date-time
-          type: string
-      type: object
     SelfServiceReservationItemResponse:
       example:
         plan_slug: plan_slug
@@ -452,6 +390,68 @@ components:
         quantity:
           type: integer
         term:
+          type: string
+      type: object
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
+      properties:
+        error:
+          description: A description of the error that caused the request to fail.
+          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
+      type: object
+    CreateSelfServiceReservationRequest_period_unit:
+      enum:
+      - monthly
+      type: string
+    CreateSelfServiceReservationRequest_period_count:
+      enum:
+      - 12
+      - 36
+      type: integer
+    findOrganizationDevices_categories_parameter_inner:
+      enum:
+      - compute
+      - storage
+      - vmce
+      - legacy_gen
+      - current_gen
+      example: compute
+      type: string
+    CreateSelfServiceReservationRequest:
+      example:
+        item:
+        - amount: 0.8008282
+          metro_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          quantity: 6
+          term: term
+          plan_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - amount: 0.8008282
+          metro_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          quantity: 6
+          term: term
+          plan_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        period:
+          unit: null
+          count: null
+        notes: notes
+        start_date: 2000-01-23 04:56:07+00:00
+      properties:
+        item:
+          items:
+            $ref: '#/components/schemas/SelfServiceReservationItemRequest'
+          type: array
+        notes:
+          type: string
+        period:
+          $ref: '#/components/schemas/CreateSelfServiceReservationRequest_period'
+        start_date:
+          format: date-time
           type: string
       type: object
   securitySchemes:

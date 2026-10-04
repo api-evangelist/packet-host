@@ -212,30 +212,6 @@ paths:
       - Batches
 components:
   schemas:
-    Mount:
-      example:
-        format: format
-        options:
-        - options
-        - options
-        device: device
-        point: point
-      properties:
-        device:
-          type: string
-        format:
-          type: string
-        point:
-          type: string
-        options:
-          items:
-            type: string
-          type: array
-      type: object
-    DeviceCreateInFacilityInput:
-      allOf:
-      - $ref: '#/components/schemas/FacilityInput'
-      - $ref: '#/components/schemas/DeviceCreateInput'
     Error:
       description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
@@ -249,50 +225,147 @@ components:
             type: string
           type: array
       type: object
-    FacilityInput:
+    Partition:
+      example:
+        number: 3
+        size: size
+        label: label
       properties:
-        facility:
-          deprecated: true
-          description: 'The datacenter where the device should be created.
-
-
-            Either metro or facility must be provided.
-
-
-            The API will accept either a single facility `{ "facility": "f1" }`, or it can be instructed to create the device in the best available datacenter `{ "facility": "any" }`.
-
-
-            Additionally it is possible to set a prioritized location selection. For example `{ "facility": ["f3", "f2", "any"] }` can be used to prioritize `f3` and then `f2` before accepting `any` facility. If none of the facilities provided have availability for the requested device the request will fail.'
-          example:
-          - sv15
+        label:
+          type: string
+        number:
+          format: int32
+          type: integer
+        size:
+          type: string
+      type: object
+    Storage:
+      example:
+        disks:
+        - partitions:
+          - number: 3
+            size: size
+            label: label
+          - number: 3
+            size: size
+            label: label
+          wipeTable: true
+          device: device
+        - partitions:
+          - number: 3
+            size: size
+            label: label
+          - number: 3
+            size: size
+            label: label
+          wipeTable: true
+          device: device
+        filesystems:
+        - mount:
+            format: format
+            options:
+            - options
+            - options
+            device: device
+            point: point
+        - mount:
+            format: format
+            options:
+            - options
+            - options
+            device: device
+            point: point
+        raid:
+        - devices:
+          - devices
+          - devices
+          level: level
+          name: name
+        - devices:
+          - devices
+          - devices
+          level: level
+          name: name
+      properties:
+        disks:
+          items:
+            $ref: '#/components/schemas/Disk'
+          type: array
+        raid:
+          items:
+            $ref: '#/components/schemas/Raid'
+          type: array
+        filesystems:
+          items:
+            $ref: '#/components/schemas/Filesystem'
+          type: array
+      type: object
+    DeviceCreateInMetroInput:
+      allOf:
+      - $ref: '#/components/schemas/MetroInput'
+      - $ref: '#/components/schemas/DeviceCreateInput'
+    BatchesList:
+      example:
+        batches:
+        - quantity: 0
+          updated_at: 2000-01-23 04:56:07+00:00
+          devices:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          error_messages:
+          - error_messages
+          - error_messages
+        - quantity: 0
+          updated_at: 2000-01-23 04:56:07+00:00
+          devices:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          project:
+            href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          error_messages:
+          - error_messages
+          - error_messages
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/Batch'
+          type: array
+      type: object
+    DeviceCreateInput_billing_cycle:
+      description: The billing cycle of the device.
+      enum:
+      - hourly
+      - daily
+      - monthly
+      - yearly
+      type: string
+    IPAddress:
+      properties:
+        address_family:
+          $ref: '#/components/schemas/IPAddress_address_family'
+        cidr:
+          description: Cidr Size for the IP Block created. Valid values depends on the operating system being provisioned. (28..32 for IPv4 addresses, 124..127 for IPv6 addresses)
+          example: 28
+          format: int32
+          type: integer
+        ip_reservations:
+          description: UUIDs of any IP reservations to use when assigning IPs
           items:
             type: string
           type: array
-      required:
-      - facility
-      type: object
-    InstancesBatchCreateInput_batches_inner:
-      allOf:
-      - properties:
-          hostnames:
-            items:
-              type: string
-            type: array
-          quantity:
-            description: The number of devices to create in this batch. The hostname may contain an `{{index}}` placeholder, which will be replaced with the index of the device in the batch. For example, if the hostname is `device-{{index}}`, the first device in the batch will have the hostname `device-01`, the second device will have the hostname `device-02`, and so on.
-            type: integer
-        type: object
-      - oneOf:
-        - $ref: '#/components/schemas/DeviceCreateInMetroInput'
-        - $ref: '#/components/schemas/DeviceCreateInFacilityInput'
-    Href:
-      example:
-        href: href
-      properties:
-        href:
-          type: string
-      required:
-      - href
+        public:
+          default: true
+          description: Address Type for IP Address
+          example: false
+          type: boolean
       type: object
     DeviceCreateInput:
       properties:
@@ -524,162 +597,10 @@ components:
       - operating_system
       - plan
       type: object
-    Storage:
-      example:
-        disks:
-        - partitions:
-          - number: 3
-            size: size
-            label: label
-          - number: 3
-            size: size
-            label: label
-          wipeTable: true
-          device: device
-        - partitions:
-          - number: 3
-            size: size
-            label: label
-          - number: 3
-            size: size
-            label: label
-          wipeTable: true
-          device: device
-        filesystems:
-        - mount:
-            format: format
-            options:
-            - options
-            - options
-            device: device
-            point: point
-        - mount:
-            format: format
-            options:
-            - options
-            - options
-            device: device
-            point: point
-        raid:
-        - devices:
-          - devices
-          - devices
-          level: level
-          name: name
-        - devices:
-          - devices
-          - devices
-          level: level
-          name: name
-      properties:
-        disks:
-          items:
-            $ref: '#/components/schemas/Disk'
-          type: array
-        raid:
-          items:
-            $ref: '#/components/schemas/Raid'
-          type: array
-        filesystems:
-          items:
-            $ref: '#/components/schemas/Filesystem'
-          type: array
-      type: object
-    IPAddress_address_family:
-      description: Address Family for IP Address
-      enum:
-      - 4
-      - 6
-      example: 4
-      format: int32
-      type: integer
-    Raid:
-      example:
-        devices:
-        - devices
-        - devices
-        level: level
-        name: name
-      properties:
-        devices:
-          items:
-            type: string
-          type: array
-        level:
-          type: string
-        name:
-          type: string
-      type: object
-    Filesystem:
-      example:
-        mount:
-          format: format
-          options:
-          - options
-          - options
-          device: device
-          point: point
-      properties:
-        mount:
-          $ref: '#/components/schemas/Mount'
-      type: object
-    Partition:
-      example:
-        number: 3
-        size: size
-        label: label
-      properties:
-        label:
-          type: string
-        number:
-          format: int32
-          type: integer
-        size:
-          type: string
-      type: object
-    DeviceCreateInMetroInput:
+    DeviceCreateInFacilityInput:
       allOf:
-      - $ref: '#/components/schemas/MetroInput'
+      - $ref: '#/components/schemas/FacilityInput'
       - $ref: '#/components/schemas/DeviceCreateInput'
-    DeviceCreateInput_billing_cycle:
-      description: The billing cycle of the device.
-      enum:
-      - hourly
-      - daily
-      - monthly
-      - yearly
-      type: string
-    IPAddress:
-      properties:
-        address_family:
-          $ref: '#/components/schemas/IPAddress_address_family'
-        cidr:
-          description: Cidr Size for the IP Block created. Valid values depends on the operating system being provisioned. (28..32 for IPv4 addresses, 124..127 for IPv6 addresses)
-          example: 28
-          format: int32
-          type: integer
-        ip_reservations:
-          description: UUIDs of any IP reservations to use when assigning IPs
-          items:
-            type: string
-          type: array
-        public:
-          default: true
-          description: Address Type for IP Address
-          example: false
-          type: boolean
-      type: object
-    InstancesBatchCreateInput:
-      example:
-        batches:
-        - null
-        - null
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/InstancesBatchCreateInput_batches_inner'
-          type: array
-      type: object
     Disk:
       example:
         partitions:
@@ -701,6 +622,60 @@ components:
             $ref: '#/components/schemas/Partition'
           type: array
       type: object
+    InstancesBatchCreateInput:
+      example:
+        batches:
+        - null
+        - null
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/InstancesBatchCreateInput_batches_inner'
+          type: array
+      type: object
+    Href:
+      example:
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    Mount:
+      example:
+        format: format
+        options:
+        - options
+        - options
+        device: device
+        point: point
+      properties:
+        device:
+          type: string
+        format:
+          type: string
+        point:
+          type: string
+        options:
+          items:
+            type: string
+          type: array
+      type: object
+    InstancesBatchCreateInput_batches_inner:
+      allOf:
+      - properties:
+          hostnames:
+            items:
+              type: string
+            type: array
+          quantity:
+            description: The number of devices to create in this batch. The hostname may contain an `{{index}}` placeholder, which will be replaced with the index of the device in the batch. For example, if the hostname is `device-{{index}}`, the first device in the batch will have the hostname `device-01`, the second device will have the hostname `device-02`, and so on.
+            type: integer
+        type: object
+      - oneOf:
+        - $ref: '#/components/schemas/DeviceCreateInMetroInput'
+        - $ref: '#/components/schemas/DeviceCreateInFacilityInput'
     Batch:
       example:
         quantity: 0
@@ -741,6 +716,55 @@ components:
           format: date-time
           type: string
       type: object
+    Raid:
+      example:
+        devices:
+        - devices
+        - devices
+        level: level
+        name: name
+      properties:
+        devices:
+          items:
+            type: string
+          type: array
+        level:
+          type: string
+        name:
+          type: string
+      type: object
+    MetroInput:
+      properties:
+        metro:
+          description: 'Metro code or ID of where the instance should be provisioned in.
+
+            Either metro or facility must be provided.'
+          example: sv
+          type: string
+      required:
+      - metro
+      type: object
+    IPAddress_address_family:
+      description: Address Family for IP Address
+      enum:
+      - 4
+      - 6
+      example: 4
+      format: int32
+      type: integer
+    Filesystem:
+      example:
+        mount:
+          format: format
+          options:
+          - options
+          - options
+          device: device
+          point: point
+      properties:
+        mount:
+          $ref: '#/components/schemas/Mount'
+      type: object
     SSHKeyInput:
       example:
         label: label
@@ -758,51 +782,27 @@ components:
             type: string
           type: array
       type: object
-    MetroInput:
+    FacilityInput:
       properties:
-        metro:
-          description: 'Metro code or ID of where the instance should be provisioned in.
+        facility:
+          deprecated: true
+          description: 'The datacenter where the device should be created.
 
-            Either metro or facility must be provided.'
-          example: sv
-          type: string
-      required:
-      - metro
-      type: object
-    BatchesList:
-      example:
-        batches:
-        - quantity: 0
-          updated_at: 2000-01-23 04:56:07+00:00
-          devices:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
-          error_messages:
-          - error_messages
-          - error_messages
-        - quantity: 0
-          updated_at: 2000-01-23 04:56:07+00:00
-          devices:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          project:
-            href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
-          error_messages:
-          - error_messages
-          - error_messages
-      properties:
-        batches:
+
+            Either metro or facility must be provided.
+
+
+            The API will accept either a single facility `{ "facility": "f1" }`, or it can be instructed to create the device in the best available datacenter `{ "facility": "any" }`.
+
+
+            Additionally it is possible to set a prioritized location selection. For example `{ "facility": ["f3", "f2", "any"] }` can be used to prioritize `f3` and then `f2` before accepting `any` facility. If none of the facilities provided have availability for the requested device the request will fail.'
+          example:
+          - sv15
           items:
-            $ref: '#/components/schemas/Batch'
+            type: string
           type: array
+      required:
+      - facility
       type: object
   securitySchemes:
     x_auth_token:

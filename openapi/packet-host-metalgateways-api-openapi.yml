@@ -455,6 +455,11 @@ paths:
       - MetalGateways
 components:
   schemas:
+    IPReservation_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the IP reservation is in. As long as the IP reservation has a metro, it can be used on a metro level. Can be null if requesting an IP reservation in a facility that is not in a metro.
+        type: object
     IPReservation_type:
       enum:
       - global_ipv4
@@ -462,1172 +467,36 @@ components:
       - private_ipv4
       - public_ipv6
       type: string
-    Coordinates:
+    Address:
       example:
-        latitude: latitude
-        longitude: longitude
-      properties:
-        latitude:
-          type: string
-        longitude:
-          type: string
-      type: object
-    Error:
-      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
-      properties:
-        error:
-          description: A description of the error that caused the request to fail.
-          type: string
-        errors:
-          description: A list of errors that contributed to the request failing.
-          items:
-            description: An error message that contributed to the request failing.
-            type: string
-          type: array
-      type: object
-    Project_type:
-      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
-      enum:
-      - default
-      - vmce
-      type: string
-    Organization:
-      example:
-        website: website
-        address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        projects:
-        - href: href
-        - href: href
-        credit_amount: 1.4658129
-        created_at: 2000-01-23 04:56:07+00:00
-        description: description
-        billing_address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        memberships:
-        - href: href
-        - href: href
-        enforce_2fa_at: 2000-01-23 04:56:07+00:00
-        twitter: twitter
-        updated_at: 2000-01-23 04:56:07+00:00
-        terms: 5
-        members:
-        - href: href
-        - href: href
-        name: name
-        logo: logo
-        customdata: '{}'
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        created_at:
-          format: date-time
-          type: string
-        credit_amount:
-          format: float
-          type: number
-        customdata:
-          type: object
-        description:
-          type: string
-        enforce_2fa_at:
-          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        logo:
-          type: string
-        members:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        memberships:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        name:
-          type: string
-        projects:
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        terms:
-          type: integer
-        twitter:
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        website:
-          type: string
-      type: object
-    IPReservation_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the IP reservation is in. As long as the IP reservation has a metro, it can be used on a metro level. Can be null if requesting an IP reservation in a facility that is not in a metro.
-        type: object
-    IPAssignment_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the IP address is in
-        type: object
-    VrfIpReservation:
-      example:
+        country: country
         address: address
-        created_at: 2000-01-23 04:56:07+00:00
-        project:
-          devices:
-          - href: href
-          - href: href
-          volumes:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          type: null
-          memberships:
-          - href: href
-          - href: href
-          bgp_config:
-            href: href
-          tags:
-          - tags
-          - tags
-          max_devices: '{}'
-          ssh_keys:
-          - href: href
-          - href: href
-          updated_at: 2000-01-23 04:56:07+00:00
-          invitations:
-          - href: href
-          - href: href
-          members:
-          - href: href
-          - href: href
-          organization:
-            website: website
-            address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            projects:
-            - href: href
-            - href: href
-            credit_amount: 1.4658129
-            created_at: 2000-01-23 04:56:07+00:00
-            description: description
-            billing_address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            memberships:
-            - href: href
-            - href: href
-            enforce_2fa_at: 2000-01-23 04:56:07+00:00
-            twitter: twitter
-            updated_at: 2000-01-23 04:56:07+00:00
-            terms: 5
-            members:
-            - href: href
-            - href: href
-            name: name
-            logo: logo
-            customdata: '{}'
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          name: name
-          network_status: '{}'
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          payment_method:
-            href: href
-        bill: true
-        project_lite:
-          devices:
-          - href: href
-          - href: href
-          volumes:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          type: null
-          memberships:
-          - href: href
-          - href: href
-          bgp_config:
-            href: href
-          tags:
-          - tags
-          - tags
-          max_devices: '{}'
-          ssh_keys:
-          - href: href
-          - href: href
-          updated_at: 2000-01-23 04:56:07+00:00
-          invitations:
-          - href: href
-          - href: href
-          members:
-          - href: href
-          - href: href
-          organization:
-            website: website
-            address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            projects:
-            - href: href
-            - href: href
-            credit_amount: 1.4658129
-            created_at: 2000-01-23 04:56:07+00:00
-            description: description
-            billing_address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            memberships:
-            - href: href
-            - href: href
-            enforce_2fa_at: 2000-01-23 04:56:07+00:00
-            twitter: twitter
-            updated_at: 2000-01-23 04:56:07+00:00
-            terms: 5
-            members:
-            - href: href
-            - href: href
-            name: name
-            logo: logo
-            customdata: '{}'
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          name: name
-          network_status: '{}'
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          payment_method:
-            href: href
-        vrf:
-          bgp_dynamic_neighbors_export_route_map: true
-          bgp_dynamic_neighbors_bfd_enabled: true
-          local_asn: 5
-          description: description
-          bill: false
-          bgp_dynamic_neighbors_enabled: true
-          project:
-            devices:
-            - href: href
-            - href: href
-            volumes:
-            - href: href
-            - href: href
-            created_at: 2000-01-23 04:56:07+00:00
-            type: null
-            memberships:
-            - href: href
-            - href: href
-            bgp_config:
-              href: href
-            tags:
-            - tags
-            - tags
-            max_devices: '{}'
-            ssh_keys:
-            - href: href
-            - href: href
-            updated_at: 2000-01-23 04:56:07+00:00
-            invitations:
-            - href: href
-            - href: href
-            members:
-            - href: href
-            - href: href
-            organization:
-              website: website
-              address:
-                country: country
-                address: address
-                address2: address2
-                city: city
-                coordinates:
-                  latitude: latitude
-                  longitude: longitude
-                state: state
-                zip_code: zip_code
-              projects:
-              - href: href
-              - href: href
-              credit_amount: 1.4658129
-              created_at: 2000-01-23 04:56:07+00:00
-              description: description
-              billing_address:
-                country: country
-                address: address
-                address2: address2
-                city: city
-                coordinates:
-                  latitude: latitude
-                  longitude: longitude
-                state: state
-                zip_code: zip_code
-              memberships:
-              - href: href
-              - href: href
-              enforce_2fa_at: 2000-01-23 04:56:07+00:00
-              twitter: twitter
-              updated_at: 2000-01-23 04:56:07+00:00
-              terms: 5
-              members:
-              - href: href
-              - href: href
-              name: name
-              logo: logo
-              customdata: '{}'
-              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            name: name
-            network_status: '{}'
-            customdata: '{}'
-            href: href
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            payment_method:
-              href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          created_by:
-            avatar_thumb_url: avatar_thumb_url
-            last_login_at: 2000-01-23 04:56:07+00:00
-            max_projects: 2
-            timezone: timezone
-            default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            created_at: 2000-01-23 04:56:07+00:00
-            last_name: last_name
-            short_id: short_id
-            fraud_score: fraud_score
-            emails:
-            - href: href
-            - href: href
-            default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            full_name: full_name
-            avatar_url: avatar_url
-            updated_at: 2000-01-23 04:56:07+00:00
-            phone_number: phone_number
-            customdata: '{}'
-            href: href
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            first_name: first_name
-            max_organizations: 3
-            two_factor_auth: two_factor_auth
-            email: email
-          tags:
-          - tags
-          - tags
-          updated_at: 2000-01-23 04:56:07+00:00
-          virtual_circuits:
-          - subnet: 12.0.0.0/30
-            customer_ip: 12.0.0.2
-            description: description
-            project:
-              href: href
-            created_at: 2000-01-23 04:56:07+00:00
-            vrf: null
-            type: null
-            metal_ip: 12.0.0.1
-            speed: 9
-            tags:
-            - tags
-            - tags
-            nni_vlan: 2
-            updated_at: 2000-01-23 04:56:07+00:00
-            port:
-              href: href
-            name: name
-            peer_asn: 7
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            md5: md5
-            status: null
-          - subnet: 12.0.0.0/30
-            customer_ip: 12.0.0.2
-            description: description
-            project:
-              href: href
-            created_at: 2000-01-23 04:56:07+00:00
-            vrf: null
-            type: null
-            metal_ip: 12.0.0.1
-            speed: 9
-            tags:
-            - tags
-            - tags
-            nni_vlan: 2
-            updated_at: 2000-01-23 04:56:07+00:00
-            port:
-              href: href
-            name: name
-            peer_asn: 7
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            md5: md5
-            status: null
-          ip_ranges:
-          - ip_ranges
-          - ip_ranges
-          metro:
-            country: country
-            code: code
-            name: name
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          href: href
-        type: null
-        created_by:
-          href: href
-        network: network
-        tags:
-        - tags
-        - tags
-        manageable: true
-        metal_gateway:
-          gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        address_family: 0
-        public: true
-        netmask: netmask
-        management: true
-        metro:
-          country: country
-          code: code
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        cidr: 6
-        details: details
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        address2: address2
+        city: city
+        coordinates:
+          latitude: latitude
+          longitude: longitude
         state: state
-        customdata: '{}'
-        gateway: gateway
-      properties:
-        address_family:
-          type: integer
-        cidr:
-          type: integer
-        created_at:
-          format: date-time
-          type: string
-        created_by:
-          $ref: '#/components/schemas/Href'
-        details:
-          type: string
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        metal_gateway:
-          $ref: '#/components/schemas/MetalGatewayLite'
-        netmask:
-          type: string
-        network:
-          type: string
-        project:
-          $ref: '#/components/schemas/Project'
-        state:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        type:
-          $ref: '#/components/schemas/VrfIpReservation_type'
-        vrf:
-          $ref: '#/components/schemas/Vrf'
-        public:
-          type: boolean
-        management:
-          type: boolean
-        manageable:
-          type: boolean
-        customdata:
-          type: object
-        bill:
-          type: boolean
-        project_lite:
-          $ref: '#/components/schemas/Project'
-        address:
-          type: string
-        gateway:
-          type: string
-        metro:
-          $ref: '#/components/schemas/Metro'
-      required:
-      - type
-      - vrf
-      type: object
-    IPAssignment_type:
-      enum:
-      - IPAssignment
-      type: string
-    IPAssignment_state:
-      description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
-
-
-        Describes the current configuration state of this IP on the network.
-
-        '
-      enum:
-      - pending
-      - active
-      - deleting
-      type: string
-    Device_metro:
-      allOf:
-      - $ref: '#/components/schemas/Metro'
-      - description: The metro the facility is in
-        type: object
-    IPAssignment:
-      example:
-        address: address
-        parent_block:
-          netmask: netmask
-          cidr: 2
-          href: href
-          network: network
-        created_at: 2000-01-23 04:56:07+00:00
-        type: null
-        enabled: true
-        manageable: true
-        network: network
-        address_family: 5
-        public: true
-        management: true
-        netmask: netmask
-        metro: null
-        next_hop: next_hop
-        cidr: 5
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
-        global_ip: true
-        gateway: gateway
-        assigned_to:
-          href: href
+        zip_code: zip_code
       properties:
         address:
           type: string
-        address_family:
-          type: integer
-        assigned_to:
-          $ref: '#/components/schemas/Href'
-        cidr:
-          type: integer
-        created_at:
-          format: date-time
+        address2:
           type: string
-        enabled:
-          type: boolean
-        gateway:
+        city:
           type: string
-        global_ip:
-          type: boolean
-        href:
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        country:
           type: string
-        id:
-          format: uuid
-          type: string
-        manageable:
-          type: boolean
-        management:
-          type: boolean
-        metro:
-          $ref: '#/components/schemas/IPAssignment_metro'
-        netmask:
-          type: string
-        network:
-          type: string
-        parent_block:
-          $ref: '#/components/schemas/ParentBlock'
-        public:
-          type: boolean
         state:
-          $ref: '#/components/schemas/IPAssignment_state'
-        next_hop:
-          description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
-
-
-            The IP address within the Metal Gateway to which requests to the Elastic IP are forwarded.
-
-            '
-          format: ipv4
           type: string
-        type:
-          $ref: '#/components/schemas/IPAssignment_type'
-      type: object
-    VrfIpReservation_type:
-      enum:
-      - vrf
-      type: string
-    Vrf:
-      example:
-        bgp_dynamic_neighbors_export_route_map: true
-        bgp_dynamic_neighbors_bfd_enabled: true
-        local_asn: 5
-        description: description
-        bill: false
-        bgp_dynamic_neighbors_enabled: true
-        project:
-          devices:
-          - href: href
-          - href: href
-          volumes:
-          - href: href
-          - href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          type: null
-          memberships:
-          - href: href
-          - href: href
-          bgp_config:
-            href: href
-          tags:
-          - tags
-          - tags
-          max_devices: '{}'
-          ssh_keys:
-          - href: href
-          - href: href
-          updated_at: 2000-01-23 04:56:07+00:00
-          invitations:
-          - href: href
-          - href: href
-          members:
-          - href: href
-          - href: href
-          organization:
-            website: website
-            address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            projects:
-            - href: href
-            - href: href
-            credit_amount: 1.4658129
-            created_at: 2000-01-23 04:56:07+00:00
-            description: description
-            billing_address:
-              country: country
-              address: address
-              address2: address2
-              city: city
-              coordinates:
-                latitude: latitude
-                longitude: longitude
-              state: state
-              zip_code: zip_code
-            memberships:
-            - href: href
-            - href: href
-            enforce_2fa_at: 2000-01-23 04:56:07+00:00
-            twitter: twitter
-            updated_at: 2000-01-23 04:56:07+00:00
-            terms: 5
-            members:
-            - href: href
-            - href: href
-            name: name
-            logo: logo
-            customdata: '{}'
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          name: name
-          network_status: '{}'
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          payment_method:
-            href: href
-        created_at: 2000-01-23 04:56:07+00:00
-        created_by:
-          avatar_thumb_url: avatar_thumb_url
-          last_login_at: 2000-01-23 04:56:07+00:00
-          max_projects: 2
-          timezone: timezone
-          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          created_at: 2000-01-23 04:56:07+00:00
-          last_name: last_name
-          short_id: short_id
-          fraud_score: fraud_score
-          emails:
-          - href: href
-          - href: href
-          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          full_name: full_name
-          avatar_url: avatar_url
-          updated_at: 2000-01-23 04:56:07+00:00
-          phone_number: phone_number
-          customdata: '{}'
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          first_name: first_name
-          max_organizations: 3
-          two_factor_auth: two_factor_auth
-          email: email
-        tags:
-        - tags
-        - tags
-        updated_at: 2000-01-23 04:56:07+00:00
-        virtual_circuits:
-        - subnet: 12.0.0.0/30
-          customer_ip: 12.0.0.2
-          description: description
-          project:
-            href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          vrf: null
-          type: null
-          metal_ip: 12.0.0.1
-          speed: 9
-          tags:
-          - tags
-          - tags
-          nni_vlan: 2
-          updated_at: 2000-01-23 04:56:07+00:00
-          port:
-            href: href
-          name: name
-          peer_asn: 7
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          md5: md5
-          status: null
-        - subnet: 12.0.0.0/30
-          customer_ip: 12.0.0.2
-          description: description
-          project:
-            href: href
-          created_at: 2000-01-23 04:56:07+00:00
-          vrf: null
-          type: null
-          metal_ip: 12.0.0.1
-          speed: 9
-          tags:
-          - tags
-          - tags
-          nni_vlan: 2
-          updated_at: 2000-01-23 04:56:07+00:00
-          port:
-            href: href
-          name: name
-          peer_asn: 7
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          md5: md5
-          status: null
-        ip_ranges:
-        - ip_ranges
-        - ip_ranges
-        metro:
-          country: country
-          code: code
-          name: name
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        href: href
-      properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
-        description:
-          description: Optional field that can be set to describe the VRF
-          type: string
-        bill:
-          default: false
-          description: True if the VRF is being billed. Usage will start when the first VRF Virtual Circuit is active, and will only stop when the VRF has been deleted.
-          type: boolean
-        bgp_dynamic_neighbors_enabled:
-          description: Toggle to enable the dynamic bgp neighbors feature on the VRF
-          type: boolean
-        bgp_dynamic_neighbors_export_route_map:
-          description: Toggle to export the VRF route-map to the dynamic bgp neighbors
-          type: boolean
-        bgp_dynamic_neighbors_bfd_enabled:
-          description: Toggle BFD on dynamic bgp neighbors sessions
-          type: boolean
-        local_asn:
-          description: A 4-byte ASN associated with the VRF.
-          format: int32
-          type: integer
-        virtual_circuits:
-          description: Virtual circuits that are in the VRF
-          items:
-            $ref: '#/components/schemas/VrfVirtualCircuit'
-          type: array
-        ip_ranges:
-          description: A list of CIDR network addresses. Like ["10.0.0.0/16", "2001:d78::/56"].
-          items:
-            type: string
-          type: array
-        project:
-          $ref: '#/components/schemas/Project'
-        metro:
-          $ref: '#/components/schemas/Metro'
-        created_by:
-          $ref: '#/components/schemas/User'
-        href:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    Href:
-      example:
-        href: href
-      properties:
-        href:
+        zip_code:
           type: string
       required:
-      - href
-      type: object
-    Facility:
-      example:
-        features:
-        - baremetal
-        - backend_transfer
-        - global_ipv4
-        address:
-          country: country
-          address: address
-          address2: address2
-          city: city
-          coordinates:
-            latitude: latitude
-            longitude: longitude
-          state: state
-          zip_code: zip_code
-        code: code
-        ip_ranges:
-        - 2604:1380::/36
-        - 147.75.192.0/21
-        metro: null
-        name: name
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        code:
-          type: string
-        features:
-          example:
-          - baremetal
-          - backend_transfer
-          - global_ipv4
-          items:
-            $ref: '#/components/schemas/Facility_features_inner'
-          type: array
-        id:
-          format: uuid
-          type: string
-        ip_ranges:
-          description: IP ranges registered in facility. Can be used for GeoIP location
-          example:
-          - 2604:1380::/36
-          - 147.75.192.0/21
-          items:
-            type: string
-          type: array
-        metro:
-          $ref: '#/components/schemas/Device_metro'
-        name:
-          type: string
-      type: object
-    MetalGateway:
-      properties:
-        created_at:
-          format: date-time
-          type: string
-        created_by:
-          $ref: '#/components/schemas/Href'
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        ip_reservation:
-          $ref: '#/components/schemas/IPReservation'
-        project:
-          $ref: '#/components/schemas/Project'
-        state:
-          $ref: '#/components/schemas/MetalGateway_state'
-        updated_at:
-          format: date-time
-          type: string
-        virtual_network:
-          $ref: '#/components/schemas/VirtualNetwork'
-      type: object
-    IPAssignmentList:
-      example:
-        ip_addresses:
-        - address: address
-          parent_block:
-            netmask: netmask
-            cidr: 2
-            href: href
-            network: network
-          created_at: 2000-01-23 04:56:07+00:00
-          type: null
-          enabled: true
-          manageable: true
-          network: network
-          address_family: 5
-          public: true
-          management: true
-          netmask: netmask
-          metro: null
-          next_hop: next_hop
-          cidr: 5
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-          global_ip: true
-          gateway: gateway
-          assigned_to:
-            href: href
-        - address: address
-          parent_block:
-            netmask: netmask
-            cidr: 2
-            href: href
-            network: network
-          created_at: 2000-01-23 04:56:07+00:00
-          type: null
-          enabled: true
-          manageable: true
-          network: network
-          address_family: 5
-          public: true
-          management: true
-          netmask: netmask
-          metro: null
-          next_hop: next_hop
-          cidr: 5
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-          global_ip: true
-          gateway: gateway
-          assigned_to:
-            href: href
-      properties:
-        ip_addresses:
-          items:
-            $ref: '#/components/schemas/IPAssignment'
-          type: array
-      type: object
-    VirtualNetwork:
-      example:
-        vxlan: 4
-        instances:
-        - href: href
-        - href: href
-        description: description
-        created_at: 2000-01-23 04:56:07+00:00
-        assigned_to_virtual_circuit: true
-        tags:
-        - tags
-        - tags
-        metal_gateways:
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        - gateway_address: 10.1.2.1/27
-          updated_at: 2000-01-23 04:56:07+00:00
-          vlan: 1001
-          created_at: 2000-01-23 04:56:07+00:00
-          href: href
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: null
-        metro_code: metro_code
-        metro:
-          href: href
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        facility:
-          href: href
-        assigned_to:
-          href: href
-      properties:
-        assigned_to:
-          $ref: '#/components/schemas/Href'
-        assigned_to_virtual_circuit:
-          description: True if the virtual network is attached to a virtual circuit. False if not.
-          type: boolean
-        description:
-          type: string
-        facility:
-          $ref: '#/components/schemas/Href'
-        href:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        instances:
-          description: A list of instances with ports currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/Href'
-          type: array
-        metal_gateways:
-          description: A list of metal gateways currently associated to this Virtual Network.
-          items:
-            $ref: '#/components/schemas/MetalGatewayLite'
-          type: array
-        metro:
-          $ref: '#/components/schemas/Href'
-        metro_code:
-          description: The Metro code of the metro in which this Virtual Network is defined.
-          type: string
-        vxlan:
-          type: integer
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    IPReservation:
-      additionalProperties: false
-      properties:
-        addon:
-          type: boolean
-        address:
-          type: string
-        address_family:
-          type: integer
-        assignments:
-          items:
-            $ref: '#/components/schemas/IPAssignment'
-          type: array
-        available:
-          type: string
-        bill:
-          type: boolean
-        cidr:
-          type: integer
-        created_at:
-          format: date-time
-          type: string
-        customdata:
-          type: object
-        enabled:
-          type: boolean
-        details:
-          type: string
-        facility:
-          $ref: '#/components/schemas/IPReservation_facility'
-        gateway:
-          type: string
-        global_ip:
-          type: boolean
-        href:
-          type: string
-        id:
-          format: uuid
-          type: string
-        manageable:
-          type: boolean
-        management:
-          type: boolean
-        metal_gateway:
-          $ref: '#/components/schemas/MetalGatewayLite'
-        metro:
-          $ref: '#/components/schemas/IPReservation_metro'
-        netmask:
-          type: string
-        network:
-          type: string
-        project:
-          $ref: '#/components/schemas/Project'
-        project_lite:
-          $ref: '#/components/schemas/Href'
-        requested_by:
-          $ref: '#/components/schemas/Href'
-        public:
-          type: boolean
-        state:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        type:
-          $ref: '#/components/schemas/IPReservation_type'
-      required:
-      - type
+      - address
+      - country
+      - zip_code
       type: object
     VrfMetalGateway:
       example:
@@ -2305,6 +1174,798 @@ components:
         vrf:
           $ref: '#/components/schemas/Vrf'
       type: object
+    Coordinates:
+      example:
+        latitude: latitude
+        longitude: longitude
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+      type: object
+    Organization:
+      example:
+        website: website
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        projects:
+        - href: href
+        - href: href
+        credit_amount: 1.4658129
+        created_at: 2000-01-23 04:56:07+00:00
+        description: description
+        billing_address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        memberships:
+        - href: href
+        - href: href
+        enforce_2fa_at: 2000-01-23 04:56:07+00:00
+        twitter: twitter
+        updated_at: 2000-01-23 04:56:07+00:00
+        terms: 5
+        members:
+        - href: href
+        - href: href
+        name: name
+        logo: logo
+        customdata: '{}'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          format: date-time
+          type: string
+        credit_amount:
+          format: float
+          type: number
+        customdata:
+          type: object
+        description:
+          type: string
+        enforce_2fa_at:
+          description: Force to all members to have enabled the two factor authentication after that date, unless the value is null
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        logo:
+          type: string
+        members:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        memberships:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        name:
+          type: string
+        projects:
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        terms:
+          type: integer
+        twitter:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        website:
+          type: string
+      type: object
+    VrfIpReservation_type:
+      enum:
+      - vrf
+      type: string
+    Project_type:
+      description: The type of the project. Projects of type `vmce` are part of an in development feature and not available to all customers.
+      enum:
+      - default
+      - vmce
+      type: string
+    MetalGatewayList_metal_gateways_inner:
+      anyOf:
+      - $ref: '#/components/schemas/MetalGateway'
+      - $ref: '#/components/schemas/VrfMetalGateway'
+    MetalGateway:
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        ip_reservation:
+          $ref: '#/components/schemas/IPReservation'
+        project:
+          $ref: '#/components/schemas/Project'
+        state:
+          $ref: '#/components/schemas/MetalGateway_state'
+        updated_at:
+          format: date-time
+          type: string
+        virtual_network:
+          $ref: '#/components/schemas/VirtualNetwork'
+      type: object
+    VirtualNetwork:
+      example:
+        vxlan: 4
+        instances:
+        - href: href
+        - href: href
+        description: description
+        created_at: 2000-01-23 04:56:07+00:00
+        assigned_to_virtual_circuit: true
+        tags:
+        - tags
+        - tags
+        metal_gateways:
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        - gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        metro_code: metro_code
+        metro:
+          href: href
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        facility:
+          href: href
+        assigned_to:
+          href: href
+      properties:
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        assigned_to_virtual_circuit:
+          description: True if the virtual network is attached to a virtual circuit. False if not.
+          type: boolean
+        description:
+          type: string
+        facility:
+          $ref: '#/components/schemas/Href'
+        href:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        instances:
+          description: A list of instances with ports currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/Href'
+          type: array
+        metal_gateways:
+          description: A list of metal gateways currently associated to this Virtual Network.
+          items:
+            $ref: '#/components/schemas/MetalGatewayLite'
+          type: array
+        metro:
+          $ref: '#/components/schemas/Href'
+        metro_code:
+          description: The Metro code of the metro in which this Virtual Network is defined.
+          type: string
+        vxlan:
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Meta:
+      example:
+        next:
+          href: href
+        total: 0
+        last:
+          href: href
+        previous:
+          href: href
+        last_page: 1
+        self:
+          href: href
+        first:
+          href: href
+        current_page: 6
+      properties:
+        first:
+          $ref: '#/components/schemas/Href'
+        last:
+          $ref: '#/components/schemas/Href'
+        next:
+          $ref: '#/components/schemas/Href'
+        previous:
+          $ref: '#/components/schemas/Href'
+        self:
+          $ref: '#/components/schemas/Href'
+        total:
+          type: integer
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    MetalGatewayList:
+      example:
+        metal_gateways:
+        - null
+        - null
+        meta:
+          next:
+            href: href
+          total: 0
+          last:
+            href: href
+          previous:
+            href: href
+          last_page: 1
+          self:
+            href: href
+          first:
+            href: href
+          current_page: 6
+      properties:
+        metal_gateways:
+          items:
+            $ref: '#/components/schemas/MetalGatewayList_metal_gateways_inner'
+          type: array
+        meta:
+          $ref: '#/components/schemas/Meta'
+      type: object
+    VrfMetalGatewayCreateInput:
+      properties:
+        ip_reservation_id:
+          description: The UUID an a VRF IP Reservation that belongs to the same project as the one in which the Metal Gateway is to be created. Additionally, the VRF IP Reservation and the Virtual Network must reside in the same Metro.
+          format: uuid
+          type: string
+        virtual_network_id:
+          description: THe UUID of a Metro Virtual Network that belongs to the same project as the one in which the Metal Gateway is to be created. Additionally, the Virtual Network and the VRF IP Reservation must reside in the same metro.
+          format: uuid
+          type: string
+      required:
+      - ip_reservation_id
+      - virtual_network_id
+      type: object
+    Facility:
+      example:
+        features:
+        - baremetal
+        - backend_transfer
+        - global_ipv4
+        address:
+          country: country
+          address: address
+          address2: address2
+          city: city
+          coordinates:
+            latitude: latitude
+            longitude: longitude
+          state: state
+          zip_code: zip_code
+        code: code
+        ip_ranges:
+        - 2604:1380::/36
+        - 147.75.192.0/21
+        metro: null
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        code:
+          type: string
+        features:
+          example:
+          - baremetal
+          - backend_transfer
+          - global_ipv4
+          items:
+            $ref: '#/components/schemas/Facility_features_inner'
+          type: array
+        id:
+          format: uuid
+          type: string
+        ip_ranges:
+          description: IP ranges registered in facility. Can be used for GeoIP location
+          example:
+          - 2604:1380::/36
+          - 147.75.192.0/21
+          items:
+            type: string
+          type: array
+        metro:
+          $ref: '#/components/schemas/Device_metro'
+        name:
+          type: string
+      type: object
+    VrfIpReservation:
+      example:
+        address: address
+        created_at: 2000-01-23 04:56:07+00:00
+        project:
+          devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        bill: true
+        project_lite:
+          devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        vrf:
+          bgp_dynamic_neighbors_export_route_map: true
+          bgp_dynamic_neighbors_bfd_enabled: true
+          local_asn: 5
+          description: description
+          bill: false
+          bgp_dynamic_neighbors_enabled: true
+          project:
+            devices:
+            - href: href
+            - href: href
+            volumes:
+            - href: href
+            - href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            type: null
+            memberships:
+            - href: href
+            - href: href
+            bgp_config:
+              href: href
+            tags:
+            - tags
+            - tags
+            max_devices: '{}'
+            ssh_keys:
+            - href: href
+            - href: href
+            updated_at: 2000-01-23 04:56:07+00:00
+            invitations:
+            - href: href
+            - href: href
+            members:
+            - href: href
+            - href: href
+            organization:
+              website: website
+              address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              projects:
+              - href: href
+              - href: href
+              credit_amount: 1.4658129
+              created_at: 2000-01-23 04:56:07+00:00
+              description: description
+              billing_address:
+                country: country
+                address: address
+                address2: address2
+                city: city
+                coordinates:
+                  latitude: latitude
+                  longitude: longitude
+                state: state
+                zip_code: zip_code
+              memberships:
+              - href: href
+              - href: href
+              enforce_2fa_at: 2000-01-23 04:56:07+00:00
+              twitter: twitter
+              updated_at: 2000-01-23 04:56:07+00:00
+              terms: 5
+              members:
+              - href: href
+              - href: href
+              name: name
+              logo: logo
+              customdata: '{}'
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            name: name
+            network_status: '{}'
+            customdata: '{}'
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            payment_method:
+              href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          created_by:
+            avatar_thumb_url: avatar_thumb_url
+            last_login_at: 2000-01-23 04:56:07+00:00
+            max_projects: 2
+            timezone: timezone
+            default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23 04:56:07+00:00
+            last_name: last_name
+            short_id: short_id
+            fraud_score: fraud_score
+            emails:
+            - href: href
+            - href: href
+            default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            full_name: full_name
+            avatar_url: avatar_url
+            updated_at: 2000-01-23 04:56:07+00:00
+            phone_number: phone_number
+            customdata: '{}'
+            href: href
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            first_name: first_name
+            max_organizations: 3
+            two_factor_auth: two_factor_auth
+            email: email
+          tags:
+          - tags
+          - tags
+          updated_at: 2000-01-23 04:56:07+00:00
+          virtual_circuits:
+          - subnet: 12.0.0.0/30
+            customer_ip: 12.0.0.2
+            description: description
+            project:
+              href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            vrf: null
+            type: null
+            metal_ip: 12.0.0.1
+            speed: 9
+            tags:
+            - tags
+            - tags
+            nni_vlan: 2
+            updated_at: 2000-01-23 04:56:07+00:00
+            port:
+              href: href
+            name: name
+            peer_asn: 7
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            md5: md5
+            status: null
+          - subnet: 12.0.0.0/30
+            customer_ip: 12.0.0.2
+            description: description
+            project:
+              href: href
+            created_at: 2000-01-23 04:56:07+00:00
+            vrf: null
+            type: null
+            metal_ip: 12.0.0.1
+            speed: 9
+            tags:
+            - tags
+            - tags
+            nni_vlan: 2
+            updated_at: 2000-01-23 04:56:07+00:00
+            port:
+              href: href
+            name: name
+            peer_asn: 7
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            md5: md5
+            status: null
+          ip_ranges:
+          - ip_ranges
+          - ip_ranges
+          metro:
+            country: country
+            code: code
+            name: name
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          href: href
+        type: null
+        created_by:
+          href: href
+        network: network
+        tags:
+        - tags
+        - tags
+        manageable: true
+        metal_gateway:
+          gateway_address: 10.1.2.1/27
+          updated_at: 2000-01-23 04:56:07+00:00
+          vlan: 1001
+          created_at: 2000-01-23 04:56:07+00:00
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+        address_family: 0
+        public: true
+        netmask: netmask
+        management: true
+        metro:
+          country: country
+          code: code
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        cidr: 6
+        details: details
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        customdata: '{}'
+        gateway: gateway
+      properties:
+        address_family:
+          type: integer
+        cidr:
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        created_by:
+          $ref: '#/components/schemas/Href'
+        details:
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        metal_gateway:
+          $ref: '#/components/schemas/MetalGatewayLite'
+        netmask:
+          type: string
+        network:
+          type: string
+        project:
+          $ref: '#/components/schemas/Project'
+        state:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          $ref: '#/components/schemas/VrfIpReservation_type'
+        vrf:
+          $ref: '#/components/schemas/Vrf'
+        public:
+          type: boolean
+        management:
+          type: boolean
+        manageable:
+          type: boolean
+        customdata:
+          type: object
+        bill:
+          type: boolean
+        project_lite:
+          $ref: '#/components/schemas/Project'
+        address:
+          type: string
+        gateway:
+          type: string
+        metro:
+          $ref: '#/components/schemas/Metro'
+      required:
+      - type
+      - vrf
+      type: object
+    Metro:
+      example:
+        country: country
+        code: code
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        code:
+          type: string
+        country:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      type: object
+    findMetalGatewayById_200_response:
+      oneOf:
+      - $ref: '#/components/schemas/MetalGateway'
+      - $ref: '#/components/schemas/VrfMetalGateway'
+    IPAssignment_state:
+      description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+        Describes the current configuration state of this IP on the network.
+
+        '
+      enum:
+      - pending
+      - active
+      - deleting
+      type: string
     Project:
       example:
         devices:
@@ -2443,56 +2104,6 @@ components:
             type: string
           type: array
       type: object
-    IPReservation_facility:
-      allOf:
-      - $ref: '#/components/schemas/Facility'
-      - description: The facility the IP reservation is in. If the facility the IP reservation was requested in is in a metro, a metro value will also be set, and the subsequent IP reservation can be used on a metro level. Can be null if requesting an IP reservation in a metro.
-        type: object
-    MetalGatewayCreateInput:
-      properties:
-        ip_reservation_id:
-          description: The UUID of an IP reservation that belongs to the same project as where the metal gateway will be created in. This field is required unless the private IPv4 subnet size is specified.
-          format: uuid
-          type: string
-        private_ipv4_subnet_size:
-          description: "The subnet size (8, 16, 32, 64, or 128) of the private IPv4 reservation that will be created for the metal gateway. This field is required unless a project IP reservation was specified.\n          Please keep in mind that the number of private metal gateway ranges are limited per project. If you would like to increase the limit per project, please contact support for assistance."
-          type: integer
-        virtual_network_id:
-          description: The UUID of a metro virtual network that belongs to the same project as where the metal gateway will be created in.
-          format: uuid
-          type: string
-      required:
-      - virtual_network_id
-      type: object
-    VrfMetalGatewayCreateInput:
-      properties:
-        ip_reservation_id:
-          description: The UUID an a VRF IP Reservation that belongs to the same project as the one in which the Metal Gateway is to be created. Additionally, the VRF IP Reservation and the Virtual Network must reside in the same Metro.
-          format: uuid
-          type: string
-        virtual_network_id:
-          description: THe UUID of a Metro Virtual Network that belongs to the same project as the one in which the Metal Gateway is to be created. Additionally, the Virtual Network and the VRF IP Reservation must reside in the same metro.
-          format: uuid
-          type: string
-      required:
-      - ip_reservation_id
-      - virtual_network_id
-      type: object
-    findMetalGatewayById_200_response:
-      oneOf:
-      - $ref: '#/components/schemas/MetalGateway'
-      - $ref: '#/components/schemas/VrfMetalGateway'
-    MetalGateway_state:
-      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
-      enum:
-      - ready
-      - active
-      - deleting
-      type: string
-    MetalGatewayList_metal_gateways_inner:
-      anyOf:
-      - $ref: '#/components/schemas/MetalGateway'
-      - $ref: '#/components/schemas/VrfMetalGateway'
     User:
       example:
         avatar_thumb_url: avatar_thumb_url
@@ -2573,47 +2184,208 @@ components:
           format: date-time
           type: string
       type: object
-    Meta:
+    IPReservation_facility:
+      allOf:
+      - $ref: '#/components/schemas/Facility'
+      - description: The facility the IP reservation is in. If the facility the IP reservation was requested in is in a metro, a metro value will also be set, and the subsequent IP reservation can be used on a metro level. Can be null if requesting an IP reservation in a metro.
+        type: object
+    IPAssignmentList:
       example:
-        next:
+        ip_addresses:
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
           href: href
-        total: 0
-        last:
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
+        - address: address
+          parent_block:
+            netmask: netmask
+            cidr: 2
+            href: href
+            network: network
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          enabled: true
+          manageable: true
+          network: network
+          address_family: 5
+          public: true
+          management: true
+          netmask: netmask
+          metro: null
+          next_hop: next_hop
+          cidr: 5
           href: href
-        previous:
-          href: href
-        last_page: 1
-        self:
-          href: href
-        first:
-          href: href
-        current_page: 6
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: null
+          global_ip: true
+          gateway: gateway
+          assigned_to:
+            href: href
       properties:
-        first:
-          $ref: '#/components/schemas/Href'
-        last:
-          $ref: '#/components/schemas/Href'
-        next:
-          $ref: '#/components/schemas/Href'
-        previous:
-          $ref: '#/components/schemas/Href'
-        self:
-          $ref: '#/components/schemas/Href'
-        total:
+        ip_addresses:
+          items:
+            $ref: '#/components/schemas/IPAssignment'
+          type: array
+      type: object
+    IPAssignment:
+      example:
+        address: address
+        parent_block:
+          netmask: netmask
+          cidr: 2
+          href: href
+          network: network
+        created_at: 2000-01-23 04:56:07+00:00
+        type: null
+        enabled: true
+        manageable: true
+        network: network
+        address_family: 5
+        public: true
+        management: true
+        netmask: netmask
+        metro: null
+        next_hop: next_hop
+        cidr: 5
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+        global_ip: true
+        gateway: gateway
+        assigned_to:
+          href: href
+      properties:
+        address:
+          type: string
+        address_family:
           type: integer
-        current_page:
+        assigned_to:
+          $ref: '#/components/schemas/Href'
+        cidr:
           type: integer
-        last_page:
+        created_at:
+          format: date-time
+          type: string
+        enabled:
+          type: boolean
+        gateway:
+          type: string
+        global_ip:
+          type: boolean
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        manageable:
+          type: boolean
+        management:
+          type: boolean
+        metro:
+          $ref: '#/components/schemas/IPAssignment_metro'
+        netmask:
+          type: string
+        network:
+          type: string
+        parent_block:
+          $ref: '#/components/schemas/ParentBlock'
+        public:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/IPAssignment_state'
+        next_hop:
+          description: 'Only set when this is a Metal Gateway Elastic IP Assignment.
+
+
+            The IP address within the Metal Gateway to which requests to the Elastic IP are forwarded.
+
+            '
+          format: ipv4
+          type: string
+        type:
+          $ref: '#/components/schemas/IPAssignment_type'
+      type: object
+    MetalGatewayLite:
+      example:
+        gateway_address: 10.1.2.1/27
+        updated_at: 2000-01-23 04:56:07+00:00
+        vlan: 1001
+        created_at: 2000-01-23 04:56:07+00:00
+        href: href
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: null
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        gateway_address:
+          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
+          example: 10.1.2.1/27
+          type: string
+        href:
+          type: string
+        id:
+          format: uuid
+          type: string
+        state:
+          $ref: '#/components/schemas/MetalGateway_state'
+        updated_at:
+          format: date-time
+          type: string
+        vlan:
+          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
+          example: 1001
           type: integer
       type: object
-    Facility_features_inner:
+    MetalGateway_state:
+      description: The current state of the Metal Gateway. 'Ready' indicates the gateway record has been configured, but is currently not active on the network. 'Active' indicates the gateway has been configured on the network. 'Deleting' is a temporary state used to indicate that the gateway is in the process of being un-configured from the network, after which the gateway record will be deleted.
       enum:
-      - baremetal
-      - backend_transfer
-      - layer_2
-      - global_ipv4
-      - ibx
+      - ready
+      - active
+      - deleting
       type: string
+    Device_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the facility is in
+        type: object
+    MetalGatewayCreateInput:
+      properties:
+        ip_reservation_id:
+          description: The UUID of an IP reservation that belongs to the same project as where the metal gateway will be created in. This field is required unless the private IPv4 subnet size is specified.
+          format: uuid
+          type: string
+        private_ipv4_subnet_size:
+          description: "The subnet size (8, 16, 32, 64, or 128) of the private IPv4 reservation that will be created for the metal gateway. This field is required unless a project IP reservation was specified.\n          Please keep in mind that the number of private metal gateway ranges are limited per project. If you would like to increase the limit per project, please contact support for assistance."
+          type: integer
+        virtual_network_id:
+          description: The UUID of a metro virtual network that belongs to the same project as where the metal gateway will be created in.
+          format: uuid
+          type: string
+      required:
+      - virtual_network_id
+      type: object
     VrfVirtualCircuit:
       example:
         subnet: 12.0.0.0/30
@@ -2692,113 +2464,364 @@ components:
       required:
       - vrf
       type: object
-    Address:
-      example:
-        country: country
-        address: address
-        address2: address2
-        city: city
-        coordinates:
-          latitude: latitude
-          longitude: longitude
-        state: state
-        zip_code: zip_code
+    IPReservation:
+      additionalProperties: false
       properties:
+        addon:
+          type: boolean
         address:
           type: string
-        address2:
-          type: string
-        city:
-          type: string
-        coordinates:
-          $ref: '#/components/schemas/Coordinates'
-        country:
-          type: string
-        state:
-          type: string
-        zip_code:
-          type: string
-      required:
-      - address
-      - country
-      - zip_code
-      type: object
-    MetalGatewayList:
-      example:
-        metal_gateways:
-        - null
-        - null
-        meta:
-          next:
-            href: href
-          total: 0
-          last:
-            href: href
-          previous:
-            href: href
-          last_page: 1
-          self:
-            href: href
-          first:
-            href: href
-          current_page: 6
-      properties:
-        metal_gateways:
+        address_family:
+          type: integer
+        assignments:
           items:
-            $ref: '#/components/schemas/MetalGatewayList_metal_gateways_inner'
+            $ref: '#/components/schemas/IPAssignment'
           type: array
-        meta:
-          $ref: '#/components/schemas/Meta'
-      type: object
-    MetalGatewayLite:
-      example:
-        gateway_address: 10.1.2.1/27
-        updated_at: 2000-01-23 04:56:07+00:00
-        vlan: 1001
-        created_at: 2000-01-23 04:56:07+00:00
-        href: href
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: null
-      properties:
+        available:
+          type: string
+        bill:
+          type: boolean
+        cidr:
+          type: integer
         created_at:
           format: date-time
           type: string
-        gateway_address:
-          description: The gateway address with subnet CIDR value for this Metal Gateway. For example, a Metal Gateway using an IP reservation with block 10.1.2.0/27 would have a gateway address of 10.1.2.1/27.
-          example: 10.1.2.1/27
+        customdata:
+          type: object
+        enabled:
+          type: boolean
+        details:
           type: string
+        facility:
+          $ref: '#/components/schemas/IPReservation_facility'
+        gateway:
+          type: string
+        global_ip:
+          type: boolean
         href:
           type: string
         id:
           format: uuid
           type: string
-        state:
-          $ref: '#/components/schemas/MetalGateway_state'
-        updated_at:
-          format: date-time
+        manageable:
+          type: boolean
+        management:
+          type: boolean
+        metal_gateway:
+          $ref: '#/components/schemas/MetalGatewayLite'
+        metro:
+          $ref: '#/components/schemas/IPReservation_metro'
+        netmask:
           type: string
-        vlan:
-          description: The VLAN id of the Virtual Network record associated to this Metal Gateway.
-          example: 1001
-          type: integer
+        network:
+          type: string
+        project:
+          $ref: '#/components/schemas/Project'
+        project_lite:
+          $ref: '#/components/schemas/Href'
+        requested_by:
+          $ref: '#/components/schemas/Href'
+        public:
+          type: boolean
+        state:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          $ref: '#/components/schemas/IPReservation_type'
+      required:
+      - type
       type: object
-    Metro:
+    Href:
       example:
-        country: country
-        code: code
+        href: href
+      properties:
+        href:
+          type: string
+      required:
+      - href
+      type: object
+    IPAssignment_type:
+      enum:
+      - IPAssignment
+      type: string
+    Vrf:
+      example:
+        bgp_dynamic_neighbors_export_route_map: true
+        bgp_dynamic_neighbors_bfd_enabled: true
+        local_asn: 5
+        description: description
+        bill: false
+        bgp_dynamic_neighbors_enabled: true
+        project:
+          devices:
+          - href: href
+          - href: href
+          volumes:
+          - href: href
+          - href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          type: null
+          memberships:
+          - href: href
+          - href: href
+          bgp_config:
+            href: href
+          tags:
+          - tags
+          - tags
+          max_devices: '{}'
+          ssh_keys:
+          - href: href
+          - href: href
+          updated_at: 2000-01-23 04:56:07+00:00
+          invitations:
+          - href: href
+          - href: href
+          members:
+          - href: href
+          - href: href
+          organization:
+            website: website
+            address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            projects:
+            - href: href
+            - href: href
+            credit_amount: 1.4658129
+            created_at: 2000-01-23 04:56:07+00:00
+            description: description
+            billing_address:
+              country: country
+              address: address
+              address2: address2
+              city: city
+              coordinates:
+                latitude: latitude
+                longitude: longitude
+              state: state
+              zip_code: zip_code
+            memberships:
+            - href: href
+            - href: href
+            enforce_2fa_at: 2000-01-23 04:56:07+00:00
+            twitter: twitter
+            updated_at: 2000-01-23 04:56:07+00:00
+            terms: 5
+            members:
+            - href: href
+            - href: href
+            name: name
+            logo: logo
+            customdata: '{}'
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: name
+          network_status: '{}'
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          payment_method:
+            href: href
+        created_at: 2000-01-23 04:56:07+00:00
+        created_by:
+          avatar_thumb_url: avatar_thumb_url
+          last_login_at: 2000-01-23 04:56:07+00:00
+          max_projects: 2
+          timezone: timezone
+          default_project_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23 04:56:07+00:00
+          last_name: last_name
+          short_id: short_id
+          fraud_score: fraud_score
+          emails:
+          - href: href
+          - href: href
+          default_organization_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          full_name: full_name
+          avatar_url: avatar_url
+          updated_at: 2000-01-23 04:56:07+00:00
+          phone_number: phone_number
+          customdata: '{}'
+          href: href
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          first_name: first_name
+          max_organizations: 3
+          two_factor_auth: two_factor_auth
+          email: email
+        tags:
+        - tags
+        - tags
+        updated_at: 2000-01-23 04:56:07+00:00
+        virtual_circuits:
+        - subnet: 12.0.0.0/30
+          customer_ip: 12.0.0.2
+          description: description
+          project:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          vrf: null
+          type: null
+          metal_ip: 12.0.0.1
+          speed: 9
+          tags:
+          - tags
+          - tags
+          nni_vlan: 2
+          updated_at: 2000-01-23 04:56:07+00:00
+          port:
+            href: href
+          name: name
+          peer_asn: 7
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          md5: md5
+          status: null
+        - subnet: 12.0.0.0/30
+          customer_ip: 12.0.0.2
+          description: description
+          project:
+            href: href
+          created_at: 2000-01-23 04:56:07+00:00
+          vrf: null
+          type: null
+          metal_ip: 12.0.0.1
+          speed: 9
+          tags:
+          - tags
+          - tags
+          nni_vlan: 2
+          updated_at: 2000-01-23 04:56:07+00:00
+          port:
+            href: href
+          name: name
+          peer_asn: 7
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          md5: md5
+          status: null
+        ip_ranges:
+        - ip_ranges
+        - ip_ranges
+        metro:
+          country: country
+          code: code
+          name: name
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         name: name
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        href: href
       properties:
-        code:
-          type: string
-        country:
-          type: string
         id:
           format: uuid
           type: string
         name:
           type: string
+        description:
+          description: Optional field that can be set to describe the VRF
+          type: string
+        bill:
+          default: false
+          description: True if the VRF is being billed. Usage will start when the first VRF Virtual Circuit is active, and will only stop when the VRF has been deleted.
+          type: boolean
+        bgp_dynamic_neighbors_enabled:
+          description: Toggle to enable the dynamic bgp neighbors feature on the VRF
+          type: boolean
+        bgp_dynamic_neighbors_export_route_map:
+          description: Toggle to export the VRF route-map to the dynamic bgp neighbors
+          type: boolean
+        bgp_dynamic_neighbors_bfd_enabled:
+          description: Toggle BFD on dynamic bgp neighbors sessions
+          type: boolean
+        local_asn:
+          description: A 4-byte ASN associated with the VRF.
+          format: int32
+          type: integer
+        virtual_circuits:
+          description: Virtual circuits that are in the VRF
+          items:
+            $ref: '#/components/schemas/VrfVirtualCircuit'
+          type: array
+        ip_ranges:
+          description: A list of CIDR network addresses. Like ["10.0.0.0/16", "2001:d78::/56"].
+          items:
+            type: string
+          type: array
+        project:
+          $ref: '#/components/schemas/Project'
+        metro:
+          $ref: '#/components/schemas/Metro'
+        created_by:
+          $ref: '#/components/schemas/User'
+        href:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
       type: object
+    VrfVirtualCircuit_status:
+      description: The status changes of a VRF virtual circuit are generally the same as Virtual Circuits that aren't in a VRF. However, for VRF Virtual Circuits on Fabric VCs, the status will change to 'waiting_on_peering_details' once the Fabric service token associated with the virtual circuit has been redeemed on Fabric, and Metal has found the associated Fabric connection. At this point, users can update the subnet, MD5 password, customer IP and/or metal IP accordingly. For VRF Virtual Circuits on Dedicated Ports, we require all peering details to be set on creation of a VRF Virtual Circuit. The status will change to `changing_peering_details` whenever an active VRF Virtual Circuit has any of its peering details updated.
+      enum:
+      - pending
+      - waiting_on_peering_details
+      - activating
+      - changing_peering_details
+      - deactivating
+      - deleting
+      - active
+      - expired
+      - activation_failed
+      - changing_peering_details_failed
+      - deactivation_failed
+      - delete_failed
+      type: string
+    createMetalGateway_request:
+      oneOf:
+      - $ref: '#/components/schemas/MetalGatewayCreateInput'
+      - $ref: '#/components/schemas/VrfMetalGatewayCreateInput'
+    Facility_features_inner:
+      enum:
+      - baremetal
+      - backend_transfer
+      - layer_2
+      - global_ipv4
+      - ibx
+      type: string
+    ParentBlock:
+      example:
+        netmask: netmask
+        cidr: 2
+        href: href
+        network: network
+      properties:
+        cidr:
+          type: integer
+        href:
+          type: string
+        netmask:
+          type: string
+        network:
+          type: string
+      type: object
+    IPAssignment_metro:
+      allOf:
+      - $ref: '#/components/schemas/Metro'
+      - description: The metro the IP address is in
+        type: object
     MetalGatewayElasticIpCreateInput:
       example:
         address: 147.75.234.8/31
@@ -2836,42 +2859,19 @@ components:
       - address
       - next_hop
       type: object
-    ParentBlock:
-      example:
-        netmask: netmask
-        cidr: 2
-        href: href
-        network: network
+    Error:
+      description: Error responses are included with 4xx and 5xx HTTP responses from the API service. Either "error" or "errors" will be set.
       properties:
-        cidr:
-          type: integer
-        href:
+        error:
+          description: A description of the error that caused the request to fail.
           type: string
-        netmask:
-          type: string
-        network:
-          type: string
+        errors:
+          description: A list of errors that contributed to the request failing.
+          items:
+            description: An error message that contributed to the request failing.
+            type: string
+          type: array
       type: object
-    createMetalGateway_request:
-      oneOf:
-      - $ref: '#/components/schemas/MetalGatewayCreateInput'
-      - $ref: '#/components/schemas/VrfMetalGatewayCreateInput'
-    VrfVirtualCircuit_status:
-      description: The status changes of a VRF virtual circuit are generally the same as Virtual Circuits that aren't in a VRF. However, for VRF Virtual Circuits on Fabric VCs, the status will change to 'waiting_on_peering_details' once the Fabric service token associated with the virtual circuit has been redeemed on Fabric, and Metal has found the associated Fabric connection. At this point, users can update the subnet, MD5 password, customer IP and/or metal IP accordingly. For VRF Virtual Circuits on Dedicated Ports, we require all peering details to be set on creation of a VRF Virtual Circuit. The status will change to `changing_peering_details` whenever an active VRF Virtual Circuit has any of its peering details updated.
-      enum:
-      - pending
-      - waiting_on_peering_details
-      - activating
-      - changing_peering_details
-      - deactivating
-      - deleting
-      - active
-      - expired
-      - activation_failed
-      - changing_peering_details_failed
-      - deactivation_failed
-      - delete_failed
-      type: string
   securitySchemes:
     x_auth_token:
       description: 'HTTP header containing the User or Project API key that will be used to authenticate the request.
